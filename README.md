@@ -4,6 +4,6 @@
 
 ## Продакшен версия:
 
-https://app.netlify.com
+## http://my-movies.cf
 
 
