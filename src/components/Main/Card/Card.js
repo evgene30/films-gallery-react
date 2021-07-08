@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import "./Card.scss";
-import logoImage from "../../../assets/png/movies.png"
+import logoImage from "../../../assets/png/movies.png";
+import delImg from "../../../assets/png/del.png"
 
 
 class Card extends Component {
@@ -12,12 +13,13 @@ class Card extends Component {
         const {itemCard} = this.props;
         const img = "https://image.tmdb.org/t/p/w500"; // формируем изображение
         const err = logoImage; // альтернативное изображение на случай отсутствия
+        const delImage = delImg;
+
         return (
             <li
                 tabIndex="0"
                 className="card-block"
                 id={itemCard.id}
-                onClick={() => this.deleteCard(itemCard.id)}
             >
                 <div className="card" title={itemCard.title}>
                     <div className="hover-img">
@@ -45,6 +47,13 @@ class Card extends Component {
                         </h4>
                         <p>{itemCard.title}</p>
                     </div>
+                </div>
+                <div className="imgdel">
+                    <img id="dell" src={delImage}
+                         alt="del"
+                         style={{paddingLeft: "8px"}}
+                         onClick={() => this.deleteCard(itemCard.id)}
+                    />
                 </div>
             </li>
         );
