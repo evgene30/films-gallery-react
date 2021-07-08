@@ -24,6 +24,13 @@ class Main extends Component {
         }
     }
 
+    handleVisualPagination = (index) => {
+        if (Number(!index) === 1 || index >= 19) {
+            return {display: "flex"};
+        } else {
+            return {display: "none"}
+        }
+    }
 
     render() {
         const massiveFilms = this.props.listFilms; // список фильмов
@@ -69,6 +76,7 @@ class Main extends Component {
                             return (<li tabIndex="0" key={index}
                                         className={index + 1 === this.state.filmPage ? "active" : ""}
                                         onClick={this.handleClick}
+                                        style={this.handleVisualPagination(index)}
                             >
                                 {index + 1}
                             </li>);
