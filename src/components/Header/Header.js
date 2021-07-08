@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import "./Header.scss";
 import logoSite from "../../assets/png/logo.png"
 
-const siteLogo = <a href="/" className="logo" title={"Домой"}><img src={logoSite} alt={"logo"}/>myMovies</a>; // ссылка на лого
 
 class Header extends Component {
 
     render() {
+        const siteLogo = <a href="/" className="logo" title={"Домой"}><img src={logoSite} alt={"logo"}/>myMovies</a>; // ссылка на лого
         return (
             <header>
                 <div className="wrap-logo">
