@@ -6,21 +6,24 @@ class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filmPage: 4,
+            filmPage: 1,
         };
     }
 
     handleClick = (event) => {
-        const filmsState = [this.state.filmPage].map((element) => element);
+        const filmsState = Number([this.state.filmPage].map((elem) => elem));
 
-        if (event.target.innerText === "Prev" && this.state.filmPage > 1) {
+        if (event.target.innerText === "Prev" && filmsState !== 1) {
             this.setState({filmPage: filmsState - 1})
-        }
-        if (event.target.innerText === "Next" && this.state.filmPage < 20) {
+        } else if (event.target.innerText === "Next" && filmsState !== 20) {
             this.setState({filmPage: filmsState + 1})
+        } else if (Number(event.target.innerText)) {
+            this.setState({filmPage: Number(event.target.innerText)})
+        } else {
+            this.setState({filmsState: this.state.filmsState})
         }
-
     }
+
 
     render() {
         const massiveFilms = this.props.listFilms; // список фильмов
