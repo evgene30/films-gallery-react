@@ -52,7 +52,7 @@ class Main extends Component {
                 <section className="section-movies">
                     <ul className="ul-movies" id="sectionmov">
                         {
-                            massiveFilms[this.state.filmPage].map((item) => {
+                            (massiveFilms[this.state.filmPage] ? massiveFilms[this.state.filmPage] : massiveFilms[this.state.filmPage - 1]).map((item) => {
                                     return (<Card
                                         key={item.id}
                                         itemCard={item}
