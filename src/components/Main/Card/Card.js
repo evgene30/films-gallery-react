@@ -5,14 +5,16 @@ import delImg from "../../../assets/png/del.png"
 
 
 class Card extends Component {
+    state = {
+        title: ""
+    }
     deleteCard = (id) => {
         this.props.handleDeleteCard(id);
     }
 
     filmInformation = (filmTitle) => {
-        let title = filmTitle.toLowerCase().trim().replace(/\s+/g, '');
-
-        console.log(title)
+        let titles = filmTitle.toLowerCase().trim().replace(/\s+/g, '');
+        this.setState({title: titles})
     }
 
     render() {
@@ -27,7 +29,7 @@ class Card extends Component {
                 className="card-block"
                 id={itemCard.id}
                 onClick={() => this.filmInformation(itemCard.original_title)}
-            >
+            ><a href={this.state.title}>
                 <div className="card" title={itemCard.title}>
                     <div className="hover-img">
                         <p>Релиз: {itemCard.release_date}</p>
@@ -62,6 +64,7 @@ class Card extends Component {
                 {/*         onClick={() => this.deleteCard(itemCard.id)}*/}
                 {/*    />*/}
                 {/*</div>*/}
+            </a>
             </li>
         );
     }
