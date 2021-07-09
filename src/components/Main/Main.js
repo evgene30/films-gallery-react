@@ -44,6 +44,10 @@ class Main extends Component {
         }
     }
 
+    handleChangeSelect = (event) => {
+        this.props.handleSortFilmSelect(event.target.value); // забираем значение select
+    }
+
     render() {
         const massiveFilms = this.props.listFilms; // список фильмов
         const handleDeleteCard = this.props.handleDeleteCard;
@@ -56,6 +60,7 @@ class Main extends Component {
                             name="sortList"
                             className="select-css"
                             id="filters"
+                            onChange={this.handleChangeSelect}
                         >
                             <option value="id">Выберите фильтр...</option>
                             <option value="popularity">Популярность</option>

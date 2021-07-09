@@ -9,17 +9,24 @@ class Card extends Component {
         this.props.handleDeleteCard(id);
     }
 
+    filmInformation = (filmTitle) => {
+        let title = filmTitle.toLowerCase().trim().replace(/\s+/g, '');
+
+        console.log(title)
+    }
+
     render() {
         const {itemCard} = this.props;
         const img = "https://image.tmdb.org/t/p/w500"; // формируем изображение
         const err = logoImage; // альтернативное изображение на случай отсутствия
-        const delImage = delImg;
+        const delImage = delImg; // импортированная картинка удаления
 
         return (
             <li
                 tabIndex="0"
                 className="card-block"
                 id={itemCard.id}
+                onClick={() => this.filmInformation(itemCard.original_title)}
             >
                 <div className="card" title={itemCard.title}>
                     <div className="hover-img">
@@ -48,13 +55,13 @@ class Card extends Component {
                         <p>{itemCard.title}</p>
                     </div>
                 </div>
-                <div className="imgdel">
-                    <img id="dell" src={delImage}
-                         alt="del"
-                         style={{paddingLeft: "8px"}}
-                         onClick={() => this.deleteCard(itemCard.id)}
-                    />
-                </div>
+                {/*<div className="imgdel">*/}
+                {/*    <img id="dell" src={delImage}*/}
+                {/*         alt="del"*/}
+                {/*         style={{paddingLeft: "8px"}}*/}
+                {/*         onClick={() => this.deleteCard(itemCard.id)}*/}
+                {/*    />*/}
+                {/*</div>*/}
             </li>
         );
     }

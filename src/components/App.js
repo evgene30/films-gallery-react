@@ -10,6 +10,7 @@ class App extends Component {
             preloader: false,
             itemsFilm: [],
             error: null,
+            // sortSelect: 'id',
         };
     }
 
@@ -21,6 +22,8 @@ class App extends Component {
             .then((response) => response.json())
             .then(
                 (value) => {
+
+
                     this.setState({
                         preloader: true,
                         itemsFilm: value.items,
@@ -35,8 +38,11 @@ class App extends Component {
             );
     }
 
+
     packMassiveFilm = (array) => {
+
         const massiveFilmsNew = [];
+
         for (let i = 0; i < Math.ceil(array.length / 20); i++) {
             // разбиваем исходный массив на вложенные массивы по 20 вложенных массивов
             massiveFilmsNew[i] = array.slice(i * 20, i * 20 + 20);
@@ -49,6 +55,43 @@ class App extends Component {
         const massiveFilmsNew = [...this.state.itemsFilm].filter((el) => el.id !== id);
         this.setState({itemsFilm: massiveFilmsNew});
     };
+
+    handleSortFilmSelect = (count) => {
+        const sortState = [...this.state.itemsFilm];
+
+        switch (count) {
+            case 'id':
+                sortState.sort(function (a, b) {
+                    return b.id - a.id;
+                });
+                break;
+            case 'popularity':
+                sortState.sort(function (a, b) {
+                    return b.popularity - a.popularity;
+                });
+                break;
+            case 'vote_average':
+                sortState.sort(function (a, b) {
+                    return b.vote_average - a.vote_average;
+                });
+                break;
+            case 'vote_count':
+                sortState.sort(function (a, b) {
+                    return b.vote_count - a.vote_count;
+                });
+                break;
+            case 'release_date':
+                sortState.sort(function (a, b) {
+                    return new Date(b.release_date) - new Date(a.release_date);
+                });
+                break;
+            default:
+                sortState.sort(function (a, b) {
+                    return b.id - a.id;
+                });
+        }
+        this.setState({itemsFilm: sortState});
+    }
 
     render() {
         const {error, preloader, itemsFilm} = this.state;
@@ -71,6 +114,7 @@ class App extends Component {
                         <Main
                             listFilms={this.packMassiveFilm(itemsFilm)}
                             handleDeleteCard={this.handleDeleteCard}
+                            handleSortFilmSelect={this.handleSortFilmSelect}
                         />
                         <Footer/>
                     </div>
