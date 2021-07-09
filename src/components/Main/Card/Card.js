@@ -13,7 +13,7 @@ class Card extends Component {
     }
 
     filmInformation = (filmTitle) => {
-        let titles = filmTitle.toLowerCase().trim().replace(/\s+/g, '');
+        let titles = filmTitle.toLowerCase().trim().replace(/\s+/g, '').replace(/[^a-z0-9]/g, '');
         this.setState({title: titles})
     }
 
@@ -57,14 +57,14 @@ class Card extends Component {
                         <p>{itemCard.title}</p>
                     </div>
                 </div>
-                {/*<div className="imgdel">*/}
-                {/*    <img id="dell" src={delImage}*/}
-                {/*         alt="del"*/}
-                {/*         style={{paddingLeft: "8px"}}*/}
-                {/*         onClick={() => this.deleteCard(itemCard.id)}*/}
-                {/*    />*/}
-                {/*</div>*/}
             </a>
+                <div className="imgdel">
+                    <img id="dell" src={delImage}
+                         alt="del"
+                         style={{paddingLeft: "8px"}}
+                         onClick={() => this.deleteCard(itemCard.id)}
+                    />
+                </div>
             </li>
         );
     }
