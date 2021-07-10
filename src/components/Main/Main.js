@@ -1,12 +1,16 @@
 import React, {Component} from "react";
 import "./Main.scss";
 import Card from "./Card/Card";
+import {Route, Switch, Redirect} from "react-router-dom"
+import Infofilm from "./Card/Infofilm/Infofilm";
+
 
 class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
             filmPage: 1,
+            filmId: "",
         };
     }
 
@@ -48,13 +52,22 @@ class Main extends Component {
         this.props.handleSortFilmSelect(event.target.value); // забираем значение select
     }
 
+    handleFilmsInfo = (id) => {
+        this.setState({filmId: id});
+    }
+
+
     render() {
         const massiveFilms = this.props.listFilms; // список фильмов
         const handleDeleteCard = this.props.handleDeleteCard;
+        const link = `/id=${this.state.filmId}`; // формирование пути роутинга
 
         return (
             <main id="firstmain">
+
+
                 <section className="section-header">
+                    {/*блок выбора фильтра*/}
                     <form name="sort_list" id="filter" action="#">
                         <select
                             name="sortList"
@@ -73,20 +86,50 @@ class Main extends Component {
                     </form>
                     <div className="adminbtn"/>
                 </section>
+
+
                 <section className="section-movies">
-                    <ul className="ul-movies" id="sectionmov">
-                        {
-                            (massiveFilms[this.state.filmPage] ? massiveFilms[this.state.filmPage] : massiveFilms[this.state.filmPage - 1]).map((item) => {
-                                    return (<Card
-                                        key={item.id}
-                                        itemCard={item}
-                                        handleDeleteCard={handleDeleteCard}
-                                    />)
-                                }
-                            )}
-                    </ul>
+
+                    <Switch>
+                        <Route path="/" exact>
+
+                            {/*блок отрисовки карточек фильмов*/}
+                            <ul className="ul-movies" id="sectionmov">
+                                {
+                                    (massiveFilms[this.state.filmPage] ? massiveFilms[this.state.filmPage] : massiveFilms[this.state.filmPage - 1]).map((item) => {
+                                            return (<Card
+                                                key={item.id}
+                                                itemCard={item}
+                                                handleDeleteCard={handleDeleteCard}
+                                                handleFilmsInfo={this.handleFilmsInfo}
+                                                filmId={this.state.filmId}
+                                            />)
+                                        }
+                                    )}
+                            </ul>
+
+                        </Route>
+
+                        <Route path={link} exact>
+                            {
+                                massiveFilms[this.state.filmPage].filter(item => item.id === this.state.filmId).map((item) => {
+                                    return (
+                                        <Infofilm
+                                            key={item.id}
+                                            item={item}
+                                            handleDeleteCard={handleDeleteCard}
+                                        />
+                                    )
+                                })
+                            }
+                        </Route>
+                        <Redirect to="/"/>
+                    </Switch>
+
                 </section>
+
                 <div className="pagination-block">
+                    {/*блок отрисовки пагинации*/}
                     <ul className="pagination" id="pagination">
                         <li tabIndex="0" className="nextclick mt" onClick={this.handleClick}>Prev</li>
                         <li tabIndex="0" className={this.state.filmPage === 1 ? "active" : ""}
@@ -107,6 +150,7 @@ class Main extends Component {
                         <li tabIndex="0" className="nextclick mt" onClick={this.handleClick}>Next</li>
                     </ul>
                 </div>
+
             </main>
         );
     }
