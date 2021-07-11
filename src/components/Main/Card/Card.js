@@ -8,10 +8,15 @@ import {Link} from "react-router-dom";
 class Card extends Component {
     deleteCard = (id) => {
         this.props.handleDeleteCard(id);
+        this.props.handleMarkCard(false);
     }
 
     filmInformation = (id) => {
         this.props.handleFilmsInfo(id);
+    }
+
+    markCard = () => {
+        this.props.handleMarkCard(true);
     }
 
     render() {
@@ -28,7 +33,7 @@ class Card extends Component {
                 id={itemCard.id}
                 onClick={() => this.filmInformation(itemCard.id)}
             >
-                <Link to={link}>
+                <Link to={link} onClick={() => this.markCard()}>
                     <div className="card" title={itemCard.title}>
                         <div className="hover-img">
                             <p>Релиз: {itemCard.release_date}</p>

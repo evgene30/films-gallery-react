@@ -12,11 +12,14 @@ const Infofilm = (props) => {
     const infoFilm = props.item;
     const history = useHistory();
 
+
     const handleClickClose = () => {
         history.goBack();
+        props.handleMarkCard(false);
     }
     const deleteCard = (id) => {
         props.handleDeleteCard(id);
+        props.handleMarkCard(false);
         history.push('./');
     }
 

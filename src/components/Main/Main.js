@@ -11,6 +11,7 @@ class Main extends Component {
         this.state = {
             filmPage: 1,
             filmId: "",
+            filmCheck: false,
         };
     }
 
@@ -55,12 +56,20 @@ class Main extends Component {
     handleFilmsInfo = (id) => {
         this.setState({filmId: id});
     }
+    handleMarkCard = (check) => {
+        this.setState({filmCheck: check})
+    }
 
 
     render() {
         const massiveFilms = this.props.listFilms; // список фильмов
         const handleDeleteCard = this.props.handleDeleteCard;
         const link = `/id=${this.state.filmId}`; // формирование пути роутинга
+        const filmCheck = this.state.filmCheck;
+        const styleVisible = (filmCheck ? {display: "none"} : {});
+
+        console.log(filmCheck)
+
 
         return (
             <main id="firstmain">
@@ -74,6 +83,8 @@ class Main extends Component {
                             className="select-css"
                             id="filters"
                             onChange={this.handleChangeSelect}
+                            disabled={this.state.filmCheck}
+
                         >
                             <option value="id">Выберите фильтр...</option>
                             <option value="popularity">Популярность</option>
@@ -83,6 +94,7 @@ class Main extends Component {
                             </option>
                             <option value="release_date">Дата релиза</option>
                         </select>
+
                     </form>
                     <div className="adminbtn"/>
                 </section>
@@ -102,7 +114,10 @@ class Main extends Component {
                                                 itemCard={item}
                                                 handleDeleteCard={handleDeleteCard}
                                                 handleFilmsInfo={this.handleFilmsInfo}
+                                                handleMarkCard={this.handleMarkCard}
                                                 filmId={this.state.filmId}
+                                                filmCheck={this.state.filmCheck}
+
                                             />)
                                         }
                                     )}
@@ -118,6 +133,7 @@ class Main extends Component {
                                             key={item.id}
                                             item={item}
                                             handleDeleteCard={handleDeleteCard}
+                                            handleMarkCard={this.handleMarkCard}
                                         />
                                     )
                                 })
@@ -128,7 +144,7 @@ class Main extends Component {
 
                 </section>
 
-                <div className="pagination-block">
+                <div className="pagination-block" style={styleVisible}>
                     {/*блок отрисовки пагинации*/}
                     <ul className="pagination" id="pagination">
                         <li tabIndex="0" className="nextclick mt" onClick={this.handleClick}>Prev</li>
