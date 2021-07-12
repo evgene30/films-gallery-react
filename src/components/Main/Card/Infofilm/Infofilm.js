@@ -3,6 +3,7 @@ import closeImg from "../../../../assets/png/close.png"
 import penImg from "../../../../assets/png/pen.png"
 import logoImage from "../../../../assets/png/movies.png";
 import {useHistory} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 
 const Infofilm = (props) => {
@@ -11,6 +12,7 @@ const Infofilm = (props) => {
     const err = logoImage; // альтернативное изображение на случай отсутствия
     const infoFilm = props.item;
     const history = useHistory();
+    const Links = `filmedit=${infoFilm.id}`; // формирование пути роутинга
 
 
     const handleClickClose = () => {
@@ -18,13 +20,14 @@ const Infofilm = (props) => {
         props.handleMarkCard(false);
     }
     const deleteCard = (id) => {
+        history.push('./');
         props.handleDeleteCard(id);
         props.handleMarkCard(false);
-        history.push('./');
     }
 
+
     return (
-        <div tabIndex="0" className="film-block" id={infoFilm.id} style={{}}>
+        <div tabIndex="0" className="film-block" id={infoFilm.id}>
             <img className="close" alt="Close" src={closeImg} onClick={handleClickClose}/>
             <div className="film-block__img">
                 <img
@@ -45,7 +48,10 @@ const Infofilm = (props) => {
                          onClick={() => deleteCard(infoFilm.id)}/>
                 </div>
                 <div className="imgdel">
-                    <img id="pen" src={penImg} alt="del" style={{paddingLeft: "8px"}}/>
+                    <Link to={Links}>
+                        <img id="pen" src={penImg} alt="del" style={{paddingLeft: "8px"}}
+                        />
+                    </Link>
                 </div>
             </div>
 
