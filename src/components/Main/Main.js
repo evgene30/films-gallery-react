@@ -20,7 +20,6 @@ class Main extends Component {
         } else if (Number(event.target.innerText)) {
             this.props.handleUpdatefilmPage(Number(event.target.innerText));
         } else {
-            // this.setState({filmsState: this.state.filmsState})
             this.props.handleUpdatefilmPage(this.props.filmPage);
         }
     }
@@ -51,7 +50,6 @@ class Main extends Component {
 
     handleFilmsInfo = (id) => {
         this.props.handleUpdatefilmId(id);
-
     }
 
     handleMarkCard = (check) => {
@@ -82,6 +80,7 @@ class Main extends Component {
                             id="filters"
                             onChange={this.handleChangeSelect}
                             disabled={this.props.filmCheck}
+                            value={"id"}
 
 
                         >
@@ -159,6 +158,7 @@ class Main extends Component {
                                             key={item.id}
                                             item={item}
                                             handleUpdateitemsFilm={handleUpdateitemsFilm}
+
                                         />
                                     )
                                 })

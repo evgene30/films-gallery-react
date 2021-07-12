@@ -44,7 +44,7 @@ class App extends Component {
         for (let i = 0; i < Math.ceil(array.length / 20); i++) {
             massiveFilmsNew[i] = array.slice(i * 20, i * 20 + 20);
         }
-        return massiveFilmsNew;
+        return massiveFilmsNew
     };
 
     handleDeleteCard = (id) => {
@@ -52,6 +52,8 @@ class App extends Component {
         const massiveFilmsNew = [...this.state.itemsFilm].filter((el) => el.id !== id);
         this.setState({itemsFilm: massiveFilmsNew});
     };
+
+
 
     handleSortFilmSelect = (count) => {
         // сортировка фильмов через Select
@@ -85,7 +87,7 @@ class App extends Component {
                 break;
             default:
                 sortState.sort(function (a, b) {
-                    return b.id - a.id;
+                    return a.index - b.index;
                 });
         }
         this.setState({itemsFilm: sortState});
@@ -106,10 +108,18 @@ class App extends Component {
     handleUpdateitemsFilm = (object) => {
         // функция проверки добавляемого (редактируемого) объекта фильма в общий стейт
         const oldArray = [...this.state.itemsFilm];
-        const newArray = oldArray.filter((item) => object.id !== item.id);
-        newArray.unshift(object);
-        this.setState({itemsFilm: newArray})
+        if (oldArray.find(item => item.id !== object.id)) {
+            const newArray = oldArray.filter((item) => object.id !== item.id);
+            newArray.unshift(object);
+            this.setState({itemsFilm: newArray})
+        } else {
+            const newArray = oldArray.map((item) => item);
+            newArray.unshift(object);
+            this.setState({itemsFilm: newArray})
+        }
+        console.log(this.state.itemsFilm)
     }
+
 
 
     render() {
@@ -138,7 +148,6 @@ class App extends Component {
                             handleUpdatefilmPage={this.handleUpdatefilmPage} // обновляем страницу пагинации
                             handleUpdatefilmId={this.handleUpdatefilmId} // обновляем id фильма
                             handleUpdatefilmCheck={this.handleUpdatefilmCheck} // обновляем состояние просмотра
-
                             listFilms={this.packMassiveFilm(itemsFilm)} // отправляем массив разделенных (на подмассивы)
                             // фильмов
                             handleUpdateitemsFilm={this.handleUpdateitemsFilm} // обновляем массив фильмов
