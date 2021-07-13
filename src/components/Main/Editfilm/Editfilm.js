@@ -25,7 +25,6 @@ const Editfilm = (props) => {
         vote_count: infoFilm.vote_count,
     });
 
-
     const handleClickClose = () => {
         history.goBack();
     }
@@ -83,10 +82,8 @@ const Editfilm = (props) => {
                 <input type="date" id="date_add" name="release_date" onChange={handleInputChange}
                        value={release_date} style={{border: "none"}}/>
                 <label>Жанр:</label>
-                <select className="add_select" multiple size="3" name="genre_ids" onChange={handleInputChange}
-                        value={genre_ids} id="select_add">
-                    <option disabled>Выберите 3 жанра</option>
-                </select>
+                <input className="add_select" name="genre_ids" onChange={handleInputChange}
+                       value={genre_ids} id="select_add"/>
                 <label>Рейтинг:</label>
                 <input type="number" name="vote_average" onChange={handleInputChange}
                        value={vote_average} id="average_add"/>

@@ -13,7 +13,7 @@ class Main extends Component {
     handleClick = (event) => {
         const filmsState = Number([this.props.filmPage].map((elem) => elem));
 
-        if (event.target.innerText === "Prev" && filmsState !== 1) {
+        if (event.target.innerText === "Prev" && filmsState !== 0) {
             this.props.handleUpdatefilmPage(filmsState - 1);
         } else if (event.target.innerText === "Next" && filmsState !== 20) {
             this.props.handleUpdatefilmPage(filmsState + 1);
@@ -26,8 +26,8 @@ class Main extends Component {
 
     handleVisualPagination = (index) => {
         const selectPage = Number(this.props.filmPage);
-        switch (selectPage >= 1 && selectPage <= 20) {
-            case (selectPage >= 1 && selectPage <= 4 && index > 0 && index < 5):
+        switch (selectPage >= 0 && selectPage <= 20) {
+            case (selectPage >= 0 && selectPage <= 4 && index > 0 && index < 5):
                 return {display: "flex"};
             case (selectPage >= 5 && selectPage < 8 && index > 2 && index < 8):
                 return {display: "flex"};
@@ -56,6 +56,22 @@ class Main extends Component {
         this.props.handleUpdatefilmCheck(check);
     }
 
+    handleGenriFilm = (genriFilm, genrisFilms) => {
+        const genri = genriFilm; // жанр отдельно взятого фильма
+        const listAllgenri = [...genrisFilms]; // список всех жанров
+        const cardGenri = new Map(listAllgenri.map((item) => [item.id, item])); // создаем карту объектов
+        if (genri) {
+            if (typeof genri === "string") {
+                return genri;
+            } else {
+                const Genri = genri.map((item) => cardGenri.get(item).name)
+                return Genri.join();
+            }
+        } else {
+            return '';
+        }
+    }
+
     render() {
         const massiveFilms = [...this.props.listFilms]; // список сортированных фильмов
         const handleDeleteCard = this.props.handleDeleteCard; // пробрасываем далее функцию удаления фильма
@@ -65,8 +81,8 @@ class Main extends Component {
         const originalListFilms = [...this.props.itemsFilm]; // список НЕ сортированных фильмов
         const handleUpdateitemsFilm = this.props.handleUpdateitemsFilm; // функция обновления для объектов нового и
         // редактируемого фильма
+        const genrisFilms = this.props.genrisFilms; // отправляем жанры фильма
         const LinkEdit = `/filmedit=${this.props.filmId}`; // путь приема динамического адреса
-
 
         return (
             <main id="firstmain">
@@ -79,10 +95,7 @@ class Main extends Component {
                             className="select-css"
                             id="filters"
                             onChange={this.handleChangeSelect}
-                            disabled={this.props.filmCheck}
-                            value={"id"}
-
-
+                            value={this.props.checkSelect}
                         >
                             <option value="id">Выберите фильтр...</option>
                             <option value="popularity">Популярность</option>
@@ -137,6 +150,7 @@ class Main extends Component {
                                             item={item}
                                             handleDeleteCard={handleDeleteCard}
                                             handleMarkCard={this.handleMarkCard}
+                                            handleGenriFilm={this.handleGenriFilm(item.genre_ids, genrisFilms)}
                                         />
                                     )
                                 })
@@ -147,6 +161,7 @@ class Main extends Component {
                             <Addfilm
                                 handleMarkCard={this.handleMarkCard}
                                 handleUpdateitemsFilm={handleUpdateitemsFilm}
+                                genrisFilms={genrisFilms}
                             />
                         </Route>
                         <Route path={LinkEdit} exact>

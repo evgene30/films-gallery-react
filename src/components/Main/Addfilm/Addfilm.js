@@ -5,9 +5,12 @@ import {useState} from "react";
 import {nanoid} from "nanoid";
 
 
-
 const Addfilm = (props) => {
     const history = useHistory();
+    const genriFilms = [...props.genrisFilms]; // список жанров
+    const cardGenri = new Map(genriFilms.map((item) => [item.id, item])); // создаем карту объектов
+    const Genri = genriFilms.map((item) => cardGenri.get(item.id).name) // извлекаем жанры
+
     const handleClickClose = () => {
         // history.push('./');
         history.goBack();
@@ -85,10 +88,14 @@ const Addfilm = (props) => {
                 <input type="date" id="date_add" name="release_date" onChange={handleInputChange}
                        value={release_date} style={{border: "none"}}/>
                 <label>Жанр:</label>
-                <select className="add_select" name="genre_ids" onChange={handleInputChange}
+
+                <select className="add_select" name="genre_ids" multiple={false} onChange={handleInputChange}
                         value={genre_ids} id="select_add">
-                    <option disabled>Выберите 3 жанра</option>
+                    {Genri.map((item) => {
+                        return <option key={nanoid()}>{item}</option>
+                    })}
                 </select>
+
                 <label>Рейтинг:</label>
                 <input type="number" name="vote_average" onChange={handleInputChange}
                        value={vote_average} id="average_add"/>

@@ -10,15 +10,18 @@ class App extends Component {
             preloader: false,
             itemsFilm: [], // не сортированный список фильмов
             error: null,
-            filmPage: 1,
+            filmPage: 0,
             filmId: "",
             filmCheck: false,
+            checkSelect: "",
+            genrisFilms: [],
         };
     }
 
     componentDidMount() {
         const filmList =
             "https://api.themoviedb.org/3/list/7095647?api_key=833e2dd8979208fbee927efb619ed90a&language=ru-RU";
+        const genriFilm = "https://api.themoviedb.org/3/genre/movie/list?api_key=833e2dd8979208fbee927efb619ed90a&language=ru-RU";
 
         fetch(filmList)
             .then((response) => response.json())
@@ -36,6 +39,17 @@ class App extends Component {
                     });
                 }
             );
+
+        fetch(genriFilm)
+            .then((response) => response.json())
+            .then(
+                (data) => {
+                    this.setState({
+                        genrisFilms: data.genres,
+                    });
+                }
+            );
+
     }
 
     packMassiveFilm = (array) => {
@@ -54,10 +68,10 @@ class App extends Component {
     };
 
 
-
     handleSortFilmSelect = (count) => {
         // сортировка фильмов через Select
         const sortState = [...this.state.itemsFilm];
+        this.setState({checkSelect: count});
 
         switch (count) {
             case 'id':
@@ -87,7 +101,7 @@ class App extends Component {
                 break;
             default:
                 sortState.sort(function (a, b) {
-                    return a.index - b.index;
+                    return b.id - a.id;
                 });
         }
         this.setState({itemsFilm: sortState});
@@ -117,10 +131,7 @@ class App extends Component {
             newArray.unshift(object);
             this.setState({itemsFilm: newArray})
         }
-        console.log(this.state.itemsFilm)
     }
-
-
 
     render() {
         const {error, preloader, itemsFilm} = this.state; // используем для передачи стейт из основных фильмов (не
@@ -153,7 +164,9 @@ class App extends Component {
                             handleUpdateitemsFilm={this.handleUpdateitemsFilm} // обновляем массив фильмов
                             filmPage={this.state.filmPage} // отправляем страницу пагинации
                             filmId={this.state.filmId} // отправляем id фильма
+                            genrisFilms={this.state.genrisFilms}// отправляем жанры фильма
                             filmCheck={this.state.filmCheck} // отправляем состояние просмотра
+                            checkSelect={this.state.checkSelect}  // отправляем состояние select
                             itemsFilm={this.state.itemsFilm} // отправляем массив НЕ разделенных фильмов (изначальный)
                         />
                         <Footer/>

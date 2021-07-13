@@ -13,6 +13,7 @@ const Infofilm = (props) => {
     const infoFilm = props.item;
     const history = useHistory();
     const Links = `filmedit=${infoFilm.id}`; // формирование пути роутинга
+    const Genri = props.handleGenriFilm;
 
 
     const handleClickClose = () => {
@@ -66,15 +67,7 @@ const Infofilm = (props) => {
                 <p>Популярность: {infoFilm.popularity}</p>
                 <p>Дата релиза: {infoFilm.release_date}</p>
                 <p>Количество голосов: {infoFilm.vote_count}</p>
-                <p>Жанр: {
-                    // infoFilm.genre_ids.length === 0
-                    //     ? ''
-                    //     : infoFilm.genre_ids.get(
-                    //     !infoFilm.genre_ids[1]
-                    //         ? infoFilm.genre_ids[0]
-                    //         : infoFilm.genre_ids[1],
-                    //     ).name
-                }</p>
+                <p>Жанр: {Genri}</p>
                 <div className="ratingFilm" style={{display: "block"}}>
                     <select name="selectrating" className="select-rating" id="ratingFilm">
                         <option value="">Выберите оценку фильма</option>
