@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import Footer from "./Footer/Footer";
 import Header from "./Header/Header";
 import Main from "./Main/Main";
@@ -21,8 +21,9 @@ class App extends Component {
 
     componentDidMount() {
         const filmList =
-            "https://api.themoviedb.org/3/list/7095647?api_key=833e2dd8979208fbee927efb619ed90a&language=ru-RU";// список фильмов
-        const genriFilm = "https://api.themoviedb.org/3/genre/movie/list?api_key=833e2dd8979208fbee927efb619ed90a&language=ru-RU"; // список жанров
+            "https://api.themoviedb.org/3/list/7095647?api_key=833e2dd8979208fbee927efb619ed90a&language=ru-RU"; // список фильмов
+        const genriFilm =
+            "https://api.themoviedb.org/3/genre/movie/list?api_key=833e2dd8979208fbee927efb619ed90a&language=ru-RU"; // список жанров
 
         fetch(filmList)
             .then((response) => response.json())
@@ -31,9 +32,9 @@ class App extends Component {
                     const idFilms = value.items.map((item) => {
                         // формирование списка id
                         if (item.id === 46087) {
-                            return 44088
+                            return 44088;
                         }
-                        return item.id
+                        return item.id;
                     });
 
                     this.setState({
@@ -42,14 +43,22 @@ class App extends Component {
                     });
 
                     idFilms.map((id) =>
-                        fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=833e2dd8979208fbee927efb619ed90a&language=ru-RU`)
+                        fetch(
+                            `https://api.themoviedb.org/3/movie/${id}/videos?api_key=833e2dd8979208fbee927efb619ed90a&language=ru-RU`
+                        )
                             .then((response) => response.json())
                             .then((data) => data.results)
                             .then((item) => {
                                 for (const i in item) {
-                                    this.setState({videoTrailer: this.state.videoTrailer.set(id, item[i].key)})
+                                    this.setState({
+                                        videoTrailer:
+                                            this.state.videoTrailer.set(
+                                                id,
+                                                item[i].key
+                                            ),
+                                    });
                                 }
-                            }),
+                            })
                     );
                 },
                 (error) => {
@@ -58,18 +67,15 @@ class App extends Component {
                         error,
                     });
                 }
-            )
+            );
 
         fetch(genriFilm)
             .then((response) => response.json())
-            .then(
-                (data) => {
-                    this.setState({
-                        genrisFilms: data.genres,
-                    });
-                }
-            );
-
+            .then((data) => {
+                this.setState({
+                    genrisFilms: data.genres,
+                });
+            });
     }
 
     packMassiveFilm = (array) => {
@@ -78,43 +84,44 @@ class App extends Component {
         for (let i = 0; i < Math.ceil(array.length / 20); i++) {
             massiveFilmsNew[i] = array.slice(i * 20, i * 20 + 20);
         }
-        return massiveFilmsNew
+        return massiveFilmsNew;
     };
 
     handleDeleteCard = (id) => {
         // удаление карточки фильма в стейте
-        const massiveFilmsNew = [...this.state.itemsFilm].filter((el) => el.id !== id);
-        this.setState({itemsFilm: massiveFilmsNew});
+        const massiveFilmsNew = [...this.state.itemsFilm].filter(
+            (el) => el.id !== id
+        );
+        this.setState({ itemsFilm: massiveFilmsNew });
     };
-
 
     handleSortFilmSelect = (count) => {
         // сортировка фильмов через Select
         const sortState = [...this.state.itemsFilm];
-        this.setState({checkSelect: count});
+        this.setState({ checkSelect: count });
 
         switch (count) {
-            case 'id':
+            case "id":
                 sortState.sort(function (a, b) {
                     return b.id - a.id;
                 });
                 break;
-            case 'popularity':
+            case "popularity":
                 sortState.sort(function (a, b) {
                     return b.popularity - a.popularity;
                 });
                 break;
-            case 'vote_average':
+            case "vote_average":
                 sortState.sort(function (a, b) {
                     return b.vote_average - a.vote_average;
                 });
                 break;
-            case 'vote_count':
+            case "vote_count":
                 sortState.sort(function (a, b) {
                     return b.vote_count - a.vote_count;
                 });
                 break;
-            case 'release_date':
+            case "release_date":
                 sortState.sort(function (a, b) {
                     return new Date(b.release_date) - new Date(a.release_date);
                 });
@@ -124,37 +131,37 @@ class App extends Component {
                     return b.id - a.id;
                 });
         }
-        this.setState({itemsFilm: sortState});
-    }
+        this.setState({ itemsFilm: sortState });
+    };
 
     handleUpdatefilmPage = (object) => {
-        this.setState({filmPage: object});
-    }
+        this.setState({ filmPage: object });
+    };
 
     handleUpdatefilmId = (object) => {
-        this.setState({filmId: object});
-    }
+        this.setState({ filmId: object });
+    };
 
     handleUpdatefilmCheck = (object) => {
-        this.setState({filmCheck: object});
-    }
+        this.setState({ filmCheck: object });
+    };
 
     handleUpdateitemsFilm = (object) => {
         // функция проверки добавляемого (редактируемого) объекта фильма в общий стейт
         const oldArray = [...this.state.itemsFilm];
-        if (oldArray.find(item => item.id !== object.id)) {
+        if (oldArray.find((item) => item.id !== object.id)) {
             const newArray = oldArray.filter((item) => object.id !== item.id);
             newArray.unshift(object);
-            this.setState({itemsFilm: newArray})
+            this.setState({ itemsFilm: newArray });
         } else {
             const newArray = oldArray.map((item) => item);
             newArray.unshift(object);
-            this.setState({itemsFilm: newArray})
+            this.setState({ itemsFilm: newArray });
         }
-    }
+    };
 
     render() {
-        const {error, preloader, itemsFilm} = this.state; // используем для передачи стейт из основных фильмов (не
+        const { error, preloader, itemsFilm } = this.state; // используем для передачи стейт из основных фильмов (не
         // сортированных)
 
         if (error) {
@@ -167,12 +174,12 @@ class App extends Component {
                 </div>
             );
         } else if (!preloader) {
-            return <div id="preloader" className="visible"/>;
+            return <div id="preloader" className="visible" />;
         } else {
             return (
                 <div className="App">
                     <div className="container">
-                        <Header/>
+                        <Header />
                         <Main
                             handleDeleteCard={this.handleDeleteCard} // принимаем id фильма для удаления
                             handleSortFilmSelect={this.handleSortFilmSelect} // обновляем фильмы по select
@@ -184,13 +191,13 @@ class App extends Component {
                             handleUpdateitemsFilm={this.handleUpdateitemsFilm} // обновляем массив фильмов
                             filmPage={this.state.filmPage} // отправляем страницу пагинации
                             filmId={this.state.filmId} // отправляем id фильма
-                            genrisFilms={this.state.genrisFilms}// отправляем жанры фильма
+                            genrisFilms={this.state.genrisFilms} // отправляем жанры фильма
                             filmCheck={this.state.filmCheck} // отправляем состояние просмотра
-                            checkSelect={this.state.checkSelect}  // отправляем состояние select
+                            checkSelect={this.state.checkSelect} // отправляем состояние select
                             videoTrailer={this.state.videoTrailer} // отправляем ссылку на трейлер
                             itemsFilm={this.state.itemsFilm} // отправляем массив НЕ разделенных фильмов (изначальный)
                         />
-                        <Footer/>
+                        <Footer />
                     </div>
                 </div>
             );
