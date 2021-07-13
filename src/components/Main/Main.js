@@ -83,6 +83,7 @@ class Main extends Component {
         // редактируемого фильма
         const genrisFilms = this.props.genrisFilms; // отправляем жанры фильма
         const LinkEdit = `/filmedit=${this.props.filmId}`; // путь приема динамического адреса
+        const videoTrailer = this.props.videoTrailer; // ссылка на трейлер
 
         return (
             <main id="firstmain">
@@ -151,6 +152,7 @@ class Main extends Component {
                                             handleDeleteCard={handleDeleteCard}
                                             handleMarkCard={this.handleMarkCard}
                                             handleGenriFilm={this.handleGenriFilm(item.genre_ids, genrisFilms)}
+                                            videoTrailer={videoTrailer}
                                         />
                                     )
                                 })

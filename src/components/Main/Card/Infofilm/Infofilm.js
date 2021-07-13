@@ -14,6 +14,8 @@ const Infofilm = (props) => {
     const history = useHistory();
     const Links = `filmedit=${infoFilm.id}`; // формирование пути роутинга
     const Genri = props.handleGenriFilm;
+    const videoTrailer = props.videoTrailer; // трейлер
+    const srcLink = `https://www.youtube.com/embed/${videoTrailer.get(infoFilm.id)}`;
 
 
     const handleClickClose = () => {
@@ -25,7 +27,6 @@ const Infofilm = (props) => {
         props.handleDeleteCard(id);
         props.handleMarkCard(false);
     }
-
 
     return (
         <div tabIndex="0" className="film-block" id={infoFilm.id}>
@@ -85,6 +86,11 @@ const Infofilm = (props) => {
                 </div>
                 <p>{infoFilm.overview}</p>
             </div>
+            {videoTrailer.get(infoFilm.id) && <div className="film-block__video">
+                <iframe id="ytplayer" title="frame" type="text/html" width="100%" height="400"
+                        src={srcLink}
+                        frameBorder="0"/>
+            </div>}
         </div>
 
     );

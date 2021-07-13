@@ -15,22 +15,42 @@ class App extends Component {
             filmCheck: false,
             checkSelect: "",
             genrisFilms: [],
+            videoTrailer: new Map(),
         };
     }
 
     componentDidMount() {
         const filmList =
-            "https://api.themoviedb.org/3/list/7095647?api_key=833e2dd8979208fbee927efb619ed90a&language=ru-RU";
-        const genriFilm = "https://api.themoviedb.org/3/genre/movie/list?api_key=833e2dd8979208fbee927efb619ed90a&language=ru-RU";
+            "https://api.themoviedb.org/3/list/7095647?api_key=833e2dd8979208fbee927efb619ed90a&language=ru-RU";// список фильмов
+        const genriFilm = "https://api.themoviedb.org/3/genre/movie/list?api_key=833e2dd8979208fbee927efb619ed90a&language=ru-RU"; // список жанров
 
         fetch(filmList)
             .then((response) => response.json())
             .then(
                 (value) => {
+                    const idFilms = value.items.map((item) => {
+                        // формирование списка id
+                        if (item.id === 46087) {
+                            return 44088
+                        }
+                        return item.id
+                    });
+
                     this.setState({
                         preloader: true,
                         itemsFilm: value.items,
                     });
+
+                    idFilms.map((id) =>
+                        fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=833e2dd8979208fbee927efb619ed90a&language=ru-RU`)
+                            .then((response) => response.json())
+                            .then((data) => data.results)
+                            .then((item) => {
+                                for (const i in item) {
+                                    this.setState({videoTrailer: this.state.videoTrailer.set(id, item[i].key)})
+                                }
+                            }),
+                    );
                 },
                 (error) => {
                     this.setState({
@@ -38,7 +58,7 @@ class App extends Component {
                         error,
                     });
                 }
-            );
+            )
 
         fetch(genriFilm)
             .then((response) => response.json())
@@ -167,6 +187,7 @@ class App extends Component {
                             genrisFilms={this.state.genrisFilms}// отправляем жанры фильма
                             filmCheck={this.state.filmCheck} // отправляем состояние просмотра
                             checkSelect={this.state.checkSelect}  // отправляем состояние select
+                            videoTrailer={this.state.videoTrailer} // отправляем ссылку на трейлер
                             itemsFilm={this.state.itemsFilm} // отправляем массив НЕ разделенных фильмов (изначальный)
                         />
                         <Footer/>
