@@ -4,6 +4,7 @@ import penImg from "../../../../assets/png/pen.png"
 import logoImage from "../../../../assets/png/movies.png";
 import {useHistory} from "react-router-dom";
 import {Link} from "react-router-dom";
+import "./Infofilm.scss";
 
 
 const Infofilm = (props) => {
@@ -86,15 +87,14 @@ const Infofilm = (props) => {
                 </div>
                 <p>{infoFilm.overview}</p>
             </div>
-            {videoTrailer.get(infoFilm.id) && <div className="film-block__video">
+            {videoTrailer.get(infoFilm.id) &&
+            <div className="film-block__video" style={{marginTop:"100px"}}>
                 <iframe id="ytplayer" title="frame" type="text/html" width="100%" height="400"
                         src={srcLink}
-                        frameBorder="0"/>
+                        frameBorder="0" allow="fullscreen"/>
             </div>}
         </div>
-
     );
-
 }
 
 export default Infofilm;
