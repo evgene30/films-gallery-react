@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import "./Main.scss";
 import Card from "./Card/Card";
-import { Route, Switch, Redirect } from "react-router-dom";
+import {Route, Switch, Redirect} from "react-router-dom";
 import Infofilm from "./Card/Infofilm/Infofilm";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Addfilm from "./Addfilm/Addfilm";
 import Editfilm from "./Editfilm/Editfilm";
 
@@ -26,25 +26,25 @@ class Main extends Component {
         const selectPage = Number(this.props.filmPage);
         switch (selectPage >= 0 && selectPage <= 20) {
             case selectPage >= 0 && selectPage <= 4 && index > 0 && index < 5:
-                return { display: "flex" };
+                return {display: "flex"};
             case selectPage >= 5 && selectPage < 8 && index > 2 && index < 8:
-                return { display: "flex" };
+                return {display: "flex"};
             case selectPage >= 8 && selectPage < 11 && index > 5 && index < 11:
-                return { display: "flex" };
+                return {display: "flex"};
             case selectPage >= 11 && selectPage < 14 && index > 8 && index < 14:
-                return { display: "flex" };
+                return {display: "flex"};
             case selectPage >= 14 &&
-                selectPage < 17 &&
-                index > 11 &&
-                index < 17:
-                return { display: "flex" };
+            selectPage < 17 &&
+            index > 11 &&
+            index < 17:
+                return {display: "flex"};
             case selectPage >= 17 &&
-                selectPage <= 20 &&
-                index > 14 &&
-                index < 19:
-                return { display: "flex" };
+            selectPage <= 20 &&
+            index > 14 &&
+            index < 19:
+                return {display: "flex"};
             default:
-                return { display: "none" };
+                return {display: "none"};
         }
     };
 
@@ -80,7 +80,7 @@ class Main extends Component {
         const massiveFilms = [...this.props.listFilms]; // список сортированных фильмов
         const handleDeleteCard = this.props.handleDeleteCard; // пробрасываем далее функцию удаления фильма
         const link = `/id=${this.props.filmId}`; // формирование пути роутинга
-        const styleVisible = this.props.filmCheck ? { display: "none" } : {}; // проверка состояния для блокирования
+        const styleVisible = this.props.filmCheck ? {display: "none"} : {}; // проверка состояния для блокирования
         // элементов
         const originalListFilms = [...this.props.itemsFilm]; // список НЕ сортированных фильмов
         const handleUpdateitemsFilm = this.props.handleUpdateitemsFilm; // функция обновления для объектов нового и
@@ -131,8 +131,8 @@ class Main extends Component {
                             {/*блок отрисовки карточек фильмов*/}
                             <ul className="ul-movies" id="sectionmov">
                                 {(massiveFilms[this.props.filmPage]
-                                    ? massiveFilms[this.props.filmPage]
-                                    : massiveFilms[this.props.filmPage - 1]
+                                        ? massiveFilms[this.props.filmPage]
+                                        : massiveFilms[this.props.filmPage - 1]
                                 ).map((item) => {
                                     return (
                                         <Card
@@ -193,7 +193,7 @@ class Main extends Component {
                                     );
                                 })}
                         </Route>
-                        <Redirect to="/" />
+                        <Redirect to="/"/>
                     </Switch>
                 </section>
 

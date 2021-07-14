@@ -1,7 +1,9 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import Footer from "./Footer/Footer";
 import Header from "./Header/Header";
 import Main from "./Main/Main";
+import delCardPOST from "./POST/delCardPOST";
+
 
 class App extends Component {
     constructor(props) {
@@ -92,13 +94,18 @@ class App extends Component {
         const massiveFilmsNew = [...this.state.itemsFilm].filter(
             (el) => el.id !== id
         );
-        this.setState({ itemsFilm: massiveFilmsNew });
+        this.setState({itemsFilm: massiveFilmsNew});
+
+        if (typeof id === "number") {
+            return (delCardPOST(id)); // запрос на сервер для удаления из списка карты фильма
+        }
+
     };
 
     handleSortFilmSelect = (count) => {
         // сортировка фильмов через Select
         const sortState = [...this.state.itemsFilm];
-        this.setState({ checkSelect: count });
+        this.setState({checkSelect: count});
 
         switch (count) {
             case "id":
@@ -131,19 +138,19 @@ class App extends Component {
                     return b.id - a.id;
                 });
         }
-        this.setState({ itemsFilm: sortState });
+        this.setState({itemsFilm: sortState});
     };
 
     handleUpdatefilmPage = (object) => {
-        this.setState({ filmPage: object });
+        this.setState({filmPage: object});
     };
 
     handleUpdatefilmId = (object) => {
-        this.setState({ filmId: object });
+        this.setState({filmId: object});
     };
 
     handleUpdatefilmCheck = (object) => {
-        this.setState({ filmCheck: object });
+        this.setState({filmCheck: object});
     };
 
     handleUpdateitemsFilm = (object) => {
@@ -152,16 +159,16 @@ class App extends Component {
         if (oldArray.find((item) => item.id !== object.id)) {
             const newArray = oldArray.filter((item) => object.id !== item.id);
             newArray.unshift(object);
-            this.setState({ itemsFilm: newArray });
+            this.setState({itemsFilm: newArray});
         } else {
             const newArray = oldArray.map((item) => item);
             newArray.unshift(object);
-            this.setState({ itemsFilm: newArray });
+            this.setState({itemsFilm: newArray});
         }
     };
 
     render() {
-        const { error, preloader, itemsFilm } = this.state; // используем для передачи стейт из основных фильмов (не
+        const {error, preloader, itemsFilm} = this.state; // используем для передачи стейт из основных фильмов (не
         // сортированных)
 
         if (error) {
@@ -174,12 +181,12 @@ class App extends Component {
                 </div>
             );
         } else if (!preloader) {
-            return <div id="preloader" className="visible" />;
+            return <div id="preloader" className="visible"/>;
         } else {
             return (
                 <div className="App">
                     <div className="container">
-                        <Header />
+                        <Header/>
                         <Main
                             handleDeleteCard={this.handleDeleteCard} // принимаем id фильма для удаления
                             handleSortFilmSelect={this.handleSortFilmSelect} // обновляем фильмы по select
@@ -197,7 +204,7 @@ class App extends Component {
                             videoTrailer={this.state.videoTrailer} // отправляем ссылку на трейлер
                             itemsFilm={this.state.itemsFilm} // отправляем массив НЕ разделенных фильмов (изначальный)
                         />
-                        <Footer />
+                        <Footer/>
                     </div>
                 </div>
             );
