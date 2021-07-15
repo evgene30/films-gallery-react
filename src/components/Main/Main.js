@@ -50,6 +50,7 @@ class Main extends Component {
         const genrisFilms = this.props.genrisFilms; // отправляем жанры фильма
         const LinkEdit = `/filmedit=${this.props.filmId}`; // путь приема динамического адреса
         const videoTrailer = this.props.videoTrailer; // ссылка на трейлер
+        const hendleVerificationUser = this.props.hendleVerificationUser; // функция верификации пользователя
 
         return (
             <main id="firstmain">
@@ -147,6 +148,7 @@ class Main extends Component {
 
                             <Register
                                 handleMarkCard={this.handleMarkCard}
+                                hendleVerificationUser={hendleVerificationUser}
                             />
 
                         </Route>

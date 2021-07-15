@@ -5,6 +5,7 @@ import Main from "./Main/Main";
 import delCardPOST from "./POST/delCardPOST";
 
 
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -167,6 +168,14 @@ class App extends Component {
         }
     };
 
+    hendleVerificationUser = (objectUser) => {
+        // функция верификации пользователя
+        console.log(objectUser)
+
+
+
+    }
+
     render() {
         const {error, preloader, itemsFilm} = this.state; // используем для передачи стейт из основных фильмов (не
         // сортированных)
@@ -197,6 +206,7 @@ class App extends Component {
                             handleUpdatefilmCheck={this.handleUpdatefilmCheck} // обновляем состояние просмотра
                             listFilms={this.packMassiveFilm(itemsFilm)} // отправляем массив разделенных (на подмассивы)
                             // фильмов
+                            hendleVerificationUser={this.hendleVerificationUser} // функция верификации пользователя
                             handleUpdateitemsFilm={this.handleUpdateitemsFilm} // обновляем массив фильмов
                             filmPage={this.state.filmPage} // отправляем страницу пагинации
                             filmId={this.state.filmId} // отправляем id фильма
