@@ -54,7 +54,13 @@ const Infofilm = (props) => {
             )
                 .then((response) => response.json())
                 .then((result) => {
-                        setState({message: result.status_message})
+                        if (result.status_message === "The item/record was updated successfully.") {
+                            setState({message: "Вы уже голосовали за данный фильм"})
+                        } else if(result.status_message === "Success.") {
+                            setState({message: "Ваш голос отправлен на сервер!"})
+                        } else {
+                            setState({message: "Ошибка запроса"})
+                        }
                     }
                 )
                 .catch((error) => {
