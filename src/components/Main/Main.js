@@ -6,51 +6,13 @@ import Infofilm from "./Card/Infofilm/Infofilm";
 import {Link} from "react-router-dom";
 import Addfilm from "./Addfilm/Addfilm";
 import Editfilm from "./Editfilm/Editfilm";
+import Pagination from "./Pagination/Pagination";
+import Select from "./Select/Select";
+import Register from "./Register/Register";
+
 
 class Main extends Component {
-    handleClick = (event) => {
-        const filmsState = Number([this.props.filmPage].map((elem) => elem));
 
-        if (event.target.innerText === "Prev" && filmsState !== 0) {
-            this.props.handleUpdatefilmPage(filmsState - 1);
-        } else if (event.target.innerText === "Next" && filmsState !== 20) {
-            this.props.handleUpdatefilmPage(filmsState + 1);
-        } else if (Number(event.target.innerText)) {
-            this.props.handleUpdatefilmPage(Number(event.target.innerText));
-        } else {
-            this.props.handleUpdatefilmPage(this.props.filmPage);
-        }
-    };
-
-    handleVisualPagination = (index) => {
-        const selectPage = Number(this.props.filmPage);
-        switch (selectPage >= 0 && selectPage <= 20) {
-            case selectPage >= 0 && selectPage <= 4 && index > 0 && index < 5:
-                return {display: "flex"};
-            case selectPage >= 5 && selectPage < 8 && index > 2 && index < 8:
-                return {display: "flex"};
-            case selectPage >= 8 && selectPage < 11 && index > 5 && index < 11:
-                return {display: "flex"};
-            case selectPage >= 11 && selectPage < 14 && index > 8 && index < 14:
-                return {display: "flex"};
-            case selectPage >= 14 &&
-            selectPage < 17 &&
-            index > 11 &&
-            index < 17:
-                return {display: "flex"};
-            case selectPage >= 17 &&
-            selectPage <= 20 &&
-            index > 14 &&
-            index < 19:
-                return {display: "flex"};
-            default:
-                return {display: "none"};
-        }
-    };
-
-    handleChangeSelect = (event) => {
-        this.props.handleSortFilmSelect(event.target.value); // забираем значение select
-    };
 
     handleFilmsInfo = (id) => {
         this.props.handleUpdatefilmId(id);
@@ -93,23 +55,10 @@ class Main extends Component {
             <main id="firstmain">
                 <section className="section-header">
                     {/*блок выбора фильтра*/}
-                    <form name="sort_list" id="filter" action="#">
-                        <select
-                            name="sortList"
-                            className="select-css"
-                            id="filters"
-                            onChange={this.handleChangeSelect}
-                            value={this.props.checkSelect}
-                        >
-                            <option value="id">Выберите фильтр...</option>
-                            <option value="popularity">Популярность</option>
-                            <option value="vote_average">Рейтинг</option>
-                            <option value="vote_count">
-                                Количество голосов
-                            </option>
-                            <option value="release_date">Дата релиза</option>
-                        </select>
-                    </form>
+                    <Select
+                        handleSortFilmSelect={this.props.handleSortFilmSelect}
+                        checkSelect={this.props.checkSelect}
+                    />
                     <div className="adminbtn">
                         <Link to="newfilm">
                             <button
@@ -168,7 +117,8 @@ class Main extends Component {
                                             videoTrailer={videoTrailer}
                                         />
                                     );
-                                })}
+                                })
+                            }
                         </Route>
                         <Route path="/newfilm" exact>
                             {/*блок отрисовки добавления фильма*/}
@@ -193,64 +143,24 @@ class Main extends Component {
                                     );
                                 })}
                         </Route>
+                        <Route path="/register" exact>
+
+                            <Register
+                                handleMarkCard={this.handleMarkCard}
+                            />
+
+                        </Route>
                         <Redirect to="/"/>
                     </Switch>
                 </section>
 
-                <div className="pagination-block" style={styleVisible}>
-                    {/*блок отрисовки пагинации*/}
-                    <ul className="pagination" id="pagination">
-                        <li
-                            tabIndex="0"
-                            className="nextclick mt"
-                            onClick={this.handleClick}
-                        >
-                            Prev
-                        </li>
-                        <li
-                            tabIndex="0"
-                            className={
-                                this.props.filmPage === 1 ? "active" : ""
-                            }
-                            onClick={this.handleClick}
-                        >
-                            1
-                        </li>
-                        {massiveFilms.map((item, index) => {
-                            return (
-                                <li
-                                    tabIndex="0"
-                                    key={index}
-                                    className={
-                                        index + 1 === this.props.filmPage
-                                            ? "active"
-                                            : ""
-                                    }
-                                    onClick={this.handleClick}
-                                    style={this.handleVisualPagination(index)}
-                                >
-                                    {index + 1}
-                                </li>
-                            );
-                        })}
-                        <li
-                            tabIndex="0"
-                            className={
-                                this.props.filmPage === 20 ? "active" : ""
-                            }
-                            onClick={this.handleClick}
-                        >
-                            20
-                        </li>
-                        <li
-                            tabIndex="0"
-                            className="nextclick mt"
-                            onClick={this.handleClick}
-                        >
-                            Next
-                        </li>
-                    </ul>
-                </div>
+                <Pagination
+                    styleVisible={styleVisible} // проверка состояния для блокирования элементов
+                    filmPage={this.props.filmPage} // текущая выбранная страница
+                    massiveFilms={massiveFilms} // список сортированных фильмов
+                    handleUpdatefilmPage={this.props.handleUpdatefilmPage} // функция записи в стейт кликнутой
+                    // страницы
+                />
             </main>
         );
     }

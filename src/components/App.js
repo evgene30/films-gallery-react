@@ -186,7 +186,9 @@ class App extends Component {
             return (
                 <div className="App">
                     <div className="container">
-                        <Header/>
+                        <Header
+                            handleUpdatefilmCheck={this.handleUpdatefilmCheck}
+                        />
                         <Main
                             handleDeleteCard={this.handleDeleteCard} // принимаем id фильма для удаления
                             handleSortFilmSelect={this.handleSortFilmSelect} // обновляем фильмы по select
