@@ -1,8 +1,7 @@
 import closeImg from "../../../assets/png/close.png";
-import {useHistory} from "react-router-dom";
-import './Editfilm.scss';
-import {useState} from "react";
-
+import { useHistory } from "react-router-dom";
+import "./Editfilm.scss";
+import { useState } from "react";
 
 const Editfilm = (props) => {
     const infoFilm = props.item;
@@ -27,22 +26,22 @@ const Editfilm = (props) => {
 
     const handleClickClose = () => {
         history.goBack();
-    }
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
         props.handleUpdateitemsFilm(state);
         history.goBack();
-    }
+    };
 
     const handleInputChange = (event) => {
         const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const value =
+            target.type === "checkbox" ? target.checked : target.value;
         const name = target.name;
         setState((prevState) => ({
             ...prevState,
-            [name]:
-            value
+            [name]: value,
         }));
     };
 
@@ -55,52 +54,111 @@ const Editfilm = (props) => {
         release_date,
         genre_ids,
         vote_average,
-        vote_count
+        vote_count,
     } = state;
     return (
         <div className="addfilm" id="addfilm">
-            <img className="close" alt="Close" src={closeImg} onClick={handleClickClose}
-                 style={{height: "40px", width: "40px"}}/>
+            <img
+                className="close"
+                alt="Close"
+                src={closeImg}
+                onClick={handleClickClose}
+                style={{ height: "40px", width: "40px" }}
+            />
 
             <form className="form_add" id="addform" onSubmit={handleSubmit}>
-
                 <label>Название фильма:</label>
-                <input type="text" onChange={handleInputChange} value={title || ''} name="title" id="title_add"
-                       minLength="3"/>
+                <input
+                    type="text"
+                    onChange={handleInputChange}
+                    value={title || ""}
+                    name="title"
+                    id="title_add"
+                    minLength="3"
+                />
                 <label>Описание фильма:</label>
-                <textarea id="textarea_add" name="overview" onChange={handleInputChange} value={overview || ''}
-                          rows="10"
-                          cols="33"
-                          minLength="6" maxLength="150"/>
+                <textarea
+                    id="textarea_add"
+                    name="overview"
+                    onChange={handleInputChange}
+                    value={overview || ""}
+                    rows="10"
+                    cols="33"
+                    minLength="6"
+                    maxLength="150"
+                />
                 <label>Изображение в формате "/name.jpeg"</label>
-                <input id="file-input" type="text"
-                       minLength="3" name="poster_path" onChange={handleInputChange} value={poster_path || ''}/>
+                <input
+                    id="file-input"
+                    type="text"
+                    minLength="3"
+                    name="poster_path"
+                    onChange={handleInputChange}
+                    value={poster_path || ""}
+                />
                 <label>Популярность:</label>
-                <input type="number" name="popularity" onChange={handleInputChange} value={popularity || ''}
-                       id="number_add"/>
+                <input
+                    type="number"
+                    name="popularity"
+                    onChange={handleInputChange}
+                    value={popularity || ""}
+                    id="number_add"
+                />
                 <label>Дата релиза:</label>
-                <input type="date" id="date_add" name="release_date" onChange={handleInputChange}
-                       value={release_date || ''} style={{border: "none"}}/>
+                <input
+                    type="date"
+                    id="date_add"
+                    name="release_date"
+                    onChange={handleInputChange}
+                    value={release_date || ""}
+                    style={{ border: "none" }}
+                />
                 <label>Жанр:</label>
-                <input className="add_select" name="genre_ids" onChange={handleInputChange}
-                       value={genre_ids || ''} id="select_add"/>
+                <input
+                    className="add_select"
+                    name="genre_ids"
+                    onChange={handleInputChange}
+                    value={genre_ids || ""}
+                    id="select_add"
+                />
                 <label>Рейтинг:</label>
-                <input type="number" name="vote_average" onChange={handleInputChange}
-                       value={vote_average || ''} id="average_add"/>
+                <input
+                    type="number"
+                    name="vote_average"
+                    onChange={handleInputChange}
+                    value={vote_average || ""}
+                    id="average_add"
+                />
                 <label>Количество голосов:</label>
-                <input type="number" name="vote_count" onChange={handleInputChange}
-                       value={vote_count || ''}
-                       id="count_add"/>
-                <label>Adult
-                    <input type="checkbox" name="adult" onChange={handleInputChange}
-                           value={adult || ''} className="custom-checkbox" id="check_add"/>
+                <input
+                    type="number"
+                    name="vote_count"
+                    onChange={handleInputChange}
+                    value={vote_count || ""}
+                    id="count_add"
+                />
+                <label>
+                    Adult
+                    <input
+                        type="checkbox"
+                        name="adult"
+                        onChange={handleInputChange}
+                        value={adult || ""}
+                        className="custom-checkbox"
+                        id="check_add"
+                    />
                 </label>
-                <button className="sendfilm" type="submit" name="form_auth_submit" id="sendfilm">Сохранить
+                <button
+                    className="sendfilm"
+                    type="submit"
+                    name="form_auth_submit"
+                    id="sendfilm"
+                >
+                    Сохранить
                 </button>
-
             </form>
         </div>
     );
-}
+};
 
 export default Editfilm;

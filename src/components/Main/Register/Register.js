@@ -1,12 +1,12 @@
 import closeImg from "../../../assets/png/close.png";
-import {useHistory} from "react-router-dom";
-import {useState} from "react";
+import { useHistory } from "react-router-dom";
+import { useState } from "react";
 import "./Register.scss";
 import RegisterNewUser from "./RegisterNewUser";
 import Json from "../../../dummy_data/users.json";
 
 const Register = (props) => {
-    const {hendleVerificationUser, handleMarkCard} = props;
+    const { hendleVerificationUser, handleMarkCard } = props;
 
     const [state, setState] = useState({
         form: true,
@@ -27,7 +27,7 @@ const Register = (props) => {
     };
 
     const handleClickRegister = () => {
-        setState({form: !state.form});
+        setState({ form: !state.form });
     };
 
     const handleSubmit = (event) => {
@@ -40,8 +40,8 @@ const Register = (props) => {
                 email: state.email,
                 pass: "",
                 mesEmail: "No registration email",
-                labelStyleError: {color: "red"},
-                inputStyleError: {border: "3px solid red"},
+                labelStyleError: { color: "red" },
+                inputStyleError: { border: "3px solid red" },
             });
         } else {
             if (User.password === state.pass) {
@@ -54,9 +54,9 @@ const Register = (props) => {
                     pass: "",
                     email: "",
                     mesPass: "Password error",
-                    passLabelError: {color: "red"},
-                    passInputError: {border: "3px solid red"},
-                    inputStyleError: {border: "3px solid red"},
+                    passLabelError: { color: "red" },
+                    passInputError: { border: "3px solid red" },
+                    inputStyleError: { border: "3px solid red" },
                 });
             }
         }
@@ -77,7 +77,7 @@ const Register = (props) => {
                 alt="Close"
                 src={closeImg}
                 onClick={handleClickClose}
-                style={{height: "40px", width: "40px"}}
+                style={{ height: "40px", width: "40px" }}
             />
             {state.form && (
                 <form
@@ -85,9 +85,12 @@ const Register = (props) => {
                     id="regform"
                     onSubmit={handleSubmit}
                 >
-                    <label htmlFor="auth_email" id="labelmail" style={state.labelStyleError}>
+                    <label
+                        htmlFor="auth_email"
+                        id="labelmail"
+                        style={state.labelStyleError}
+                    >
                         {state.mesEmail ? state.mesEmail : "Введите Ваш email:"}
-
                     </label>
                     <input
                         type="email"
@@ -96,10 +99,14 @@ const Register = (props) => {
                         required
                         id="auth_email"
                         onChange={handleInputChange}
-                        value={state.email || ''}
+                        value={state.email || ""}
                         style={state.inputStyleError}
                     />
-                    <label htmlFor="auth_pass" id="labelinput" style={state.passLabelError}>
+                    <label
+                        htmlFor="auth_pass"
+                        id="labelinput"
+                        style={state.passLabelError}
+                    >
                         {state.mesPass ? state.mesPass : "Введите ваш пароль:"}
                     </label>
                     <input
@@ -109,7 +116,7 @@ const Register = (props) => {
                         required
                         id="auth_pass"
                         onChange={handleInputChange}
-                        value={state.pass || ''}
+                        value={state.pass || ""}
                         style={state.passInputError}
                     />
 
@@ -131,7 +138,11 @@ const Register = (props) => {
                     </div>
                 </form>
             )}
-            {!state.form && <RegisterNewUser hendleVerificationUser={hendleVerificationUser}/>}
+            {!state.form && (
+                <RegisterNewUser
+                    hendleVerificationUser={hendleVerificationUser}
+                />
+            )}
         </section>
     );
 };

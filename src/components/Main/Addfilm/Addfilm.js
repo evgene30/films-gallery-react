@@ -75,7 +75,7 @@ const Addfilm = (props) => {
                 <input
                     type="text"
                     onChange={handleInputChange}
-                    value={title || ''}
+                    value={title || ""}
                     name="title"
                     id="title_add"
                     minLength="3"
@@ -86,7 +86,7 @@ const Addfilm = (props) => {
                     id="textarea_add"
                     name="overview"
                     onChange={handleInputChange}
-                    value={overview || ''}
+                    value={overview || ""}
                     rows="10"
                     cols="33"
                     minLength="6"
@@ -99,14 +99,14 @@ const Addfilm = (props) => {
                     minLength="3"
                     name="poster_path"
                     onChange={handleInputChange}
-                    value={poster_path || ''}
+                    value={poster_path || ""}
                 />
                 <label>Популярность:</label>
                 <input
                     type="number"
                     name="popularity"
                     onChange={handleInputChange}
-                    value={popularity || ''}
+                    value={popularity || ""}
                     id="number_add"
                 />
                 <label>Дата релиза:</label>
@@ -115,7 +115,7 @@ const Addfilm = (props) => {
                     id="date_add"
                     name="release_date"
                     onChange={handleInputChange}
-                    value={release_date || ''}
+                    value={release_date || ""}
                     style={{ border: "none" }}
                 />
                 <label>Жанр:</label>
@@ -138,7 +138,7 @@ const Addfilm = (props) => {
                     type="number"
                     name="vote_average"
                     onChange={handleInputChange}
-                    value={vote_average || ''}
+                    value={vote_average || ""}
                     id="average_add"
                 />
                 <label>Количество голосов:</label>
@@ -146,7 +146,7 @@ const Addfilm = (props) => {
                     type="number"
                     name="vote_count"
                     onChange={handleInputChange}
-                    value={vote_count || ''}
+                    value={vote_count || ""}
                     id="count_add"
                 />
                 <label>
@@ -155,7 +155,7 @@ const Addfilm = (props) => {
                         type="checkbox"
                         name="adult"
                         onChange={handleInputChange}
-                        value={adult || ''}
+                        value={adult || ""}
                         className="custom-checkbox"
                         id="check_add"
                     />

@@ -1,19 +1,16 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import "./Main.scss";
 import Card from "./Card/Card";
-import {Route, Switch, Redirect} from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Infofilm from "./Card/Infofilm/Infofilm";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Addfilm from "./Addfilm/Addfilm";
 import Editfilm from "./Editfilm/Editfilm";
 import Pagination from "./Pagination/Pagination";
 import Select from "./Select/Select";
 import Register from "./Register/Register";
 
-
 class Main extends Component {
-
-
     handleFilmsInfo = (id) => {
         this.props.handleUpdatefilmId(id);
     };
@@ -42,7 +39,7 @@ class Main extends Component {
         const massiveFilms = [...this.props.listFilms]; // список сортированных фильмов
         const handleDeleteCard = this.props.handleDeleteCard; // пробрасываем далее функцию удаления фильма
         const link = `/id=${this.props.filmId}`; // формирование пути роутинга
-        const styleVisible = this.props.filmCheck ? {display: "none"} : {}; // проверка состояния для блокирования
+        const styleVisible = this.props.filmCheck ? { display: "none" } : {}; // проверка состояния для блокирования
         // элементов
         const originalListFilms = [...this.props.itemsFilm]; // список НЕ сортированных фильмов
         const handleUpdateitemsFilm = this.props.handleUpdateitemsFilm; // функция обновления для объектов нового и
@@ -62,19 +59,21 @@ class Main extends Component {
                         handleSortFilmSelect={this.props.handleSortFilmSelect}
                         checkSelect={this.props.checkSelect}
                     />
-                    {infoUser.status === "admin" && <div className="adminbtn">
-                        <Link to="newfilm">
-                            <button
-                                className="buttonAdmin"
-                                title="Добавить видео"
-                                tabIndex="0"
-                                id="adminbutton"
-                                onClick={() => this.handleMarkCard(true)}
-                            >
-                                Add
-                            </button>
-                        </Link>
-                    </div>}
+                    {infoUser.status === "admin" && (
+                        <div className="adminbtn">
+                            <Link to="newfilm">
+                                <button
+                                    className="buttonAdmin"
+                                    title="Добавить видео"
+                                    tabIndex="0"
+                                    id="adminbutton"
+                                    onClick={() => this.handleMarkCard(true)}
+                                >
+                                    Add
+                                </button>
+                            </Link>
+                        </div>
+                    )}
                 </section>
 
                 <section className="section-movies">
@@ -83,8 +82,8 @@ class Main extends Component {
                             {/*блок отрисовки карточек фильмов*/}
                             <ul className="ul-movies" id="sectionmov">
                                 {(massiveFilms[this.props.filmPage]
-                                        ? massiveFilms[this.props.filmPage]
-                                        : massiveFilms[this.props.filmPage - 1]
+                                    ? massiveFilms[this.props.filmPage]
+                                    : massiveFilms[this.props.filmPage - 1]
                                 ).map((item) => {
                                     return (
                                         <Card
@@ -123,8 +122,7 @@ class Main extends Component {
                                             videoTrailer={videoTrailer}
                                         />
                                     );
-                                })
-                            }
+                                })}
                         </Route>
                         <Route path="/newfilm" exact>
                             {/*блок отрисовки добавления фильма*/}
@@ -155,7 +153,7 @@ class Main extends Component {
                                 hendleVerificationUser={hendleVerificationUser}
                             />
                         </Route>
-                        <Redirect to="/"/>
+                        <Redirect to="/" />
                     </Switch>
                 </section>
 

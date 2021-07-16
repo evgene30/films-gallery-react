@@ -1,16 +1,15 @@
-import delImg from "../../../../assets/png/del.png"
-import closeImg from "../../../../assets/png/close.png"
-import penImg from "../../../../assets/png/pen.png"
+import delImg from "../../../../assets/png/del.png";
+import closeImg from "../../../../assets/png/close.png";
+import penImg from "../../../../assets/png/pen.png";
 import logoImage from "../../../../assets/png/movies.png";
-import {useHistory, Link} from "react-router-dom";
-import {useState} from "react";
+import { useHistory, Link } from "react-router-dom";
+import { useState } from "react";
 import "./Infofilm.scss";
-
 
 const Infofilm = (props) => {
     const [state, setState] = useState({
-        value: '',
-        message: '',
+        value: "",
+        message: "",
     });
 
     const img = "https://image.tmdb.org/t/p/w500"; // формируем изображение
@@ -19,23 +18,25 @@ const Infofilm = (props) => {
     const history = useHistory();
     const Links = `filmedit=${infoFilm.id}`; // формирование пути роутинга
     const Genri = props.handleGenriFilm;
-    const {videoTrailer, infoUser, newStyle} = props; // трейлер
-    const srcLink = `https://www.youtube.com/embed/${videoTrailer.get(infoFilm.id)}`;
+    const { videoTrailer, infoUser, newStyle } = props; // трейлер
+    const srcLink = `https://www.youtube.com/embed/${videoTrailer.get(
+        infoFilm.id
+    )}`;
     const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // оценка фильма
 
     const handleClickClose = () => {
         history.goBack();
         props.handleMarkCard(false);
-    }
+    };
     const deleteCard = (id) => {
-        history.push('./');
+        history.push("./");
         props.handleDeleteCard(id);
         props.handleMarkCard(false);
-    }
+    };
 
     const handleChange = (event) => {
-        setState({value: event.target.value});
-    }
+        setState({ value: event.target.value });
+    };
 
     const RatingPost = (value, id) => {
         if (value) {
@@ -45,34 +46,49 @@ const Infofilm = (props) => {
             fetch(
                 `https://api.themoviedb.org/3/movie/${id}/rating?api_key=833e2dd8979208fbee927efb619ed90a&session_id=b5ac2e7a824e2eff35e3f452706116df7525a037`,
                 {
-                    method: 'POST',
+                    method: "POST",
                     headers: {
-                        'Content-Type': 'application/json;charset=utf-8',
+                        "Content-Type": "application/json;charset=utf-8",
                     },
                     body: JSON.stringify(addRating),
-                },
+                }
             )
                 .then((response) => response.json())
                 .then((result) => {
-                        if (result.status_message === "The item/record was updated successfully.") {
-                            setState({message: "Вы уже голосовали. Ваш голос успешно обновлен."})
-                        } else if (result.status_message === "Success.") {
-                            setState({message: "Ваш голос отправлен на сервер!"})
-                        } else {
-                            setState({message: "Ошибка запроса"})
-                        }
+                    if (
+                        result.status_message ===
+                        "The item/record was updated successfully."
+                    ) {
+                        setState({
+                            message:
+                                "Вы уже голосовали. Ваш голос успешно обновлен.",
+                        });
+                    } else if (result.status_message === "Success.") {
+                        setState({ message: "Ваш голос отправлен на сервер!" });
+                    } else {
+                        setState({ message: "Ошибка запроса" });
                     }
-                )
-                .catch((error) => {
-                    setState({message: error})
                 })
+                .catch((error) => {
+                    setState({ message: error });
+                });
         }
-    }
+    };
     RatingPost(state.value, infoFilm.id); // отправка запроса рейтинга
 
     return (
-        <div tabIndex="0" className="film-block" id={infoFilm.id} style={newStyle}>
-            <img className="close" alt="Close" src={closeImg} onClick={handleClickClose}/>
+        <div
+            tabIndex="0"
+            className="film-block"
+            id={infoFilm.id}
+            style={newStyle}
+        >
+            <img
+                className="close"
+                alt="Close"
+                src={closeImg}
+                onClick={handleClickClose}
+            />
             <div className="film-block__img">
                 <img
                     src={
@@ -82,60 +98,91 @@ const Infofilm = (props) => {
                             : err
                     }
                     alt={infoFilm.title}
-                    style={{width: "100%"}}
+                    style={{ width: "100%" }}
                 />
             </div>
 
-            {infoUser.status === "admin" && <div className="correct">
-                <div className="imgdel">
-                    <img id="dell" src={delImg} alt="del" style={{paddingLeft: "8px"}}
-                         onClick={() => deleteCard(infoFilm.id)}/>
-                </div>
-                <div className="imgdel">
-                    <Link to={Links}>
-                        <img id="pen" src={penImg} alt="del" style={{paddingLeft: "8px"}}
+            {infoUser.status === "admin" && (
+                <div className="correct">
+                    <div className="imgdel">
+                        <img
+                            id="dell"
+                            src={delImg}
+                            alt="del"
+                            style={{ paddingLeft: "8px" }}
+                            onClick={() => deleteCard(infoFilm.id)}
                         />
-                    </Link>
+                    </div>
+                    <div className="imgdel">
+                        <Link to={Links}>
+                            <img
+                                id="pen"
+                                src={penImg}
+                                alt="del"
+                                style={{ paddingLeft: "8px" }}
+                            />
+                        </Link>
+                    </div>
                 </div>
-            </div>}
+            )}
 
             <div className="film-block__text">
                 <h2>{infoFilm.title}</h2>
-                <h3>{
-                    infoFilm.original_title !== infoFilm.title
+                <h3>
+                    {infoFilm.original_title !== infoFilm.title
                         ? infoFilm.original_title
-                        : ''
-                }</h3>
+                        : ""}
+                </h3>
                 <p>Рейтинг: {infoFilm.vote_average}</p>
                 <p>Популярность: {infoFilm.popularity}</p>
                 <p>Дата релиза: {infoFilm.release_date}</p>
                 <p>Количество голосов: {infoFilm.vote_count}</p>
                 <p>Жанр: {Genri}</p>
-                {infoUser.name && <div className="ratingFilm" style={{display: "block"}}>
-
-                    <select name="selectrating" className="select-rating" id="ratingFilm" value={state.value}
-                            onChange={handleChange}>
-                        <option value="">Выберите оценку фильма</option>
-                        {arr.map(item => {
-                            return (<option key={item} value={item}>{item}</option>)
-                        })}
-                    </select>
-
-                </div>}
-                <p style={{fontWeight: "normal", fontSize: "16px"}}>{infoFilm.overview}</p>
+                {infoUser.name && (
+                    <div className="ratingFilm" style={{ display: "block" }}>
+                        <select
+                            name="selectrating"
+                            className="select-rating"
+                            id="ratingFilm"
+                            value={state.value}
+                            onChange={handleChange}
+                        >
+                            <option value="">Выберите оценку фильма</option>
+                            {arr.map((item) => {
+                                return (
+                                    <option key={item} value={item}>
+                                        {item}
+                                    </option>
+                                );
+                            })}
+                        </select>
+                    </div>
+                )}
+                <p style={{ fontWeight: "normal", fontSize: "16px" }}>
+                    {infoFilm.overview}
+                </p>
 
                 <div className="film-block__msg">{state.message}</div>
-
             </div>
-            {videoTrailer.get(infoFilm.id) &&
-            <div className="film-block__video" style={{marginTop: "100px"}}>
-                <iframe id="ytplayer" title="frame" type="text/html" width="100%" height="400"
+            {videoTrailer.get(infoFilm.id) && (
+                <div
+                    className="film-block__video"
+                    style={{ marginTop: "100px" }}
+                >
+                    <iframe
+                        id="ytplayer"
+                        title="frame"
+                        type="text/html"
+                        width="100%"
+                        height="400"
                         src={srcLink}
-                        frameBorder="0" allow="fullscreen"/>
-            </div>}
+                        frameBorder="0"
+                        allow="fullscreen"
+                    />
+                </div>
+            )}
         </div>
     );
-}
+};
 
 export default Infofilm;
-

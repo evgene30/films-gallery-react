@@ -1,9 +1,8 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import Footer from "./Footer/Footer";
 import Header from "./Header/Header";
 import Main from "./Main/Main";
 import delCardPOST from "./POST/delCardPOST";
-
 
 class App extends Component {
     constructor(props) {
@@ -95,18 +94,17 @@ class App extends Component {
         const massiveFilmsNew = [...this.state.itemsFilm].filter(
             (el) => el.id !== id
         );
-        this.setState({itemsFilm: massiveFilmsNew});
+        this.setState({ itemsFilm: massiveFilmsNew });
 
         if (typeof id === "number") {
-            return (delCardPOST(id)); // запрос на сервер для удаления из списка карты фильма
+            return delCardPOST(id); // запрос на сервер для удаления из списка карты фильма
         }
-
     };
 
     handleSortFilmSelect = (count) => {
         // сортировка фильмов через Select
         const sortState = [...this.state.itemsFilm];
-        this.setState({checkSelect: count});
+        this.setState({ checkSelect: count });
 
         switch (count) {
             case "id":
@@ -139,19 +137,19 @@ class App extends Component {
                     return b.id - a.id;
                 });
         }
-        this.setState({itemsFilm: sortState});
+        this.setState({ itemsFilm: sortState });
     };
 
     handleUpdatefilmPage = (object) => {
-        this.setState({filmPage: object});
+        this.setState({ filmPage: object });
     };
 
     handleUpdatefilmId = (object) => {
-        this.setState({filmId: object});
+        this.setState({ filmId: object });
     };
 
     handleUpdatefilmCheck = (object) => {
-        this.setState({filmCheck: object});
+        this.setState({ filmCheck: object });
     };
 
     handleUpdateitemsFilm = (object) => {
@@ -160,23 +158,24 @@ class App extends Component {
         if (oldArray.find((item) => item.id !== object.id)) {
             const newArray = oldArray.filter((item) => object.id !== item.id);
             newArray.unshift(object);
-            this.setState({itemsFilm: newArray});
+            this.setState({ itemsFilm: newArray });
         } else {
             const newArray = oldArray.map((item) => item);
             newArray.unshift(object);
-            this.setState({itemsFilm: newArray});
+            this.setState({ itemsFilm: newArray });
         }
     };
 
     hendleVerificationUser = (userStatus, userName) => {
         // функция верификации пользователя
-        this.setState({user: {name: userName, status: userStatus}});
-    }
+        this.setState({ user: { name: userName, status: userStatus } });
+    };
 
     render() {
-        const {error, preloader, itemsFilm} = this.state; // используем для передачи стейт из основных фильмов (не
+        const { error, preloader, itemsFilm } = this.state; // используем для передачи стейт из основных фильмов (не
         // сортированных)
-        const newStyle = (this.state.user.status === "admin" ? {background: "#8080ff"} : {}); // изменение фона
+        const newStyle =
+            this.state.user.status === "admin" ? { background: "#8080ff" } : {}; // изменение фона
         // пользователя
 
         if (error) {
@@ -189,13 +188,20 @@ class App extends Component {
                 </div>
             );
         } else if (!preloader) {
-            return <div id="preloader" className="visible"/>;
+            return <div id="preloader" className="visible" />;
         } else {
             return (
-                <div className="App" style={(this.state.user.status === "admin" ? {background: "#dae7f1"} : {})}>
+                <div
+                    className="App"
+                    style={
+                        this.state.user.status === "admin"
+                            ? { background: "#dae7f1" }
+                            : {}
+                    }
+                >
                     <div className="container">
                         <Header
-                            handleUpdatefilmCheck={this.handleUpdatefilmCheck}  // обновляем состояние просмотра
+                            handleUpdatefilmCheck={this.handleUpdatefilmCheck} // обновляем состояние просмотра
                             hendleVerificationUser={this.hendleVerificationUser} // функция верификации пользователя
                             infoUser={this.state.user} // информация о зарегистрированном пользователе
                         />
@@ -219,7 +225,7 @@ class App extends Component {
                             infoUser={this.state.user} // информация о зарегистрированном пользователе
                             newStyle={newStyle} // изменение фона для пользователей
                         />
-                        <Footer/>
+                        <Footer />
                     </div>
                 </div>
             );
