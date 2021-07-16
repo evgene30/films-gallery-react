@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 
 
 class Card extends Component {
+
     deleteCard = (id) => {
         this.props.handleDeleteCard(id);
         this.props.handleMarkCard(false);
@@ -20,7 +21,7 @@ class Card extends Component {
     }
 
     render() {
-        const {itemCard} = this.props;
+        const {itemCard, infoUser} = this.props;
         const img = "https://image.tmdb.org/t/p/w500"; // формируем изображение
         const err = logoImage; // альтернативное изображение на случай отсутствия
         const delImage = delImg; // импортированная картинка удаления
@@ -63,13 +64,13 @@ class Card extends Component {
                     </div>
                 </Link>
 
-                <div className="imgdel">
+                {infoUser.status === "admin" && <div className="imgdel">
                     <img id="dell" src={delImage}
                          alt="del"
                          style={{paddingLeft: "8px"}}
                          onClick={() => this.deleteCard(itemCard.id)}
                     />
-                </div>
+                </div>}
 
             </li>
         );

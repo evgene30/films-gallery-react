@@ -1,13 +1,17 @@
 import "./Header.scss";
-import logoSite from "../../assets/png/logo.png"
+import logoSite from "../../assets/svg/logo.svg"
 import {Link} from "react-router-dom";
 
 
 const Header = (props) => {
+    const {handleUpdatefilmCheck, infoUser, hendleVerificationUser} = props;
+
     const siteLogo = <a href="/" className="logo" title={"Домой"}><img src={logoSite} alt={"logo"}/>myMovies</a>; // ссылка на лого
     const handleMarkCard = (check) => {
-        props.handleUpdatefilmCheck(check); // убираем пагинацию
+        handleUpdatefilmCheck(check); // убираем пагинацию
+        hendleVerificationUser('', '');
     };
+
 
     return (
         <header>
@@ -15,15 +19,15 @@ const Header = (props) => {
                 {siteLogo}
             </div>
             <div className="prebutton">
-                <div className="innertext"/>
-                <Link to="register">
+                <div className="innertext">{infoUser.name ? infoUser.name : ''}</div>
+                <Link to={infoUser.name ? "./" : "register"}>
                     <button
                         className="button"
                         title="Авторизация"
                         tabIndex="0" id="regbutton"
                         onClick={() => handleMarkCard(true)}
                     >
-                        Sign In/Sign Up
+                        {infoUser.name ? 'Exit' : 'Sign In/Sign Up'}
                     </button>
                 </Link>
             </div>

@@ -51,16 +51,18 @@ class Main extends Component {
         const LinkEdit = `/filmedit=${this.props.filmId}`; // путь приема динамического адреса
         const videoTrailer = this.props.videoTrailer; // ссылка на трейлер
         const hendleVerificationUser = this.props.hendleVerificationUser; // функция верификации пользователя
+        const infoUser = this.props.infoUser; // информация о зарегистрированном пользователе
+        const newStyle = this.props.newStyle; // изменение фона пользователя
 
         return (
-            <main id="firstmain">
+            <main id="firstmain" style={newStyle}>
                 <section className="section-header">
                     {/*блок выбора фильтра*/}
                     <Select
                         handleSortFilmSelect={this.props.handleSortFilmSelect}
                         checkSelect={this.props.checkSelect}
                     />
-                    <div className="adminbtn">
+                    {infoUser.status === "admin" && <div className="adminbtn">
                         <Link to="newfilm">
                             <button
                                 className="buttonAdmin"
@@ -72,7 +74,7 @@ class Main extends Component {
                                 Add
                             </button>
                         </Link>
-                    </div>
+                    </div>}
                 </section>
 
                 <section className="section-movies">
@@ -95,6 +97,7 @@ class Main extends Component {
                                             handleMarkCard={this.handleMarkCard}
                                             filmId={this.props.filmId}
                                             filmCheck={this.props.filmCheck}
+                                            infoUser={infoUser}
                                         />
                                     );
                                 })}
@@ -107,6 +110,8 @@ class Main extends Component {
                                 .map((item) => {
                                     return (
                                         <Infofilm
+                                            newStyle={newStyle}
+                                            infoUser={infoUser}
                                             key={item.id}
                                             item={item}
                                             handleDeleteCard={handleDeleteCard}

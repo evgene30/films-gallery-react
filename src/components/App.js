@@ -5,7 +5,6 @@ import Main from "./Main/Main";
 import delCardPOST from "./POST/delCardPOST";
 
 
-
 class App extends Component {
     constructor(props) {
         super(props);
@@ -19,6 +18,7 @@ class App extends Component {
             checkSelect: "",
             genrisFilms: [],
             videoTrailer: new Map(),
+            user: [],
         };
     }
 
@@ -168,17 +168,16 @@ class App extends Component {
         }
     };
 
-    hendleVerificationUser = (objectUser) => {
+    hendleVerificationUser = (userStatus, userName) => {
         // функция верификации пользователя
-        console.log(objectUser)
-
-
-
+        this.setState({user: {name: userName, status: userStatus}});
     }
 
     render() {
         const {error, preloader, itemsFilm} = this.state; // используем для передачи стейт из основных фильмов (не
         // сортированных)
+        const newStyle = (this.state.user.status === "admin" ? {background: "#8080ff"} : {}); // изменение фона
+        // пользователя
 
         if (error) {
             return (
@@ -193,10 +192,12 @@ class App extends Component {
             return <div id="preloader" className="visible"/>;
         } else {
             return (
-                <div className="App">
+                <div className="App" style={(this.state.user.status === "admin" ? {background: "#dae7f1"} : {})}>
                     <div className="container">
                         <Header
-                            handleUpdatefilmCheck={this.handleUpdatefilmCheck}
+                            handleUpdatefilmCheck={this.handleUpdatefilmCheck}  // обновляем состояние просмотра
+                            hendleVerificationUser={this.hendleVerificationUser} // функция верификации пользователя
+                            infoUser={this.state.user} // информация о зарегистрированном пользователе
                         />
                         <Main
                             handleDeleteCard={this.handleDeleteCard} // принимаем id фильма для удаления
@@ -215,6 +216,8 @@ class App extends Component {
                             checkSelect={this.state.checkSelect} // отправляем состояние select
                             videoTrailer={this.state.videoTrailer} // отправляем ссылку на трейлер
                             itemsFilm={this.state.itemsFilm} // отправляем массив НЕ разделенных фильмов (изначальный)
+                            infoUser={this.state.user} // информация о зарегистрированном пользователе
+                            newStyle={newStyle} // изменение фона для пользователей
                         />
                         <Footer/>
                     </div>

@@ -19,7 +19,7 @@ const Infofilm = (props) => {
     const history = useHistory();
     const Links = `filmedit=${infoFilm.id}`; // формирование пути роутинга
     const Genri = props.handleGenriFilm;
-    const videoTrailer = props.videoTrailer; // трейлер
+    const {videoTrailer, infoUser, newStyle} = props; // трейлер
     const srcLink = `https://www.youtube.com/embed/${videoTrailer.get(infoFilm.id)}`;
     const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // оценка фильма
 
@@ -56,7 +56,7 @@ const Infofilm = (props) => {
                 .then((result) => {
                         if (result.status_message === "The item/record was updated successfully.") {
                             setState({message: "Вы уже голосовали. Ваш голос успешно обновлен."})
-                        } else if(result.status_message === "Success.") {
+                        } else if (result.status_message === "Success.") {
                             setState({message: "Ваш голос отправлен на сервер!"})
                         } else {
                             setState({message: "Ошибка запроса"})
@@ -71,7 +71,7 @@ const Infofilm = (props) => {
     RatingPost(state.value, infoFilm.id); // отправка запроса рейтинга
 
     return (
-        <div tabIndex="0" className="film-block" id={infoFilm.id}>
+        <div tabIndex="0" className="film-block" id={infoFilm.id} style={newStyle}>
             <img className="close" alt="Close" src={closeImg} onClick={handleClickClose}/>
             <div className="film-block__img">
                 <img
@@ -86,7 +86,7 @@ const Infofilm = (props) => {
                 />
             </div>
 
-            <div className="correct">
+            {infoUser.status === "admin" && <div className="correct">
                 <div className="imgdel">
                     <img id="dell" src={delImg} alt="del" style={{paddingLeft: "8px"}}
                          onClick={() => deleteCard(infoFilm.id)}/>
@@ -97,7 +97,7 @@ const Infofilm = (props) => {
                         />
                     </Link>
                 </div>
-            </div>
+            </div>}
 
             <div className="film-block__text">
                 <h2>{infoFilm.title}</h2>
@@ -111,7 +111,7 @@ const Infofilm = (props) => {
                 <p>Дата релиза: {infoFilm.release_date}</p>
                 <p>Количество голосов: {infoFilm.vote_count}</p>
                 <p>Жанр: {Genri}</p>
-                <div className="ratingFilm" style={{display: "block"}}>
+                {infoUser.name && <div className="ratingFilm" style={{display: "block"}}>
 
                     <select name="selectrating" className="select-rating" id="ratingFilm" value={state.value}
                             onChange={handleChange}>
@@ -121,7 +121,7 @@ const Infofilm = (props) => {
                         })}
                     </select>
 
-                </div>
+                </div>}
                 <p style={{fontWeight: "normal", fontSize: "16px"}}>{infoFilm.overview}</p>
 
                 <div className="film-block__msg">{state.message}</div>
