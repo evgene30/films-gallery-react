@@ -1,3 +1,5 @@
+import "./Pagination.scss"
+
 const Pagination = (props) => {
 
     const {styleVisible, filmPage, massiveFilms, handleUpdatefilmPage} = props;

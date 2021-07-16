@@ -1,0 +1,39 @@
+.pagination-block {
+  width: 100%;
+  padding: 10px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  flex-wrap: wrap;
+}
+
+.pagination li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10px;
+  height: 10px;
+  margin: 5px;
+  padding: 20px;
+  border-radius: 50%;
+  background: white;
+  font-weight: 700;
+}
+
+.pagination li:hover,
+.pagination li.active {
+  cursor: pointer;
+  color: black;
+  transition: 0.3s;
+  background: #2196f3;
+}
+
+.active {
+  cursor: pointer;
+  color: black;
+  transition: 0.3s;
+  background: #2196f3;
+}
