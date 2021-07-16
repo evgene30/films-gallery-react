@@ -150,12 +150,10 @@ class Main extends Component {
                                 })}
                         </Route>
                         <Route path="/register" exact>
-
                             <Register
                                 handleMarkCard={this.handleMarkCard}
                                 hendleVerificationUser={hendleVerificationUser}
                             />
-
                         </Route>
                         <Redirect to="/"/>
                     </Switch>

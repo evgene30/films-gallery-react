@@ -96,7 +96,7 @@ const Register = (props) => {
                         required
                         id="auth_email"
                         onChange={handleInputChange}
-                        value={state.email}
+                        value={state.email || ''}
                         style={state.inputStyleError}
                     />
                     <label htmlFor="auth_pass" id="labelinput" style={state.passLabelError}>
@@ -109,7 +109,7 @@ const Register = (props) => {
                         required
                         id="auth_pass"
                         onChange={handleInputChange}
-                        value={state.pass}
+                        value={state.pass || ''}
                         style={state.passInputError}
                     />
 
@@ -131,7 +131,7 @@ const Register = (props) => {
                     </div>
                 </form>
             )}
-            {!state.form && <RegisterNewUser/>}
+            {!state.form && <RegisterNewUser hendleVerificationUser={hendleVerificationUser}/>}
         </section>
     );
 };
