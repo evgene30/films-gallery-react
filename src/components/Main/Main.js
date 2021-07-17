@@ -84,7 +84,7 @@ class Main extends Component {
                                 {(massiveFilms[this.props.filmPage]
                                     ? massiveFilms[this.props.filmPage]
                                     : massiveFilms[this.props.filmPage - 1]
-                                ).map((item) => {
+                                )?.map((item) => {
                                     return (
                                         <Card
                                             key={item.id}
