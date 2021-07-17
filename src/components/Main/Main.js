@@ -27,7 +27,7 @@ class Main extends Component {
             if (typeof genri === "string") {
                 return genri;
             } else {
-                const Genri = genri.map((item) => cardGenri.get(item).name);
+                const Genri = genri.map((item) => cardGenri.get(item)?.name);
                 return Genri.join();
             }
         } else {
