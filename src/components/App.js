@@ -1,92 +1,31 @@
 import Footer from "./Footer/Footer";
 import Header from "./Header/Header";
 import Main from "./Main/Main";
-import delCardPOST from "./POST/delCardPOST";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useState} from "react";
-import {addFilm, delFilm, newListFilms} from "../store/actions/actions";
+import {useEffect} from "react";
+import {addFilm, delFilm, newListFilms, genrisFilms, filmID, selectFilter, filmChecks, usersStatus} from "../store/actions/actions";
 
 
 const App = () => {
-    const itemsFilm = useSelector((state) => state.stateApp.itemsFilm); // функция возврата значения из стора
-    const preloader = useSelector((state) => state.stateApp.preloader); // передзагрузчик
-    const user = useSelector((state) => state.stateApp.user);
     const dispatch = useDispatch(); // функция захвата объекта
+    const itemsFilm = useSelector((state) => state.stateApp.itemsFilm); // списк всех фильмов
+    const preloader = useSelector((state) => state.stateApp.preloader); // передзагрузчик
+    const user = useSelector((state) => state.stateApp.user); // авторизированный пользователь
+    const errors = useSelector((state) => state.stateApp.error); // отлов ошибок промиса
+    const genrisFilm = useSelector((state) => state.stateApp.genrisFilms); // жанры фильмов
 
+    const filmId = useSelector((state) => state.stateApp.filmId); // ID выбранного фильма
+    const filmCheck = useSelector((state) => state.stateApp.filmCheck); // убираем блок пагинации при клике
+    const checkSelect = useSelector((state) => state.stateApp.checkSelect); // трейлеры фильмов
+    const filmPages = useSelector((state) => state.stateApp.filmPage); // отправляем страницу пагинации
 
-    const [state, setState] = useState({
-        error: null,
-        filmPage: 0,
-        filmId: "",
-        filmCheck: false,
-        checkSelect: "",
-        genrisFilms: [],
-        videoTrailer: new Map(),
-        user: [],
-    });
 
     useEffect(() => {
-        dispatch(newListFilms());
-    }, [dispatch]);
+            dispatch(newListFilms());
+            dispatch(genrisFilms());
+        },
+        [dispatch]);
 
-    // componentDidMount() {
-    //     const filmList =
-    //         "https://api.themoviedb.org/3/list/7095647?api_key=833e2dd8979208fbee927efb619ed90a&language=ru-RU"; // список фильмов
-    //     const genriFilm =
-    //         "https://api.themoviedb.org/3/genre/movie/list?api_key=833e2dd8979208fbee927efb619ed90a&language=ru-RU"; // список жанров
-    //
-    //     fetch(filmList)
-    //         .then((response) => response.json())
-    //         .then(
-    //             (value) => {
-    //                 const idFilms = value.items.map((item) => {
-    //                     // формирование списка id
-    //                     if (item.id === 46087) {
-    //                         return 44088;
-    //                     }
-    //                     return item.id;
-    //                 });
-    //
-    //                 this.setState({
-    //                     preloader: true,
-    //                     itemsFilm: value.items,
-    //                 });
-    //
-    //                 idFilms.map((id) =>
-    //                     fetch(
-    //                         `https://api.themoviedb.org/3/movie/${id}/videos?api_key=833e2dd8979208fbee927efb619ed90a&language=ru-RU`
-    //                     )
-    //                         .then((response) => response.json())
-    //                         .then((data) => data.results)
-    //                         .then((item) => {
-    //                             for (const i in item) {
-    //                                 this.setState({
-    //                                     videoTrailer:
-    //                                         this.state.videoTrailer.set(
-    //                                             id,
-    //                                             item[i].key
-    //                                         ),
-    //                                 });
-    //                             }
-    //                         })
-    //                 );
-    //             },
-    //             (error) => {
-    //                 this.setState({
-    //                     preloader: true,
-    //                     error,
-    //                 });
-    //             }
-    //         );
-    //
-    //     fetch(genriFilm)
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             this.setState({
-    //                 genrisFilms: data.genres,
-    //             });
-    //         });
-    // }
 
     const packMassiveFilm = (array) => {
         // разбиваем исходный массив на вложенные массивы по 20 вложенных массивов
@@ -98,9 +37,10 @@ const App = () => {
     };
 
     const handleDeleteCard = (id) => {
+
         dispatch(delFilm(id));
         // удаление карточки фильма в стейте
-        // const massiveFilmsNew = [...this.state.itemsFilm].filter(
+        // const massiveFilmsNew = [...itemsFilm].filter(
         //     (el) => el.id !== id
         // );
         // this.setState({ itemsFilm: massiveFilmsNew });
@@ -114,7 +54,7 @@ const App = () => {
     const handleSortFilmSelect = (count) => {
         // сортировка фильмов через Select
         const sortState = [...itemsFilm];
-        setState({checkSelect: count});
+        dispatch(selectFilter(count))
 
         switch (count) {
             case "id":
@@ -147,26 +87,24 @@ const App = () => {
                     return b.id - a.id;
                 });
         }
-        setState({itemsFilm: sortState});
+        dispatch(addFilm(sortState))
     };
 
-    const handleUpdatefilmPage = (object) => {
-        setState({filmPage: object});
-    };
 
     const handleUpdatefilmId = (object) => {
-        setState({filmId: object});
+        dispatch(filmID(object))
     };
 
     const handleUpdatefilmCheck = (object) => {
-        setState({filmCheck: object});
+        dispatch(filmChecks(object))
     };
 
     const handleUpdateitemsFilm = (object) => {
         dispatch(addFilm(object));
 
-        // // функция проверки добавляемого (редактируемого) объекта фильма в общий стейт
-        // const oldArray = [...state.itemsFilm];
+        // функция проверки добавляемого (редактируемого) объекта фильма в общий стейт
+
+        // const oldArray = [...itemsFilm];
         // if (oldArray.find((item) => item.id !== object.id)) {
         //     const newArray = oldArray.filter((item) => object.id !== item.id);
         //     newArray.unshift(object);
@@ -182,27 +120,21 @@ const App = () => {
 
     const hendleVerificationUser = (userStatus, userName) => {
         // функция верификации пользователя
-        setState({user: {name: userName, status: userStatus}});
+        dispatch(usersStatus({name: userName, status: userStatus}));
     };
 
+    const newStyle = user.status === "admin" ? {background: "#8080ff"} : {}; // изменение фона пользователя
 
-    const {error} = state; // используем для передачи стейт из основных фильмов (не
-    // сортированных)
-    const newStyle =
-        user.status === "admin" ? {background: "#8080ff"} : {}; // изменение фона
-    // пользователя
-
-    if (error) {
+    if (errors) {
         return (
             <div className="error-response">
-                Ошибка: {error.message}
+                Ошибка: {errors.message}
                 <a href="/">
                     <div className="button-reboot">Перезагрузить</div>
                 </a>
             </div>
         );
-    }
-    if (preloader) {
+    } else if (preloader) {
         return <div id="preloader" className="visible"/>;
     } else {
         return (
@@ -223,19 +155,19 @@ const App = () => {
                     <Main
                         handleDeleteCard={handleDeleteCard} // принимаем id фильма для удаления
                         handleSortFilmSelect={handleSortFilmSelect} // обновляем фильмы по select
-                        handleUpdatefilmPage={handleUpdatefilmPage} // обновляем страницу пагинации
                         handleUpdatefilmId={handleUpdatefilmId} // обновляем id фильма
                         handleUpdatefilmCheck={handleUpdatefilmCheck} // обновляем состояние просмотра
                         listFilms={packMassiveFilm(itemsFilm)} // отправляем массив разделенных (на подмассивы)
                         // фильмов
                         hendleVerificationUser={hendleVerificationUser} // функция верификации пользователя
                         handleUpdateitemsFilm={handleUpdateitemsFilm} // обновляем массив фильмов
-                        filmPage={state.filmPage} // отправляем страницу пагинации
-                        filmId={state.filmId} // отправляем id фильма
-                        genrisFilms={state.genrisFilms} // отправляем жанры фильма
-                        filmCheck={state.filmCheck} // отправляем состояние просмотра
-                        checkSelect={state.checkSelect} // отправляем состояние select
-                        videoTrailer={state.videoTrailer} // отправляем ссылку на трейлер
+
+
+                        filmPage={filmPages} // отправляем страницу пагинации
+                        filmId={filmId} // отправляем id фильма
+                        genrisFilms={genrisFilm} // отправляем жанры фильмов
+                        filmCheck={filmCheck} // отправляем состояние просмотра
+                        checkSelect={checkSelect} // отправляем состояние select
                         itemsFilm={itemsFilm} // отправляем массив НЕ разделенных фильмов (изначальный)
                         infoUser={user} // информация о зарегистрированном пользователе
                         newStyle={newStyle} // изменение фона для пользователей

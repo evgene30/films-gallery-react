@@ -38,18 +38,28 @@ class Main extends Component {
     render() {
         const massiveFilms = [...this.props.listFilms]; // список сортированных фильмов
         const handleDeleteCard = this.props.handleDeleteCard; // пробрасываем далее функцию удаления фильма
+
+
         const link = `/id=${this.props.filmId}`; // формирование пути роутинга
+
+
         const styleVisible = this.props.filmCheck ? { display: "none" } : {}; // проверка состояния для блокирования
         // элементов
         const originalListFilms = [...this.props.itemsFilm]; // список НЕ сортированных фильмов
         const handleUpdateitemsFilm = this.props.handleUpdateitemsFilm; // функция обновления для объектов нового и
         // редактируемого фильма
         const genrisFilms = this.props.genrisFilms; // отправляем жанры фильма
+
+
         const LinkEdit = `/filmedit=${this.props.filmId}`; // путь приема динамического адреса
+
+
         const videoTrailer = this.props.videoTrailer; // ссылка на трейлер
         const hendleVerificationUser = this.props.hendleVerificationUser; // функция верификации пользователя
         const infoUser = this.props.infoUser; // информация о зарегистрированном пользователе
         const newStyle = this.props.newStyle; // изменение фона пользователя
+
+
 
         return (
             <main id="firstmain" style={newStyle}>
@@ -81,6 +91,7 @@ class Main extends Component {
                         <Route path="/" exact>
                             {/*блок отрисовки карточек фильмов*/}
                             <ul className="ul-movies" id="sectionmov">
+
                                 {(massiveFilms[this.props.filmPage]
                                     ? massiveFilms[this.props.filmPage]
                                     : massiveFilms[this.props.filmPage - 1]

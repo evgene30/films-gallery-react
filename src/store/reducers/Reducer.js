@@ -1,4 +1,18 @@
-import {ADD_FILM, IS_FILMS_LOADING, REMOVE_FILM, FILMS_LOAD} from "../constans/const";
+
+import {
+    ADD_FILM,
+    IS_FILMS_LOADING,
+    REMOVE_FILM,
+    FILMS_LOAD,
+    ERROR_LOAD,
+    LOAD_GENRIS,
+    LOAD_TRAILERS,
+    FILM_PAGE,
+    FILM_ID,
+    SELECT_FILTER,
+    FILM_CHECK,
+    USER_STATUS
+} from "../constans/const";
 
 const initialState = {
     preloader: false,
@@ -9,32 +23,24 @@ const initialState = {
     filmCheck: false,
     checkSelect: "",
     genrisFilms: [],
-    videoTrailer: new Map(),
+    videoTrailer: [],
     user: [],
+
 };
 
 const Reducer = (state = initialState, action) => {
 
     switch (action.type) {
         case ADD_FILM:
-            const oldArray = [...state.itemsFilm];
-            const newArray = oldArray.filter((item) => action.id !== item.id);
-            if (oldArray.find((item) => item.id !== action.id)) {
-                return {
-                    ...newArray, //новый массив
-                    data: [...newArray, action.payload], // добавляем в него объект и возвращаем
-                };
-            } else {
-                return {
-                    ...newArray, // новый массив
-                    data: [...newArray, action.payload], // добавляем в него объект и возвращаем
-                };
+            return {
+                ...state,
+                itemsFilm: action.payload,
             }
 
         case REMOVE_FILM:
             return {
                 ...state,
-                data: state.itemsFilm.filter((el) => el.id !== action.payload),
+                itemsFilm: state.itemsFilm.filter((el) => el.id !== action.payload),
             };
 
         case IS_FILMS_LOADING:
@@ -42,11 +48,60 @@ const Reducer = (state = initialState, action) => {
                 ...state,
                 preloader: action.payload,
             }
+
         case FILMS_LOAD:
             return {
                 ...state,
                 itemsFilm: action.payload,
             }
+
+        case SELECT_FILTER:
+            return {
+                ...state,
+                checkSelect: action.payload,
+            }
+
+        case FILM_CHECK:
+            return {
+                ...state,
+                filmCheck: action.payload,
+            }
+
+        case LOAD_GENRIS:
+            return {
+                ...state,
+                genrisFilms: action.payload,
+            }
+
+        case ERROR_LOAD:
+            return {
+                ...state,
+                error: action.payload,
+            }
+
+        case LOAD_TRAILERS:
+            return {
+                ...state,
+                videoTrailer: action.payload,
+            }
+        case FILM_PAGE:
+            return {
+                ...state,
+                filmPage: action.payload,
+            }
+
+        case USER_STATUS:
+            return {
+                ...state,
+                user: action.payload,
+            }
+
+        case FILM_ID:
+            return {
+                ...state,
+                filmId: action.payload,
+            }
+
         default:
             return state;
     }
