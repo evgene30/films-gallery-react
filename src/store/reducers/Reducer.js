@@ -1,4 +1,3 @@
-
 import {
     ADD_FILM,
     IS_FILMS_LOADING,

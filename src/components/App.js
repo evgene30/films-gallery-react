@@ -3,6 +3,8 @@ import Header from "./Header/Header";
 import Main from "./Main/Main";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
+import {selectFilms} from "./Main/Select/selectFilms";
+import {newFilms} from "./Main/Addfilm/addNewFilm";
 import {addFilm, delFilm, newListFilms, genrisFilms, filmID, selectFilter, filmChecks, usersStatus} from "../store/actions/actions";
 
 
@@ -13,22 +15,21 @@ const App = () => {
     const user = useSelector((state) => state.stateApp.user); // авторизированный пользователь
     const errors = useSelector((state) => state.stateApp.error); // отлов ошибок промиса
     const genrisFilm = useSelector((state) => state.stateApp.genrisFilms); // жанры фильмов
-
     const filmId = useSelector((state) => state.stateApp.filmId); // ID выбранного фильма
     const filmCheck = useSelector((state) => state.stateApp.filmCheck); // убираем блок пагинации при клике
     const checkSelect = useSelector((state) => state.stateApp.checkSelect); // трейлеры фильмов
     const filmPages = useSelector((state) => state.stateApp.filmPage); // отправляем страницу пагинации
-
+    const newStyle = user.status === "admin" ? {background: "#8080ff"} : {}; // изменение фона для Админа
 
     useEffect(() => {
-            dispatch(newListFilms());
-            dispatch(genrisFilms());
+            dispatch(newListFilms()); // загружаем список фильмов
+            dispatch(genrisFilms()); // загружаем жанры
         },
         [dispatch]);
 
 
     const packMassiveFilm = (array) => {
-        // разбиваем исходный массив на вложенные массивы по 20 вложенных массивов
+        // разбиваем исходный массив на вложенные массивы по 20 вложенных массивов для пагинации
         const massiveFilmsNew = [];
         for (let i = 0; i < Math.ceil(array.length / 20); i++) {
             massiveFilmsNew[i] = array.slice(i * 20, i * 20 + 20);
@@ -37,57 +38,14 @@ const App = () => {
     };
 
     const handleDeleteCard = (id) => {
-
+        // удаление карточки фильма
         dispatch(delFilm(id));
-        // удаление карточки фильма в стейте
-        // const massiveFilmsNew = [...itemsFilm].filter(
-        //     (el) => el.id !== id
-        // );
-        // this.setState({ itemsFilm: massiveFilmsNew });
-        //
-        // if (typeof id === "number") {
-        //     return delCardPOST(id); // запрос на сервер для удаления из списка карты фильма
-        // }
-
     };
 
     const handleSortFilmSelect = (count) => {
         // сортировка фильмов через Select
-        const sortState = [...itemsFilm];
-        dispatch(selectFilter(count))
-
-        switch (count) {
-            case "id":
-                sortState.sort(function (a, b) {
-                    return b.id - a.id;
-                });
-                break;
-            case "popularity":
-                sortState.sort(function (a, b) {
-                    return b.popularity - a.popularity;
-                });
-                break;
-            case "vote_average":
-                sortState.sort(function (a, b) {
-                    return b.vote_average - a.vote_average;
-                });
-                break;
-            case "vote_count":
-                sortState.sort(function (a, b) {
-                    return b.vote_count - a.vote_count;
-                });
-                break;
-            case "release_date":
-                sortState.sort(function (a, b) {
-                    return new Date(b.release_date) - new Date(a.release_date);
-                });
-                break;
-            default:
-                sortState.sort(function (a, b) {
-                    return b.id - a.id;
-                });
-        }
-        dispatch(addFilm(sortState))
+        dispatch(selectFilter(count)) // записываем выбранный параметр в стейт
+        dispatch(addFilm(selectFilms(count, itemsFilm))) // обработка логики сортировки перед записью в стейт
     };
 
 
@@ -100,21 +58,7 @@ const App = () => {
     };
 
     const handleUpdateitemsFilm = (object) => {
-        dispatch(addFilm(object));
-
-        // функция проверки добавляемого (редактируемого) объекта фильма в общий стейт
-
-        // const oldArray = [...itemsFilm];
-        // if (oldArray.find((item) => item.id !== object.id)) {
-        //     const newArray = oldArray.filter((item) => object.id !== item.id);
-        //     newArray.unshift(object);
-        //     setState({itemsFilm: newArray});
-        // } else {
-        //     const newArray = oldArray.map((item) => item);
-        //     newArray.unshift(object);
-        //     setState({itemsFilm: newArray});
-        // }
-
+        dispatch(addFilm(newFilms(object, itemsFilm))); // обработка логики добавления/изменения фильма
 
     };
 
@@ -122,8 +66,6 @@ const App = () => {
         // функция верификации пользователя
         dispatch(usersStatus({name: userName, status: userStatus}));
     };
-
-    const newStyle = user.status === "admin" ? {background: "#8080ff"} : {}; // изменение фона пользователя
 
     if (errors) {
         return (
