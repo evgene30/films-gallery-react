@@ -1,11 +1,11 @@
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import closeImg from "../../../assets/png/close.png";
 import "./Addfilm.scss";
-import {useState} from "react";
-import {nanoid} from "nanoid";
-import {useDispatch, useSelector} from "react-redux";
-import {addFilm, filmChecks} from "../../../store/actions/actions";
-import {newFilms} from "./addNewFilm";
+import { useState } from "react";
+import { nanoid } from "nanoid";
+import { useDispatch, useSelector } from "react-redux";
+import { addFilm, filmChecks } from "../../../store/actions/actions";
+import { newFilms } from "./addNewFilm";
 
 const Addfilm = () => {
     const history = useHistory();
@@ -72,7 +72,7 @@ const Addfilm = () => {
                 alt="Close"
                 src={closeImg}
                 onClick={handleClickClose}
-                style={{height: "40px", width: "40px"}}
+                style={{ height: "40px", width: "40px" }}
             />
 
             <form className="form_add" id="addform" onSubmit={handleSubmit}>
@@ -121,7 +121,7 @@ const Addfilm = () => {
                     name="release_date"
                     onChange={handleInputChange}
                     value={release_date || ""}
-                    style={{border: "none"}}
+                    style={{ border: "none" }}
                 />
                 <label>Жанр:</label>
 

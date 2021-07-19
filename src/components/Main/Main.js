@@ -1,9 +1,9 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import "./Main.scss";
 import Card from "./Card/Card";
-import {Route, Switch, Redirect} from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Infofilm from "./Card/Infofilm/Infofilm";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Addfilm from "./Addfilm/Addfilm";
 import Editfilm from "./Editfilm/Editfilm";
 import Pagination from "./Pagination/Pagination";
@@ -11,7 +11,6 @@ import Select from "./Select/Select";
 import Register from "./Register/Register";
 
 class Main extends Component {
-
     handleMarkCard = (check) => {
         this.props.handleUpdatefilmCheck(check);
     };
@@ -25,12 +24,11 @@ class Main extends Component {
         const newStyle = this.props.newStyle; // изменение фона пользователя
         const filmCheck = this.props.filmCheck;
 
-
         return (
             <main id="firstmain" style={newStyle}>
                 <section className="section-header">
                     {/*блок выбора фильтра*/}
-                    <Select/>
+                    <Select />
                     {infoUser.status === "admin" && (
                         <div className="adminbtn">
                             <Link to="newfilm">
@@ -53,16 +51,12 @@ class Main extends Component {
                         <Route path="/" exact>
                             {/*блок отрисовки карточек фильмов*/}
                             <ul className="ul-movies" id="sectionmov">
-
                                 {(massiveFilms[this.props.filmPage]
-                                        ? massiveFilms[this.props.filmPage]
-                                        : massiveFilms[this.props.filmPage - 1]
+                                    ? massiveFilms[this.props.filmPage]
+                                    : massiveFilms[this.props.filmPage - 1]
                                 )?.map((item) => {
                                     return (
-                                        <Card
-                                            key={item.id}
-                                            itemCard={item}
-                                        />
+                                        <Card key={item.id} itemCard={item} />
                                     );
                                 })}
                             </ul>
@@ -73,39 +67,35 @@ class Main extends Component {
                                 .filter((item) => item.id === this.props.filmId)
                                 .map((item) => {
                                     return (
-                                        <Infofilm
-                                            key={item.id}
-                                            item={item}
-                                        />
+                                        <Infofilm key={item.id} item={item} />
                                     );
                                 })}
                         </Route>
                         <Route path="/newfilm" exact>
                             {/*блок отрисовки добавления фильма*/}
-                            <Addfilm/>
+                            <Addfilm />
                         </Route>
                         <Route path={LinkEdit} exact>
                             {originalListFilms
                                 .filter((item) => item.id === this.props.filmId)
                                 .map((item) => {
                                     return (
-                                        <Editfilm
-                                            key={item.id}
-                                            item={item}
-                                        />
+                                        <Editfilm key={item.id} item={item} />
                                     );
                                 })}
                         </Route>
                         <Route path="/register" exact>
-                            <Register/>
+                            <Register />
                         </Route>
-                        <Redirect to="/"/>
+                        <Redirect to="/" />
                     </Switch>
                 </section>
 
-                {!filmCheck && <Pagination
-                    massiveFilms={massiveFilms} // список сортированных фильмов
-                />}
+                {!filmCheck && (
+                    <Pagination
+                        massiveFilms={massiveFilms} // список сортированных фильмов
+                    />
+                )}
             </main>
         );
     }

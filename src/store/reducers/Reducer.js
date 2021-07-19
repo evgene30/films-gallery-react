@@ -10,7 +10,7 @@ import {
     FILM_ID,
     SELECT_FILTER,
     FILM_CHECK,
-    USER_STATUS
+    USER_STATUS,
 } from "../constans/const";
 
 const initialState = {
@@ -24,87 +24,86 @@ const initialState = {
     genrisFilms: [],
     videoTrailer: [],
     user: [],
-
 };
 
 const Reducer = (state = initialState, action) => {
-
     switch (action.type) {
         case ADD_FILM:
             return {
                 ...state,
                 itemsFilm: action.payload,
-            }
+            };
 
         case REMOVE_FILM:
             return {
                 ...state,
-                itemsFilm: state.itemsFilm.filter((el) => el.id !== action.payload),
+                itemsFilm: state.itemsFilm.filter(
+                    (el) => el.id !== action.payload
+                ),
             };
 
         case IS_FILMS_LOADING:
             return {
                 ...state,
                 preloader: action.payload,
-            }
+            };
 
         case FILMS_LOAD:
             return {
                 ...state,
                 itemsFilm: action.payload,
-            }
+            };
 
         case SELECT_FILTER:
             return {
                 ...state,
                 checkSelect: action.payload,
-            }
+            };
 
         case FILM_CHECK:
             return {
                 ...state,
                 filmCheck: action.payload,
-            }
+            };
 
         case LOAD_GENRIS:
             return {
                 ...state,
                 genrisFilms: action.payload,
-            }
+            };
 
         case ERROR_LOAD:
             return {
                 ...state,
                 error: action.payload,
-            }
+            };
 
         case LOAD_TRAILERS:
             return {
                 ...state,
                 videoTrailer: action.payload,
-            }
+            };
         case FILM_PAGE:
             return {
                 ...state,
                 filmPage: action.payload,
-            }
+            };
 
         case USER_STATUS:
             return {
                 ...state,
                 user: action.payload,
-            }
+            };
 
         case FILM_ID:
             return {
                 ...state,
                 filmId: action.payload,
-            }
+            };
 
         default:
             return state;
     }
-
 };
 
 export default Reducer;

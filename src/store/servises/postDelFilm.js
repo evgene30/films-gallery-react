@@ -1,7 +1,5 @@
 export const delCardPOST = (id) => {
-
     if (typeof id === "number") {
-
         const postId = {
             media_id: Number(id),
         };
@@ -17,11 +15,8 @@ export const delCardPOST = (id) => {
         ).then((response) => {
             response.json();
         });
-        return id
-
+        return id;
     } else {
-        return id
+        return id;
     }
-
 };
-

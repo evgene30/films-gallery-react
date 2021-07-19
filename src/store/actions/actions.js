@@ -10,13 +10,13 @@ import {
     FILM_ID,
     SELECT_FILTER,
     FILM_CHECK,
-    USER_STATUS
+    USER_STATUS,
 } from "../constans/const";
 
-import {getFilms} from "../servises/getFilms";
-import {getGenris} from "../servises/getGenris";
-import {getTrailer} from "../servises/getVideo";
-import {delCardPOST} from "../servises/postDelFilm"
+import { getFilms } from "../servises/getFilms";
+import { getGenris } from "../servises/getGenris";
+import { getTrailer } from "../servises/getVideo";
+import { delCardPOST } from "../servises/postDelFilm";
 
 export const addFilm = (value) => ({
     type: ADD_FILM,
@@ -26,7 +26,6 @@ export const addFilm = (value) => ({
 export const delFilm = (value) => ({
     type: REMOVE_FILM,
     payload: delCardPOST(value),
-
 });
 
 export const usersStatus = (value) => ({
@@ -76,7 +75,7 @@ export const newListFilms = () => (dispatch) => {
                 type: ERROR_LOAD,
                 payload: error,
             });
-        })
+        });
 };
 
 export const genrisFilms = () => (dispatch) => {
@@ -92,16 +91,17 @@ export const genrisFilms = () => (dispatch) => {
                 type: ERROR_LOAD,
                 payload: error,
             });
-        })
+        });
 };
 
 export const traller = (id) => (dispatch) => {
-    getTrailer(id)
-        .then((data) => {
-            dispatch({
-                type: LOAD_TRAILERS,
-                payload: {id: data.id, key: data.results?.map(item => item.key)},
-            });
-        })
-}
-
+    getTrailer(id).then((data) => {
+        dispatch({
+            type: LOAD_TRAILERS,
+            payload: {
+                id: data.id,
+                key: data.results?.map((item) => item.key),
+            },
+        });
+    });
+};

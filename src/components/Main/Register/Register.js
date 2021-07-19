@@ -1,14 +1,13 @@
 import closeImg from "../../../assets/png/close.png";
-import {useHistory} from "react-router-dom";
-import {useState} from "react";
+import { useHistory } from "react-router-dom";
+import { useState } from "react";
 import "./Register.scss";
 import RegisterNewUser from "./RegisterNewUser";
 import Json from "../../../dummy_data/users.json";
-import {useDispatch} from "react-redux";
-import {filmChecks, usersStatus} from "../../../store/actions/actions";
+import { useDispatch } from "react-redux";
+import { filmChecks, usersStatus } from "../../../store/actions/actions";
 
 const Register = () => {
-
     const dispatch = useDispatch(); // функция захвата экшена
     const [state, setState] = useState({
         form: true,
@@ -25,11 +24,11 @@ const Register = () => {
 
     const handleClickClose = () => {
         history.push("./");
-        dispatch(filmChecks(false))
+        dispatch(filmChecks(false));
     };
 
     const handleClickRegister = () => {
-        setState({form: !state.form});
+        setState({ form: !state.form });
     };
 
     const handleSubmit = (event) => {
@@ -42,28 +41,30 @@ const Register = () => {
                 email: state.email,
                 pass: "",
                 mesEmail: "No registration email",
-                labelStyleError: {color: "red"},
-                inputStyleError: {border: "3px solid red"},
+                labelStyleError: { color: "red" },
+                inputStyleError: { border: "3px solid red" },
             });
         } else {
             if (User.password === state.pass) {
-                dispatch(usersStatus({name: User.name, status: User.status}));
+                dispatch(usersStatus({ name: User.name, status: User.status }));
 
-                const regUser = JSON.stringify({name: User.name, status: User.status});
+                const regUser = JSON.stringify({
+                    name: User.name,
+                    status: User.status,
+                });
                 localStorage.setItem("User", regUser);
 
-
                 history.push("./");
-                dispatch(filmChecks(false))
+                dispatch(filmChecks(false));
             } else {
                 setState({
                     form: true,
                     pass: "",
                     email: "",
                     mesPass: "Password error",
-                    passLabelError: {color: "red"},
-                    passInputError: {border: "3px solid red"},
-                    inputStyleError: {border: "3px solid red"},
+                    passLabelError: { color: "red" },
+                    passInputError: { border: "3px solid red" },
+                    inputStyleError: { border: "3px solid red" },
                 });
             }
         }
@@ -84,7 +85,7 @@ const Register = () => {
                 alt="Close"
                 src={closeImg}
                 onClick={handleClickClose}
-                style={{height: "40px", width: "40px"}}
+                style={{ height: "40px", width: "40px" }}
             />
             {state.form && (
                 <form
@@ -145,9 +146,7 @@ const Register = () => {
                     </div>
                 </form>
             )}
-            {!state.form && (
-                <RegisterNewUser/>
-            )}
+            {!state.form && <RegisterNewUser />}
         </section>
     );
 };

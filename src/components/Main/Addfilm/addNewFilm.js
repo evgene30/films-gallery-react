@@ -1,5 +1,4 @@
 export const newFilms = (object, listFilms) => {
-
     const oldArray = [...listFilms];
     if (oldArray.find((item) => item.id !== object.id)) {
         const newArray = oldArray.filter((item) => object.id !== item.id);
@@ -12,5 +11,4 @@ export const newFilms = (object, listFilms) => {
 
         return newArray;
     }
-
 };

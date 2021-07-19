@@ -1,15 +1,14 @@
 import "./Card.scss";
 import logoImage from "../../../assets/png/movies.png";
-import delImg from "../../../assets/png/del.png"
-import {Link} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {delFilm, filmID, filmChecks} from "../../../store/actions/actions";
-
+import delImg from "../../../assets/png/del.png";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { delFilm, filmID, filmChecks } from "../../../store/actions/actions";
 
 const Card = (props) => {
     const dispatch = useDispatch(); // функция захвата экшена
     const infoUser = useSelector((state) => state.stateApp.user); // авторизированный пользователь
-    const {itemCard} = props; // информация о выбранном фильме
+    const { itemCard } = props; // информация о выбранном фильме
     const img = "https://image.tmdb.org/t/p/w500"; // формируем изображение
     const err = logoImage; // альтернативное изображение на случай отсутствия
     const delImage = delImg; // картинка удаления
@@ -18,15 +17,15 @@ const Card = (props) => {
     const deleteCard = (id) => {
         dispatch(delFilm(id));
         dispatch(filmChecks(false)); // чекер пагинации
-    }
+    };
 
     const filmInformation = (id) => {
-        dispatch(filmID(id)) // отправка id фильма
-    }
+        dispatch(filmID(id)); // отправка id фильма
+    };
 
     const markCard = () => {
         dispatch(filmChecks(true)); // чекер пагинации
-    }
+    };
 
     return (
         <li
@@ -49,13 +48,12 @@ const Card = (props) => {
                                 : err
                         }
                         alt={itemCard.title}
-                        style={{width: "100%"}}
+                        style={{ width: "100%" }}
                     />
                     <div className="container">
                         <h4>
                             <b>
-                                {itemCard.original_title !==
-                                itemCard.title
+                                {itemCard.original_title !== itemCard.title
                                     ? itemCard.original_title
                                     : ""}
                             </b>
@@ -64,15 +62,19 @@ const Card = (props) => {
                     </div>
                 </div>
             </Link>
-            {infoUser.status === "admin" && <div className="imgdel">
-                <img id="dell" src={delImage}
-                     alt="del"
-                     style={{paddingLeft: "8px"}}
-                     onClick={() => deleteCard(itemCard.id)}
-                />
-            </div>}
+            {infoUser.status === "admin" && (
+                <div className="imgdel">
+                    <img
+                        id="dell"
+                        src={delImage}
+                        alt="del"
+                        style={{ paddingLeft: "8px" }}
+                        onClick={() => deleteCard(itemCard.id)}
+                    />
+                </div>
+            )}
         </li>
     );
-}
+};
 
 export default Card;

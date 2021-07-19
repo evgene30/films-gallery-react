@@ -1,24 +1,22 @@
 import "./Header.scss";
 import logoSite from "../../assets/svg/logo.svg";
-import {Link} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {usersStatus} from "../../store/actions/actions";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { usersStatus } from "../../store/actions/actions";
 
 const Header = () => {
     const dispatch = useDispatch(); // функция захвата экшена
     const infoUser = useSelector((state) => state.stateApp.user); // авторизированный пользователь
 
-
     const siteLogo = (
         <a href="/" className="logo" title={"Домой"}>
-            <img src={logoSite} alt={"logo"}/>
+            <img src={logoSite} alt={"logo"} />
             myMovies
         </a>
     ); // ссылка на лого
     const handleMarkCard = () => {
-        dispatch(usersStatus({name: "", status: ""}));
+        dispatch(usersStatus({ name: "", status: "" }));
         localStorage.clear();
-
     };
 
     return (
