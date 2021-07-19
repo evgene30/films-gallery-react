@@ -34,9 +34,7 @@ const Register = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
         const User = Json.find((item) => item.email === state.email);
-
 
         if (!User) {
             setState({
