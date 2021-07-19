@@ -1,19 +1,24 @@
 import "./Header.scss";
 import logoSite from "../../assets/svg/logo.svg";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {usersStatus} from "../../store/actions/actions";
 
-const Header = (props) => {
-    const { handleUpdatefilmCheck, infoUser, hendleVerificationUser } = props;
+const Header = () => {
+    const dispatch = useDispatch(); // функция захвата экшена
+    const infoUser = useSelector((state) => state.stateApp.user); // авторизированный пользователь
+
 
     const siteLogo = (
         <a href="/" className="logo" title={"Домой"}>
-            <img src={logoSite} alt={"logo"} />
+            <img src={logoSite} alt={"logo"}/>
             myMovies
         </a>
     ); // ссылка на лого
-    const handleMarkCard = (check) => {
-        handleUpdatefilmCheck(check); // убираем пагинацию
-        hendleVerificationUser("", "");
+    const handleMarkCard = () => {
+        dispatch(usersStatus({name: "", status: ""}));
+        localStorage.clear();
+
     };
 
     return (
@@ -29,7 +34,7 @@ const Header = (props) => {
                         title="Авторизация"
                         tabIndex="0"
                         id="regbutton"
-                        onClick={() => handleMarkCard(true)}
+                        onClick={() => handleMarkCard()}
                     >
                         {infoUser.name ? "Exit" : "Sign In/Sign Up"}
                     </button>

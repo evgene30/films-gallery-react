@@ -1,17 +1,24 @@
-import { nanoid } from "nanoid";
+import {nanoid} from "nanoid";
+import {useDispatch, useSelector} from "react-redux";
+import {addFilm, selectFilter} from "../../../store/actions/actions";
+import {selectFilms} from "./selectFilms";
 
-const Select = (props) => {
-    const { handleSortFilmSelect, checkSelect } = props;
+const Select = () => {
+    const dispatch = useDispatch(); // функция захвата экшена
+    const checkSelect = useSelector((state) => state.stateApp.checkSelect); // запись выбранного фильтра (название)
+    const itemsFilm = useSelector((state) => state.stateApp.itemsFilm); // список всех фильмов
     const sortingSelect = [
-        { indexValue: "id", indexName: "Выберите фильтр..." },
-        { indexValue: "popularity", indexName: "Популярность" },
-        { indexValue: "vote_average", indexName: "Рейтинг" },
-        { indexValue: "vote_count", indexName: "Количество голосов" },
-        { indexValue: "release_date", indexName: "Дата релиза" },
+        {indexValue: "id", indexName: "Выберите фильтр..."},
+        {indexValue: "popularity", indexName: "Популярность"},
+        {indexValue: "vote_average", indexName: "Рейтинг"},
+        {indexValue: "vote_count", indexName: "Количество голосов"},
+        {indexValue: "release_date", indexName: "Дата релиза"},
     ];
 
     const handleChangeSelect = (event) => {
-        handleSortFilmSelect(event.target.value); // забираем значение select
+        // сортировка фильмов через Select
+        dispatch(selectFilter(event.target.value)) // записываем название фильтра в стейт
+        dispatch(addFilm(selectFilms(event.target.value, itemsFilm))) // обработка логики сортировки перед записью в стейт
     };
 
     return (

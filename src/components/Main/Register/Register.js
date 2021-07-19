@@ -1,13 +1,15 @@
 import closeImg from "../../../assets/png/close.png";
-import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import {useHistory} from "react-router-dom";
+import {useState} from "react";
 import "./Register.scss";
 import RegisterNewUser from "./RegisterNewUser";
 import Json from "../../../dummy_data/users.json";
+import {useDispatch} from "react-redux";
+import {filmChecks, usersStatus} from "../../../store/actions/actions";
 
-const Register = (props) => {
-    const { hendleVerificationUser, handleMarkCard } = props;
+const Register = () => {
 
+    const dispatch = useDispatch(); // функция захвата экшена
     const [state, setState] = useState({
         form: true,
         email: "",
@@ -23,40 +25,47 @@ const Register = (props) => {
 
     const handleClickClose = () => {
         history.push("./");
-        handleMarkCard(false);
+        dispatch(filmChecks(false))
     };
 
     const handleClickRegister = () => {
-        setState({ form: !state.form });
+        setState({form: !state.form});
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
         const User = Json.find((item) => item.email === state.email);
+
+
         if (!User) {
             setState({
                 form: true,
                 email: state.email,
                 pass: "",
                 mesEmail: "No registration email",
-                labelStyleError: { color: "red" },
-                inputStyleError: { border: "3px solid red" },
+                labelStyleError: {color: "red"},
+                inputStyleError: {border: "3px solid red"},
             });
         } else {
             if (User.password === state.pass) {
-                hendleVerificationUser(User.status, User.name);
+                dispatch(usersStatus({name: User.name, status: User.status}));
+
+                const regUser = JSON.stringify({name: User.name, status: User.status});
+                localStorage.setItem("User", regUser);
+
+
                 history.push("./");
-                handleMarkCard(false);
+                dispatch(filmChecks(false))
             } else {
                 setState({
                     form: true,
                     pass: "",
                     email: "",
                     mesPass: "Password error",
-                    passLabelError: { color: "red" },
-                    passInputError: { border: "3px solid red" },
-                    inputStyleError: { border: "3px solid red" },
+                    passLabelError: {color: "red"},
+                    passInputError: {border: "3px solid red"},
+                    inputStyleError: {border: "3px solid red"},
                 });
             }
         }
@@ -77,7 +86,7 @@ const Register = (props) => {
                 alt="Close"
                 src={closeImg}
                 onClick={handleClickClose}
-                style={{ height: "40px", width: "40px" }}
+                style={{height: "40px", width: "40px"}}
             />
             {state.form && (
                 <form
@@ -139,9 +148,7 @@ const Register = (props) => {
                 </form>
             )}
             {!state.form && (
-                <RegisterNewUser
-                    hendleVerificationUser={hendleVerificationUser}
-                />
+                <RegisterNewUser/>
             )}
         </section>
     );

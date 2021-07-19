@@ -3,26 +3,23 @@ import {useDispatch, useSelector} from "react-redux";
 import {filmPage} from "../../../store/actions/actions";
 
 const Pagination = (props) => {
-    const {styleVisible, massiveFilms} =
-        props;
+    const {massiveFilms} = props;
     const dispatch = useDispatch(); // функция захвата объекта
     const filmPages = useSelector((state) => state.stateApp.filmPage);
+    const user = useSelector((state) => state.stateApp.user); // авторизированный пользователь
+    const styleVisible = user.status === "admin" ? {background: "#8080ff"} : {}; // изменение фона для Админа
 
 
     const handleClick = (event) => {
-        const filmsState = filmPages;
+        const filmsState = Number([filmPages].map((elem) => elem));
 
         if (event.target.innerText === "Prev" && filmsState !== 0) {
-            // handleUpdatefilmPage(filmsState - 1);
             dispatch(filmPage(filmsState - 1));
         } else if (event.target.innerText === "Next" && filmsState !== 20) {
-            // handleUpdatefilmPage(filmsState + 1);
             dispatch(filmPage(filmsState + 1));
         } else if (Number(event.target.innerText)) {
-            // handleUpdatefilmPage(Number(event.target.innerText));
-            dispatch(filmPage((Number(event.target.innerText))))
+            dispatch(filmPage(Number(event.target.innerText === '1' ? '0' : event.target.innerText)));
         } else {
-            // handleUpdatefilmPage(filmPage);
             dispatch(filmPage(filmPages));
         }
     };
@@ -52,6 +49,7 @@ const Pagination = (props) => {
                 return {display: "none"};
         }
     };
+
     return (
         <div className="pagination-block" style={styleVisible}>
             {/*блок отрисовки пагинации*/}
@@ -61,7 +59,7 @@ const Pagination = (props) => {
                 </li>
                 <li
                     tabIndex="0"
-                    className={filmPages === 1 ? "active" : ""}
+                    className={filmPages === 0 ? "active" : ""}
                     onClick={handleClick}
                 >
                     1

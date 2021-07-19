@@ -1,18 +1,23 @@
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import closeImg from "../../../assets/png/close.png";
 import "./Addfilm.scss";
-import { useState } from "react";
-import { nanoid } from "nanoid";
+import {useState} from "react";
+import {nanoid} from "nanoid";
+import {useDispatch, useSelector} from "react-redux";
+import {addFilm, filmChecks} from "../../../store/actions/actions";
+import {newFilms} from "./addNewFilm";
 
-const Addfilm = (props) => {
+const Addfilm = () => {
     const history = useHistory();
-    const genriFilms = [...props.genrisFilms]; // список жанров
+    const dispatch = useDispatch(); // функция захвата экшена
+    const genriFilms = useSelector((state) => state.stateApp.genrisFilms); // жанры фильмов
     const cardGenri = new Map(genriFilms.map((item) => [item.id, item])); // создаем карту объектов
     const Genri = genriFilms.map((item) => cardGenri.get(item.id).name); // извлекаем жанры
+    const itemsFilm = useSelector((state) => state.stateApp.itemsFilm); // списк всех фильмов
 
     const handleClickClose = () => {
         history.push("./");
-        props.handleMarkCard(false);
+        dispatch(filmChecks(false));
     };
     const [state, setState] = useState({
         id: nanoid(),
@@ -32,9 +37,9 @@ const Addfilm = (props) => {
     });
     const handleSubmit = (event) => {
         event.preventDefault();
-        props.handleUpdateitemsFilm(state);
+        dispatch(addFilm(newFilms(state, itemsFilm))); // обработка логики добавления/изменения фильма
         history.goBack();
-        props.handleMarkCard(false);
+        dispatch(filmChecks(false));
     };
 
     const handleInputChange = (event) => {
@@ -67,7 +72,7 @@ const Addfilm = (props) => {
                 alt="Close"
                 src={closeImg}
                 onClick={handleClickClose}
-                style={{ height: "40px", width: "40px" }}
+                style={{height: "40px", width: "40px"}}
             />
 
             <form className="form_add" id="addform" onSubmit={handleSubmit}>
@@ -116,7 +121,7 @@ const Addfilm = (props) => {
                     name="release_date"
                     onChange={handleInputChange}
                     value={release_date || ""}
-                    style={{ border: "none" }}
+                    style={{border: "none"}}
                 />
                 <label>Жанр:</label>
 

@@ -1,16 +1,26 @@
 import closeImg from "../../../assets/png/close.png";
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import "./Editfilm.scss";
-import { useState } from "react";
+import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {addFilm} from "../../../store/actions/actions";
+import {newFilms} from "../Addfilm/addNewFilm";
+import {nanoid} from "nanoid";
 
 const Editfilm = (props) => {
+    const dispatch = useDispatch(); // функция захвата экшена
     const infoFilm = props.item;
+    const itemsFilm = useSelector((state) => state.stateApp.itemsFilm); // список всех фильмов
+    const genrisFilm = useSelector((state) => state.stateApp.genrisFilms); // жанры фильмов
+    const cardGenri = new Map(genrisFilm.map((item) => [item.id, item])); // создаем карту объектов
+    const Genri = genrisFilm.map((item) => cardGenri.get(item.id).name); // извлекаем жанры
+
     const history = useHistory();
     const [state, setState] = useState({
         id: infoFilm.id,
         adult: infoFilm.adult,
         backdrop_path: infoFilm.backdrop_path,
-        genre_ids: infoFilm.genre_ids,
+        genre_ids: "",
         media_type: infoFilm.media_type,
         original_language: infoFilm.original_language,
         original_title: infoFilm.original_title,
@@ -30,7 +40,7 @@ const Editfilm = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        props.handleUpdateitemsFilm(state);
+        dispatch(addFilm(newFilms(state, itemsFilm))); // обработка логики добавления/изменения фильма
         history.goBack();
     };
 
@@ -63,7 +73,7 @@ const Editfilm = (props) => {
                 alt="Close"
                 src={closeImg}
                 onClick={handleClickClose}
-                style={{ height: "40px", width: "40px" }}
+                style={{height: "40px", width: "40px"}}
             />
 
             <form className="form_add" id="addform" onSubmit={handleSubmit}>
@@ -111,16 +121,23 @@ const Editfilm = (props) => {
                     name="release_date"
                     onChange={handleInputChange}
                     value={release_date || ""}
-                    style={{ border: "none" }}
+                    style={{border: "none"}}
                 />
                 <label>Жанр:</label>
-                <input
+
+                <select
                     className="add_select"
                     name="genre_ids"
                     onChange={handleInputChange}
-                    value={genre_ids || ""}
+                    value={genre_ids}
+                    multiple={false}
                     id="select_add"
-                />
+                >
+                    {Genri.map((item) => {
+                        return <option key={nanoid()}>{item}</option>;
+                    })}
+                </select>
+
                 <label>Рейтинг:</label>
                 <input
                     type="number"

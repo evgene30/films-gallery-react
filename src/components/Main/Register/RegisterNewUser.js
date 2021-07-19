@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Json from "../../../dummy_data/users.json";
+import {useDispatch} from "react-redux";
+import {usersStatus} from "../../../store/actions/actions";
 
 const RegisterNewUser = (props) => {
     const history = useHistory();
+    const dispatch = useDispatch(); // функция захвата экшена
     const [state, setState] = useState({
         name: "",
         lastname: "",
@@ -60,10 +63,9 @@ const RegisterNewUser = (props) => {
             });
         } else {
             if (state.pass === state.auth_pass) {
-                props.hendleVerificationUser(
-                    (state.status = "user"),
-                    state.name
-                );
+                dispatch(usersStatus({name: state.name, status: state.status = "user"}));
+                const regUser = JSON.stringify({name: state.name, status: "user"});
+                localStorage.setItem("User", regUser);
                 history.push("./");
             } else {
                 setState({

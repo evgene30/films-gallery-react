@@ -6,46 +6,48 @@ import {useHistory, Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import "./Infofilm.scss";
-import {traller} from "../../../../store/actions/actions";
+import {delFilm, filmChecks, traller} from "../../../../store/actions/actions";
+import {handleGenriFilm} from "./genrisFilm";
 
 const Infofilm = (props) => {
-    const dispatch = useDispatch(); // функция захвата объекта
-    const infoFilm = props.item;
-    const videoTrailer =  useSelector((state) => state.stateApp.videoTrailer); // трейлеры фильмов
-
-    useEffect(() => {
-            dispatch(traller(infoFilm.id));
-        },
-        [dispatch]);
-
-
-    const [state, setState] = useState({
-        value: "",
-        message: "",
-    });
-
+    const dispatch = useDispatch(); // функция захвата экшена
+    const infoFilm = props.item; // информация о выбранном фильме
+    const genrisFilm = useSelector((state) => state.stateApp.genrisFilms); // жанры фильмов
+    const genri = infoFilm.genre_ids; // жанр текущего фильма
+    const videoTrailer = useSelector((state) => state.stateApp.videoTrailer); // трейлер фильма
+    const infoUser = useSelector((state) => state.stateApp.user); // авторизированный пользователь
+    const newStyle = infoUser.status === "admin" ? {background: "#8080ff"} : {}; // изменение фона для Админа
     const img = "https://image.tmdb.org/t/p/w500"; // формируем изображение
     const err = logoImage; // альтернативное изображение на случай отсутствия
     const history = useHistory();
     const Links = `filmedit=${infoFilm.id}`; // формирование пути роутинга
-    const Genri = props.handleGenriFilm;
-    const {infoUser, newStyle} = props; // трейлер
     const srcLink = `https://www.youtube.com/embed/${videoTrailer.key}`;
     const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // оценка фильма
+
+    useEffect(() => {
+            dispatch(traller(infoFilm.id));
+        },
+        [dispatch, infoFilm]); // прописываем зависимости
+
+
+    const [state, setState] = useState({
+        message: "",
+    });
 
 
     const handleClickClose = () => {
         history.goBack();
-        props.handleMarkCard(false);
+        dispatch(filmChecks(false));
+
     };
     const deleteCard = (id) => {
         history.push("./");
-        props.handleDeleteCard(id);
-        props.handleMarkCard(false);
+        dispatch(delFilm(id));
+        dispatch(filmChecks(false));
     };
 
     const handleChange = (event) => {
-        setState({value: event.target.value});
+        RatingPost(event.target.value, infoFilm.id);
     };
 
     const RatingPost = (value, id) => {
@@ -72,7 +74,7 @@ const Infofilm = (props) => {
                         setState({
                             message:
                                 "Вы уже голосовали. Ваш голос успешно обновлен.",
-                        });
+                        })
                     } else if (result.status_message === "Success.") {
                         setState({message: "Ваш голос отправлен на сервер!"});
                     } else {
@@ -84,7 +86,6 @@ const Infofilm = (props) => {
                 });
         }
     };
-    RatingPost(state.value, infoFilm.id); // отправка запроса рейтинга
 
     return (
         <div
@@ -147,7 +148,7 @@ const Infofilm = (props) => {
                 <p>Популярность: {infoFilm.popularity}</p>
                 <p>Дата релиза: {infoFilm.release_date}</p>
                 <p>Количество голосов: {infoFilm.vote_count}</p>
-                <p>Жанр: {Genri}</p>
+                <p>Жанр: {handleGenriFilm(genri, genrisFilm)}</p>
                 {infoUser.name && (
                     <div className="ratingFilm" style={{display: "block"}}>
                         <select
