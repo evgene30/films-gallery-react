@@ -5,7 +5,6 @@ import thunk from "redux-thunk";
 
 const composedEnhancer = compose(
     applyMiddleware(logger, thunk),
-    development() && window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );
 const comboReducer = combineReducers({
     stateApp: Reducer,
