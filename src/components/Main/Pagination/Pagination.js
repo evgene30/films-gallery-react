@@ -1,4 +1,5 @@
 import "./Pagination.scss";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filmPage } from "../../../store/actions/actions";
 

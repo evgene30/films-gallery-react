@@ -1,4 +1,5 @@
 import "./Header.scss";
+import React from "react";
 import logoSite from "../../assets/svg/logo.svg";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";

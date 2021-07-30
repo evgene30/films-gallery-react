@@ -1,4 +1,5 @@
 import { useHistory } from "react-router-dom";
+import React from "react";
 import closeImg from "../../../assets/png/close.png";
 import "./Addfilm.scss";
 import { useState } from "react";

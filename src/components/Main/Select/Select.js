@@ -1,4 +1,5 @@
 import { nanoid } from "nanoid";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addFilm, selectFilter } from "../../../store/actions/actions";
 import { selectFilms } from "./selectFilms";

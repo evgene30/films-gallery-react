@@ -1,4 +1,5 @@
 import closeImg from "../../../assets/png/close.png";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import "./Register.scss";

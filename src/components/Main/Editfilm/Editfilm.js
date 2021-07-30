@@ -1,11 +1,12 @@
 import closeImg from "../../../assets/png/close.png";
-import { useHistory } from "react-router-dom";
+import React from "react";
+import {useHistory} from "react-router-dom";
 import "./Editfilm.scss";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addFilm } from "../../../store/actions/actions";
-import { newFilms } from "../Addfilm/addNewFilm";
-import { nanoid } from "nanoid";
+import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {addFilm} from "../../../store/actions/actions";
+import {newFilms} from "../Addfilm/addNewFilm";
+import {nanoid} from "nanoid";
 
 const Editfilm = (props) => {
     const dispatch = useDispatch(); // функция захвата экшена
@@ -73,7 +74,7 @@ const Editfilm = (props) => {
                 alt="Close"
                 src={closeImg}
                 onClick={handleClickClose}
-                style={{ height: "40px", width: "40px" }}
+                style={{height: "40px", width: "40px"}}
             />
 
             <form className="form_add" id="addform" onSubmit={handleSubmit}>
@@ -121,7 +122,7 @@ const Editfilm = (props) => {
                     name="release_date"
                     onChange={handleInputChange}
                     value={release_date || ""}
-                    style={{ border: "none" }}
+                    style={{border: "none"}}
                 />
                 <label>Жанр:</label>
 

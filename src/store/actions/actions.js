@@ -13,25 +13,30 @@ import {
     USER_STATUS,
 } from "../constans/const";
 
-import { getFilms } from "../servises/getFilms";
-import { getGenris } from "../servises/getGenris";
-import { getTrailer } from "../servises/getVideo";
-import { delCardPOST } from "../servises/postDelFilm";
+import {getFilms} from "../servises/getFilms";
+import {getGenris} from "../servises/getGenris";
+import {getTrailer} from "../servises/getVideo";
+import {delCardPOST} from "../servises/postDelFilm";
 
 export const addFilm = (value) => ({
     type: ADD_FILM,
     payload: value,
 });
 
-export const delFilm = (value) => ({
+export const delFilm = (value, dispatch) => ({
     type: REMOVE_FILM,
-    payload: delCardPOST(value),
+    payload: delCardPOST(value, dispatch),
 });
 
 export const usersStatus = (value) => ({
     type: USER_STATUS,
     payload: value,
 });
+
+export const errorLoad = (value) => ({
+    type: ERROR_LOAD,
+    payload: value,
+})
 
 export const preloader = (value) => ({
     type: IS_FILMS_LOADING,
@@ -59,6 +64,8 @@ export const selectFilter = (value) => ({
 });
 
 export const newListFilms = () => (dispatch) => {
+
+
     dispatch(preloader(true));
     getFilms()
         .then((value) => {
@@ -67,15 +74,12 @@ export const newListFilms = () => (dispatch) => {
                 payload: value.items,
             });
         })
-        .then(() => {
+        .catch((error) => {
+            dispatch(errorLoad(error));
+        })
+        .finally(() => {
             dispatch(preloader(false));
         })
-        .catch((error) => {
-            dispatch({
-                type: ERROR_LOAD,
-                payload: error,
-            });
-        });
 };
 
 export const genrisFilms = () => (dispatch) => {
@@ -87,10 +91,7 @@ export const genrisFilms = () => (dispatch) => {
             });
         })
         .catch((error) => {
-            dispatch({
-                type: ERROR_LOAD,
-                payload: error,
-            });
+            dispatch(errorLoad(error));
         });
 };
 
