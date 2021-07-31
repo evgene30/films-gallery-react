@@ -4,7 +4,7 @@ import Header from "./Header/Header";
 import Main from "./Main/Main";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
-import {newListFilms, genrisFilms, usersStatus} from "../store/actions/actions";
+import {getListFilms, getGenrisFilms, usersStatus} from "../store/actions/actions";
 
 
 const App = () => {
@@ -16,8 +16,8 @@ const App = () => {
 
     useEffect(() => {
         const userLocal = JSON.parse(localStorage.getItem("User")) || []; // проверка зарегистрированного пользователя
-        dispatch(newListFilms()); // загружаем список фильмов
-        dispatch(genrisFilms()); // загружаем жанры
+        dispatch(getListFilms()); // загружаем список фильмов
+        dispatch(getGenrisFilms()); // загружаем жанры
 
         if (userLocal) {
             dispatch(

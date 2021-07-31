@@ -13,7 +13,7 @@ const binarySearch = (massive, item) => {
 
         if (typeof massive[0] === "object") {
             if (massive[midlleIndex].id === item) {
-                return massive[midlleIndex];
+                return true;
             } else if (massive[midlleIndex].id > item) {
                 max = midlleIndex - 1;
             } else {
@@ -23,10 +23,7 @@ const binarySearch = (massive, item) => {
 
         if (typeof massive[0] === "string" || typeof massive[0] === "number") {
             if (massive[midlleIndex] === item) {
-                console.log(
-                    `Искомый элемент "${massive[midlleIndex]}" находится в массиве под индексом "${midlleIndex}"`
-                );
-                return midlleIndex;
+                return true;
             } else if (massive[midlleIndex] > item) {
                 max = midlleIndex - 1;
             } else {

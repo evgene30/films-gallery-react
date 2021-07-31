@@ -1,6 +1,5 @@
 import {errorLoad} from "../actions/actions";
 
-
 export const delCardPOST = (id, dispatch) => {
     if (typeof id === "number") { // производим проверку типа id (определяем отправлять ли запрос на сервер)
         // если число отправляем на удаление
@@ -21,7 +20,7 @@ export const delCardPOST = (id, dispatch) => {
                         dispatch(errorLoad(error));
                     }
                 } else {
-                    dispatch(errorLoad("нет связи с сервером"))
+                    dispatch(errorLoad(String(response)))
                 }
             })
         return id;  // передаем id число для удаления из нашего массива

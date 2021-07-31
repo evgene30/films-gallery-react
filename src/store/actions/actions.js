@@ -15,7 +15,6 @@ import {
 
 import {getFilms} from "../servises/getFilms";
 import {getGenris} from "../servises/getGenris";
-import {getTrailer} from "../servises/getVideo";
 import {delCardPOST} from "../servises/postDelFilm";
 
 export const addFilm = (value) => ({
@@ -63,46 +62,23 @@ export const selectFilter = (value) => ({
     payload: value,
 });
 
-export const newListFilms = () => (dispatch) => {
+export const filmsLoad = (value) => ({
+    type: FILMS_LOAD,
+    payload: value,
+});
+
+export const loadGenris = (value) => ({
+    type: LOAD_GENRIS,
+    payload: value,
+})
+
+export const loadTrailers = (value) => ({
+    type: LOAD_TRAILERS,
+    payload: value,
+})
+
+export const getListFilms = () => (dispatch) => getFilms(dispatch); // асинхронный запрос списка фильмов с сервера
+
+export const getGenrisFilms = () => (dispatch) => getGenris(dispatch); // асинхронный запрос списка жанров фильмов с сервера
 
 
-    dispatch(preloader(true));
-    getFilms()
-        .then((value) => {
-            dispatch({
-                type: FILMS_LOAD,
-                payload: value.items,
-            });
-        })
-        .catch((error) => {
-            dispatch(errorLoad(error));
-        })
-        .finally(() => {
-            dispatch(preloader(false));
-        })
-};
-
-export const genrisFilms = () => (dispatch) => {
-    getGenris()
-        .then((data) => {
-            dispatch({
-                type: LOAD_GENRIS,
-                payload: data.genres,
-            });
-        })
-        .catch((error) => {
-            dispatch(errorLoad(error));
-        });
-};
-
-export const traller = (id) => (dispatch) => {
-    getTrailer(id).then((data) => {
-        dispatch({
-            type: LOAD_TRAILERS,
-            payload: {
-                id: data.id,
-                key: data.results?.map((item) => item.key),
-            },
-        });
-    });
-};

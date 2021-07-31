@@ -4,13 +4,12 @@ import closeImg from "../../../../assets/png/close.png";
 import penImg from "../../../../assets/png/pen.png";
 import logoImage from "../../../../assets/png/movies.png";
 import {useHistory, Link} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import "./Infofilm.scss";
 import {
     delFilm,
     filmChecks,
-    traller,
 } from "../../../../store/actions/actions";
 import {handleGenriFilm} from "./genrisFilm";
 
@@ -27,12 +26,9 @@ const Infofilm = (props) => {
     const err = logoImage; // альтернативное изображение на случай отсутствия
     const history = useHistory();
     const Links = `filmedit=${infoFilm.id}`; // формирование пути роутинга
-    const srcLink = `https://www.youtube.com/embed/${videoTrailer.key}`;
+    const srcLink = `https://www.youtube.com/embed/${videoTrailer.get(
+        infoFilm.id)}`;
     const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // оценка фильма
-
-    useEffect(() => {
-        dispatch(traller(infoFilm.id));
-    }, [dispatch, infoFilm]); // прописываем зависимости
 
     const [state, setState] = useState({
         message: "",
@@ -177,7 +173,7 @@ const Infofilm = (props) => {
 
                 <div className="film-block__msg">{state.message}</div>
             </div>
-            {videoTrailer.key && (
+            {videoTrailer.get(infoFilm.id) && (
                 <div
                     className="film-block__video"
                     style={{marginTop: "100px"}}
