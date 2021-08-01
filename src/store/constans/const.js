@@ -8,6 +8,5 @@ export const LOAD_TRAILERS = "LOAD_TRAILERS";
 export const FILM_PAGE = "FILM_PAGE";
 export const FILM_ID = "FILM_ID";
 export const SELECT_FILTER = "SELECT_FILTER";
-export const FILM_CHECK = "FILM_CHECK";
 export const USER_STATUS = "USER_STATUS";
 

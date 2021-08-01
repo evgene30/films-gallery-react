@@ -1,11 +1,11 @@
-import { useState } from "react";
+import {useState} from "react";
 import React from "react";
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import Json from "../../../dummy_data/users.json";
-import { useDispatch } from "react-redux";
-import { usersStatus } from "../../../store/actions/actions";
+import {useDispatch} from "react-redux";
+import {usersStatus} from "../../../store/actions/actions";
 
-const RegisterNewUser = (props) => {
+const RegisterNewUser = () => {
     const history = useHistory();
     const dispatch = useDispatch(); // функция захвата экшена
     const [state, setState] = useState({
@@ -56,8 +56,8 @@ const RegisterNewUser = (props) => {
                 lastname: state.lastname,
                 pass: "",
                 auth_pass: "",
-                passLabelError: { color: "red" },
-                passInputError: { border: "3px solid red" },
+                passLabelError: {color: "red"},
+                passInputError: {border: "3px solid red"},
                 mesEmail: "Email registered",
                 nonCheckInput: {},
                 nonCheckLabel: {},
@@ -65,7 +65,7 @@ const RegisterNewUser = (props) => {
             });
         } else {
             if (state.pass === state.auth_pass) {
-                dispatch(usersStatus({ name: state.name, status: "user" }));
+                dispatch(usersStatus({name: state.name, status: "user"}));
                 const regUser = JSON.stringify({
                     name: state.name,
                     status: "user",
@@ -82,8 +82,8 @@ const RegisterNewUser = (props) => {
                     passLabelError: {},
                     passInputError: {},
                     mesEmail: "",
-                    nonCheckInput: { border: "3px solid red" },
-                    nonCheckLabel: { color: "red" },
+                    nonCheckInput: {border: "3px solid red"},
+                    nonCheckLabel: {color: "red"},
                     mesPass: "Password mismatch",
                 });
             }
@@ -96,7 +96,7 @@ const RegisterNewUser = (props) => {
             id="regformtwo"
             onSubmit={handleSubmit}
         >
-            <label>Введите ваше имя</label>
+            <label>Введите ваше имя *</label>
             <input
                 type="text"
                 name="name"
@@ -106,7 +106,7 @@ const RegisterNewUser = (props) => {
                 onChange={handleInputChange}
                 value={state.name || ""}
             />
-            <label>Введите вашу фамилию</label>
+            <label>Введите вашу фамилию *</label>
             <input
                 type="text"
                 name="lastname"
@@ -117,7 +117,7 @@ const RegisterNewUser = (props) => {
                 value={state.lastname || ""}
             />
             <label style={state.passLabelError}>
-                {state.mesEmail ? state.mesEmail : "Введите ваш email"}
+                {state.mesEmail ? state.mesEmail : "Введите ваш email *"}
             </label>
             <input
                 type="email"
@@ -130,7 +130,7 @@ const RegisterNewUser = (props) => {
                 style={state.passInputError || ""}
             />
             <label style={state.nonCheckLabel}>
-                {state.mesPass ? state.mesPass : "Введите Ваш пароль"}
+                {state.mesPass ? state.mesPass : "Введите Ваш пароль *"}
             </label>
             <input
                 type="password"
@@ -143,7 +143,7 @@ const RegisterNewUser = (props) => {
                 value={state.pass || ""}
                 style={state.nonCheckInput || ""}
             />
-            <label>Введите Ваш пароль еще раз:</label>
+            <label>Введите Ваш пароль еще раз: *</label>
             <input
                 type="password"
                 name="auth_pass"

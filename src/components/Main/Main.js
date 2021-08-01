@@ -9,21 +9,15 @@ import Editfilm from "./Editfilm/Editfilm";
 import Pagination from "./Pagination/Pagination";
 import Select from "./Select/Select";
 import Register from "./Register/Register";
-import {useDispatch, useSelector} from "react-redux";
-import {filmChecks} from "../../store/actions/actions";
+import {useSelector} from "react-redux";
 
 const Main = () => {
-    const dispatch = useDispatch(); // функция захвата экшена
     const originalListFilms = useSelector((state) => state.stateApp.itemsFilm); // список всех фильмов
     const filmId = useSelector((state) => state.stateApp.filmId); // ID выбранного фильма
-
     const link = `/id=${filmId}`; // формирование пути роутинга
     const LinkEdit = `/filmedit=${filmId}`; // путь приема динамического адреса
-
-
     const infoUser = useSelector((state) => state.stateApp.user); // авторизированный пользователь
     const newStyle = infoUser.status === "admin" ? {background: "#8080ff"} : {}; // изменение фона для Админа
-    const filmCheck = useSelector((state) => state.stateApp.filmCheck); // убираем блок пагинации при клике
     const filmPage = useSelector((state) => state.stateApp.filmPage); // отправляем страницу пагинации
     const massiveFilms = packMassiveFilm(originalListFilms); // список рассортированных для пагинации фильмов
 
@@ -51,7 +45,6 @@ const Main = () => {
                                 title="Добавить видео"
                                 tabIndex="0"
                                 id="adminbutton"
-                                onClick={() => dispatch(filmChecks(true))}
                             >
                                 Add
                             </button>
@@ -75,9 +68,14 @@ const Main = () => {
 
                             }
                         </ul>
+                        <Pagination
+                            massiveFilms={massiveFilms} // список сортированных фильмов
+                        />
 
 
                     </Route>
+
+
                     <Route path={link} exact>
                         {/*блок отрисовки фильма по клику*/}
                         {originalListFilms
@@ -88,10 +86,14 @@ const Main = () => {
                                 );
                             })}
                     </Route>
+
+
                     <Route path="/newfilm" exact>
                         {/*блок отрисовки добавления фильма*/}
                         <Addfilm/>
                     </Route>
+
+
                     <Route path={LinkEdit} exact>
                         {originalListFilms
                             .filter((item) => item.id === filmId)
@@ -101,22 +103,19 @@ const Main = () => {
                                 );
                             })}
                     </Route>
+
+
                     <Route path="/register" exact>
                         <Register/>
                     </Route>
+
                     <Redirect to="/"/>
+
+
                 </Switch>
             </section>
-
-            {!filmCheck && (
-                <Pagination
-                    massiveFilms={massiveFilms} // список сортированных фильмов
-                />
-            )}
-
         </main>
     );
-
 }
 
 export default Main;

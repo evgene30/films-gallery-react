@@ -7,10 +7,8 @@ import {useHistory, Link} from "react-router-dom";
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import "./Infofilm.scss";
-import {
-    delFilm,
-    filmChecks,
-} from "../../../../store/actions/actions";
+import "./videoYouTube.scss";
+import {delFilm} from "../../../../store/actions/actions";
 import {handleGenriFilm} from "./genrisFilm";
 
 const Infofilm = (props) => {
@@ -36,12 +34,10 @@ const Infofilm = (props) => {
 
     const handleClickClose = () => {
         history.goBack();
-        dispatch(filmChecks(false));
     };
     const deleteCard = (id) => {
         history.push("./");
         dispatch(delFilm(id, dispatch));
-        dispatch(filmChecks(false));
     };
 
     const handleChange = (event) => {
@@ -176,16 +172,12 @@ const Infofilm = (props) => {
             {videoTrailer.get(infoFilm.id) && (
                 <div
                     className="film-block__video"
-                    style={{marginTop: "100px"}}
                 >
                     <iframe
                         id="ytplayer"
                         title="frame"
                         type="text/html"
-                        width="100%"
-                        height="400"
                         src={srcLink}
-                        frameBorder="0"
                         allow="fullscreen"
                     />
                 </div>

@@ -9,7 +9,6 @@ import {
     FILM_PAGE,
     FILM_ID,
     SELECT_FILTER,
-    FILM_CHECK,
     USER_STATUS,
 } from "../constans/const";
 
@@ -20,7 +19,6 @@ const initialState = {
     filmPage: 0,
     filmId: "",
     filmCheck: false,
-    checkSelect: "",
     genrisFilms: [],
     videoTrailer: [],
     user: [],
@@ -58,12 +56,6 @@ const Reducer = (state = initialState, action) => {
             return {
                 ...state,
                 checkSelect: action.payload,
-            };
-
-        case FILM_CHECK:
-            return {
-                ...state,
-                filmCheck: action.payload,
             };
 
         case LOAD_GENRIS:

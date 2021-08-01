@@ -4,7 +4,7 @@ import logoImage from "../../../assets/png/movies.png";
 import delImg from "../../../assets/png/del.png";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {delFilm, filmID, filmChecks} from "../../../store/actions/actions";
+import {delFilm, filmID} from "../../../store/actions/actions";
 
 const Card = (props) => {
     const dispatch = useDispatch(); // функция захвата экшена
@@ -17,15 +17,10 @@ const Card = (props) => {
 
     const deleteCard = (id) => {
         dispatch(delFilm(id, dispatch));
-        dispatch(filmChecks(false)); // чекер пагинации
     };
 
     const filmInformation = (id) => {
         dispatch(filmID(id)); // отправка id фильма
-    };
-
-    const markCard = () => {
-        dispatch(filmChecks(true)); // чекер пагинации
     };
 
     return (
@@ -35,7 +30,7 @@ const Card = (props) => {
             id={itemCard.id}
             onClick={() => filmInformation(itemCard.id)}
         >
-            <Link to={link} onClick={() => markCard()}>
+            <Link to={link}>
                 <div className="card" title={itemCard.title}>
                     <div className="hover-img">
                         <p>Релиз: {itemCard.release_date}</p>

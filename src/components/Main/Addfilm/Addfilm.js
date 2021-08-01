@@ -5,7 +5,7 @@ import "./Addfilm.scss";
 import { useState } from "react";
 import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
-import { addFilm, filmChecks } from "../../../store/actions/actions";
+import { addFilm} from "../../../store/actions/actions";
 import { newFilms } from "./addNewFilm";
 
 const Addfilm = () => {
@@ -14,11 +14,10 @@ const Addfilm = () => {
     const genriFilms = useSelector((state) => state.stateApp.genrisFilms); // жанры фильмов
     const cardGenri = new Map(genriFilms.map((item) => [item.id, item])); // создаем карту объектов
     const Genri = genriFilms.map((item) => cardGenri.get(item.id).name); // извлекаем жанры
-    const itemsFilm = useSelector((state) => state.stateApp.itemsFilm); // списк всех фильмов
+    const itemsFilm = useSelector((state) => state.stateApp.itemsFilm); // список всех фильмов
 
     const handleClickClose = () => {
         history.push("./");
-        dispatch(filmChecks(false));
     };
     const [state, setState] = useState({
         id: nanoid(),
@@ -40,7 +39,6 @@ const Addfilm = () => {
         event.preventDefault();
         dispatch(addFilm(newFilms(state, itemsFilm))); // обработка логики добавления/изменения фильма
         history.goBack();
-        dispatch(filmChecks(false));
     };
 
     const handleInputChange = (event) => {

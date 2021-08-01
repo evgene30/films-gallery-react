@@ -6,7 +6,7 @@ import "./Register.scss";
 import RegisterNewUser from "./RegisterNewUser";
 import Json from "../../../dummy_data/users.json";
 import { useDispatch } from "react-redux";
-import { filmChecks, usersStatus } from "../../../store/actions/actions";
+import { usersStatus } from "../../../store/actions/actions";
 
 const Register = () => {
     const dispatch = useDispatch(); // функция захвата экшена
@@ -25,7 +25,6 @@ const Register = () => {
 
     const handleClickClose = () => {
         history.push("./");
-        dispatch(filmChecks(false));
     };
 
     const handleClickRegister = () => {
@@ -56,7 +55,6 @@ const Register = () => {
                 localStorage.setItem("User", regUser);
 
                 history.push("./");
-                dispatch(filmChecks(false));
             } else {
                 setState({
                     form: true,

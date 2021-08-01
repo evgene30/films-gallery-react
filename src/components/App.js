@@ -11,7 +11,7 @@ const App = () => {
     const dispatch = useDispatch(); // функция захвата экшена
     const preloader = useSelector((state) => state.stateApp.preloader); // передзагрузчик
     const user = useSelector((state) => state.stateApp.user); // авторизированный пользователь
-    const errors = useSelector((state) => state.stateApp.error); // отлов ошибок промиса
+    const errors = useSelector((state) => state.stateApp.error); // отлов ошибок
 
 
     useEffect(() => {

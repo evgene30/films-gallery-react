@@ -9,7 +9,6 @@ import {
     FILM_PAGE,
     FILM_ID,
     SELECT_FILTER,
-    FILM_CHECK,
     USER_STATUS,
 } from "../constans/const";
 
@@ -44,11 +43,6 @@ export const preloader = (value) => ({
 
 export const filmPage = (value) => ({
     type: FILM_PAGE,
-    payload: value,
-});
-
-export const filmChecks = (value) => ({
-    type: FILM_CHECK,
     payload: value,
 });
 
