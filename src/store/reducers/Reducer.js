@@ -5,7 +5,6 @@ import {
     FILMS_LOAD,
     ERROR_LOAD,
     LOAD_GENRIS,
-    LOAD_TRAILERS,
     FILM_PAGE,
     FILM_ID,
     SELECT_FILTER,
@@ -20,7 +19,6 @@ const initialState = {
     filmId: "",
     filmCheck: false,
     genrisFilms: [],
-    videoTrailer: [],
     user: [],
 };
 
@@ -70,11 +68,6 @@ const Reducer = (state = initialState, action) => {
                 error: action.payload,
             };
 
-        case LOAD_TRAILERS:
-            return {
-                ...state,
-                videoTrailer: action.payload,
-            };
         case FILM_PAGE:
             return {
                 ...state,

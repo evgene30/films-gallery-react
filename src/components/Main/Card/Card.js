@@ -4,7 +4,7 @@ import logoImage from "../../../assets/png/movies.png";
 import delImg from "../../../assets/png/del.png";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {delFilm, filmID} from "../../../store/actions/actions";
+import {delFilm} from "../../../store/actions/actions";
 
 const Card = (props) => {
     const dispatch = useDispatch(); // функция захвата экшена
@@ -13,14 +13,10 @@ const Card = (props) => {
     const img = "https://image.tmdb.org/t/p/w500"; // формируем изображение
     const err = logoImage; // альтернативное изображение на случай отсутствия
     const delImage = delImg; // картинка удаления
-    const link = `id=${itemCard.id}`; // формирование строки адреса отдельного фильма для роутинга
+    const link = `${itemCard.id}`; // формирование строки адреса отдельного фильма для роутинга
 
     const deleteCard = (id) => {
         dispatch(delFilm(id, dispatch));
-    };
-
-    const filmInformation = (id) => {
-        dispatch(filmID(id)); // отправка id фильма
     };
 
     return (
@@ -28,7 +24,6 @@ const Card = (props) => {
             tabIndex="0"
             className="card-block"
             id={itemCard.id}
-            onClick={() => filmInformation(itemCard.id)}
         >
             <Link to={link}>
                 <div className="card" title={itemCard.title}>

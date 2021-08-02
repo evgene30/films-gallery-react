@@ -1,7 +1,7 @@
 import React from "react";
 import "./Main.scss";
 import Card from "./Card/Card";
-import {Route, Switch, Redirect} from "react-router-dom";
+import {Route, Switch, Redirect, useParams} from "react-router-dom";
 import Infofilm from "./Card/Infofilm/Infofilm";
 import {Link} from "react-router-dom";
 import Addfilm from "./Addfilm/Addfilm";
@@ -13,9 +13,6 @@ import {useSelector} from "react-redux";
 
 const Main = () => {
     const originalListFilms = useSelector((state) => state.stateApp.itemsFilm); // список всех фильмов
-    const filmId = useSelector((state) => state.stateApp.filmId); // ID выбранного фильма
-    const link = `/id=${filmId}`; // формирование пути роутинга
-    const LinkEdit = `/filmedit=${filmId}`; // путь приема динамического адреса
     const infoUser = useSelector((state) => state.stateApp.user); // авторизированный пользователь
     const newStyle = infoUser.status === "admin" ? {background: "#8080ff"} : {}; // изменение фона для Админа
     const filmPage = useSelector((state) => state.stateApp.filmPage); // отправляем страницу пагинации
@@ -31,6 +28,69 @@ const Main = () => {
         return massiveFilmsNew;
     }
 
+    function RouteWithSubRoutes(route) {
+        return (
+            <Route
+                path={route.path}
+                render={props => (
+                    <route.component {...props} routes={route.routes}/>
+                )}
+            />
+        );
+    }
+
+    function Film() {
+        let {id} = useParams();
+        if (Number(id)) {
+            return (
+                originalListFilms
+                    .filter((item) => item.id === Number(id))
+                    .map((item) => <Infofilm key={item.id} item={item}/>)
+            );
+        } else {
+            return (
+                originalListFilms
+                    .filter((item) => item.id === id)
+                    .map((item) => <Infofilm key={item.id} item={item}/>)
+            );
+        }
+    }
+
+    function Edit() {
+        let {id} = useParams();
+        if (Number(id)) {
+            return (
+                originalListFilms
+                    .filter((item) => item.id === Number(id))
+                    .map((item) => {
+                        return (
+                            <Editfilm key={item.id} item={item}/>
+                        );
+                    })
+            )
+        } else {
+            return (
+                originalListFilms
+                    .filter((item) => item.id === id)
+                    .map((item) => {
+                        return (
+                            <Editfilm key={item.id} item={item}/>
+                        );
+                    })
+            )
+        }
+    }
+
+    const routes = [
+        {
+            path: "/register",
+            component: Register,
+        },
+        {
+            path: "/newfilm",
+            component: Addfilm,
+        },
+    ];
 
     return (
         <main id="firstmain" style={newStyle}>
@@ -55,63 +115,25 @@ const Main = () => {
 
             <section className="section-movies">
                 <Switch>
-
-
                     <Route path="/" exact>
                         {/*блок отрисовки карточек фильмов*/}
-
-
                         <ul className="ul-movies" id="sectionmov">
                             {
-
                                 massiveFilms[filmPage]?.map((item) => <Card key={item.id} itemCard={item}/>)
-
                             }
                         </ul>
                         <Pagination
                             massiveFilms={massiveFilms} // список сортированных фильмов
                         />
-
-
                     </Route>
 
+                    {routes.map((route, i) => (
+                        <RouteWithSubRoutes key={i} {...route} />
+                    ))}
 
-                    <Route path={link} exact>
-                        {/*блок отрисовки фильма по клику*/}
-                        {originalListFilms
-                            .filter((item) => item.id === filmId)
-                            .map((item) => {
-                                return (
-                                    <Infofilm key={item.id} item={item}/>
-                                );
-                            })}
-                    </Route>
-
-
-                    <Route path="/newfilm" exact>
-                        {/*блок отрисовки добавления фильма*/}
-                        <Addfilm/>
-                    </Route>
-
-
-                    <Route path={LinkEdit} exact>
-                        {originalListFilms
-                            .filter((item) => item.id === filmId)
-                            .map((item) => {
-                                return (
-                                    <Editfilm key={item.id} item={item}/>
-                                );
-                            })}
-                    </Route>
-
-
-                    <Route path="/register" exact>
-                        <Register/>
-                    </Route>
-
+                    <Route path="/:id" exact children={<Film/>}/>
+                    <Route path="/edit/:id" exact children={<Edit/>}/>
                     <Redirect to="/"/>
-
-
                 </Switch>
             </section>
         </main>

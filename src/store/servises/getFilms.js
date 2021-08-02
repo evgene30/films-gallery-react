@@ -1,5 +1,4 @@
 import {errorLoad, filmsLoad, preloader} from "../actions/actions";
-import {getTrailer} from "./getVideo";
 
 export const getFilms = (dispatch) => {
     dispatch(preloader(true));
@@ -10,7 +9,6 @@ export const getFilms = (dispatch) => {
         .then((response) => response.json())
         .then((value) => {
             dispatch(filmsLoad(value.items));
-            getTrailer(value.items.map((item) => item.id), dispatch); // формирование и передача id всех фильмов
         })
         .catch((error) => {
             dispatch(errorLoad(String(error)));

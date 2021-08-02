@@ -5,7 +5,6 @@ import {
     FILMS_LOAD,
     ERROR_LOAD,
     LOAD_GENRIS,
-    LOAD_TRAILERS,
     FILM_PAGE,
     FILM_ID,
     SELECT_FILTER,
@@ -63,11 +62,6 @@ export const filmsLoad = (value) => ({
 
 export const loadGenris = (value) => ({
     type: LOAD_GENRIS,
-    payload: value,
-})
-
-export const loadTrailers = (value) => ({
-    type: LOAD_TRAILERS,
     payload: value,
 })
 

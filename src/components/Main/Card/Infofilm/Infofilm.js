@@ -7,33 +7,32 @@ import {useHistory, Link} from "react-router-dom";
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import "./Infofilm.scss";
-import "./videoYouTube.scss";
+import "./YouTubeTraller/videoYouTube.scss";
 import {delFilm} from "../../../../store/actions/actions";
 import {handleGenriFilm} from "./genrisFilm";
+import YouTubeVideo from "./YouTubeTraller/YouTubeVideo";
 
 const Infofilm = (props) => {
     const dispatch = useDispatch(); // функция захвата экшена
     const infoFilm = props.item; // информация о выбранном фильме
     const genrisFilm = useSelector((state) => state.stateApp.genrisFilms); // жанры фильмов
     const genri = infoFilm.genre_ids; // жанр текущего фильма
-    const videoTrailer = useSelector((state) => state.stateApp.videoTrailer); // трейлер фильма
     const infoUser = useSelector((state) => state.stateApp.user); // авторизированный пользователь
     const newStyle =
         infoUser.status === "admin" ? {background: "#8080ff"} : {}; // изменение фона для Админа
     const img = "https://image.tmdb.org/t/p/w500"; // формируем изображение
     const err = logoImage; // альтернативное изображение на случай отсутствия
     const history = useHistory();
-    const Links = `filmedit=${infoFilm.id}`; // формирование пути роутинга
-    const srcLink = `https://www.youtube.com/embed/${videoTrailer.get(
-        infoFilm.id)}`;
+    const Links = `edit/${infoFilm.id}`; // формирование пути роутинга
     const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // оценка фильма
+
 
     const [state, setState] = useState({
         message: "",
     });
 
     const handleClickClose = () => {
-        history.goBack();
+        history.push("./");
     };
     const deleteCard = (id) => {
         history.push("./");
@@ -130,7 +129,6 @@ const Infofilm = (props) => {
                     </div>
                 </div>
             )}
-
             <div className="film-block__text">
                 <h2>{infoFilm.title}</h2>
                 <h3>
@@ -166,22 +164,9 @@ const Infofilm = (props) => {
                 <p style={{fontWeight: "normal", fontSize: "16px"}}>
                     {infoFilm.overview}
                 </p>
-
                 <div className="film-block__msg">{state.message}</div>
             </div>
-            {videoTrailer.get(infoFilm.id) && (
-                <div
-                    className="film-block__video"
-                >
-                    <iframe
-                        id="ytplayer"
-                        title="frame"
-                        type="text/html"
-                        src={srcLink}
-                        allow="fullscreen"
-                    />
-                </div>
-            )}
+            <YouTubeVideo id={infoFilm.id}/>
         </div>
     );
 };
