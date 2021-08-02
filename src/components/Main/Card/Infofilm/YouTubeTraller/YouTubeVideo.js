@@ -1,22 +1,26 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react"
 
-const YouTubeVideo = (props) => {
+const YouTubeVideo = ({id}) => {
+
     const [state, setState] = useState({
         link: "",
     });
 
     useEffect(() => {
-        fetch(
-            `https://api.themoviedb.org/3/movie/${props.id}/videos?api_key=833e2dd8979208fbee927efb619ed90a&language=ru-RU`
-        )
-            .then((response) => response.json())
-            .then((data) => data.results)
-            .then((item) => {
-                if (typeof item === "object") {
-                    setState({link: item[0]?.key})
-                }
-            })
-    }, [props.id])
+        if (typeof id === "number") {
+            fetch(
+                `https://api.themoviedb.org/3/movie/${id}/videos?api_key=833e2dd8979208fbee927efb619ed90a&language=ru-RU`
+            )
+                .then((response) => response.json())
+                .then((data) => data.results)
+                .then((item) => {
+                    if (typeof item === "object") {
+                        setState({link: item[0]?.key})
+                    }
+                })
+        }
+        return '';
+    }, [id])
 
     if (state.link) {
         return (
@@ -31,7 +35,7 @@ const YouTubeVideo = (props) => {
             </div>
         )
     }
-    return ''
+    return '';
 };
 
 export default YouTubeVideo

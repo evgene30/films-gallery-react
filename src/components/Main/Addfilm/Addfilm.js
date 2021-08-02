@@ -38,7 +38,7 @@ const Addfilm = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         dispatch(addFilm(newFilms(state, itemsFilm))); // обработка логики добавления/изменения фильма
-        history.goBack();
+        history.push("./");
     };
 
     const handleInputChange = (event) => {

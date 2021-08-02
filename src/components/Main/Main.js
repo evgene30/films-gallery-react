@@ -1,15 +1,14 @@
 import React from "react";
 import "./Main.scss";
 import Card from "./Card/Card";
-import {Route, Switch, Redirect, useParams} from "react-router-dom";
-import Infofilm from "./Card/Infofilm/Infofilm";
+import {Route, Switch, Redirect} from "react-router-dom";
 import {Link} from "react-router-dom";
 import Addfilm from "./Addfilm/Addfilm";
-import Editfilm from "./Editfilm/Editfilm";
 import Pagination from "./Pagination/Pagination";
 import Select from "./Select/Select";
 import Register from "./Register/Register";
 import {useSelector} from "react-redux";
+import {Film, Edit, RouteWithSubRoutes} from "./route/route"
 
 const Main = () => {
     const originalListFilms = useSelector((state) => state.stateApp.itemsFilm); // список всех фильмов
@@ -26,59 +25,6 @@ const Main = () => {
             massiveFilmsNew[i] = array.slice(i * 20, i * 20 + 20);
         }
         return massiveFilmsNew;
-    }
-
-    function RouteWithSubRoutes(route) {
-        return (
-            <Route
-                path={route.path}
-                render={props => (
-                    <route.component {...props} routes={route.routes}/>
-                )}
-            />
-        );
-    }
-
-    function Film() {
-        let {id} = useParams();
-        if (Number(id)) {
-            return (
-                originalListFilms
-                    .filter((item) => item.id === Number(id))
-                    .map((item) => <Infofilm key={item.id} item={item}/>)
-            );
-        } else {
-            return (
-                originalListFilms
-                    .filter((item) => item.id === id)
-                    .map((item) => <Infofilm key={item.id} item={item}/>)
-            );
-        }
-    }
-
-    function Edit() {
-        let {id} = useParams();
-        if (Number(id)) {
-            return (
-                originalListFilms
-                    .filter((item) => item.id === Number(id))
-                    .map((item) => {
-                        return (
-                            <Editfilm key={item.id} item={item}/>
-                        );
-                    })
-            )
-        } else {
-            return (
-                originalListFilms
-                    .filter((item) => item.id === id)
-                    .map((item) => {
-                        return (
-                            <Editfilm key={item.id} item={item}/>
-                        );
-                    })
-            )
-        }
     }
 
     const routes = [
@@ -112,7 +58,6 @@ const Main = () => {
                     </div>
                 )}
             </section>
-
             <section className="section-movies">
                 <Switch>
                     <Route path="/" exact>
@@ -126,11 +71,9 @@ const Main = () => {
                             massiveFilms={massiveFilms} // список сортированных фильмов
                         />
                     </Route>
-
                     {routes.map((route, i) => (
                         <RouteWithSubRoutes key={i} {...route} />
                     ))}
-
                     <Route path="/:id" exact children={<Film/>}/>
                     <Route path="/edit/:id" exact children={<Edit/>}/>
                     <Redirect to="/"/>
