@@ -17,7 +17,7 @@ const Addfilm = () => {
     const itemsFilm = useSelector((state) => state.stateApp.itemsFilm); // список всех фильмов
 
     const handleClickClose = () => {
-        history.push("./");
+        history.push("../");
     };
     const [state, setState] = useState({
         id: nanoid(),
@@ -38,7 +38,7 @@ const Addfilm = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         dispatch(addFilm(newFilms(state, itemsFilm))); // обработка логики добавления/изменения фильма
-        history.push("./");
+        history.push("../");
     };
 
     const handleInputChange = (event) => {
