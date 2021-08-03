@@ -14,6 +14,7 @@ const Main = () => {
     const infoUser = useSelector((state) => state.stateApp.user); // авторизированный пользователь
     const newStyle = infoUser.status === "admin" ? {background: "#8080ff"} : {}; // изменение фона для Админа
 
+
     return (
         <main id="firstmain" style={newStyle}>
             <section className="section-header">
@@ -36,13 +37,13 @@ const Main = () => {
             </section>
             <section className="section-movies">
                 <Switch>
-                    <Route exact path="/"><HomePage /></Route>
-                    <Route exact strict path="/edit/newfilm"><Addfilm /></Route>
+                    <Route exact path="/"><HomePage/></Route>
+                    <Route exact strict path="/edit/newfilm"><Addfilm/></Route>
                     <Route exact strict path="/newfilm"><Addfilm /></Route>
-                    <Route exact strict path="/register"><Register /></Route>
-                    <Route exact path="/:id"><Film /></Route>
-                    <Route exact path="/edit/:id"><Edit /></Route>
-                    <Route><NoteFoundPage/></Route>
+                    <Route exact strict path="/register"><Register/></Route>
+                    <Route exact path="/:id"><Film/></Route>
+                    <Route exact path="/edit/:id"><Edit/></Route>
+                    <NoteFoundPage/>
                 </Switch>
             </section>
         </main>

@@ -1,6 +1,6 @@
 import closeImg from "../../../assets/png/close.png";
 import React from "react";
-import {useHistory} from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 import "./Editfilm.scss";
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
@@ -9,6 +9,7 @@ import {newFilms} from "../Addfilm/addNewFilm";
 import {nanoid} from "nanoid";
 
 const Editfilm = (props) => {
+    const admin = JSON.parse(localStorage.getItem("User")) || [];
     const dispatch = useDispatch(); // функция захвата экшена
     const infoFilm = props.item;
     const itemsFilm = useSelector((state) => state.stateApp.itemsFilm); // список всех фильмов
@@ -68,7 +69,7 @@ const Editfilm = (props) => {
         vote_count,
     } = state;
     return (
-        <div className="addfilm" id="addfilm">
+        admin.status === "admin" ? <div className="addfilm" id="addfilm">
             <img
                 className="close"
                 alt="Close"
@@ -175,7 +176,7 @@ const Editfilm = (props) => {
                     Сохранить
                 </button>
             </form>
-        </div>
+        </div> : <Redirect to="../register"/>
     );
 };
 

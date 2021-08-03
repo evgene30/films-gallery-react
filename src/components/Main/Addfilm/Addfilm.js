@@ -1,14 +1,16 @@
-import { useHistory } from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 import React from "react";
 import closeImg from "../../../assets/png/close.png";
 import "./Addfilm.scss";
-import { useState } from "react";
-import { nanoid } from "nanoid";
-import { useDispatch, useSelector } from "react-redux";
-import { addFilm} from "../../../store/actions/actions";
-import { newFilms } from "./addNewFilm";
+import {useState} from "react";
+import {nanoid} from "nanoid";
+import {useDispatch, useSelector} from "react-redux";
+import {addFilm} from "../../../store/actions/actions";
+import {newFilms} from "./addNewFilm";
+
 
 const Addfilm = () => {
+    const admin = JSON.parse(localStorage.getItem("User")) || [];
     const history = useHistory();
     const dispatch = useDispatch(); // функция захвата экшена
     const genriFilms = useSelector((state) => state.stateApp.genrisFilms); // жанры фильмов
@@ -65,13 +67,13 @@ const Addfilm = () => {
     } = state;
 
     return (
-        <div className="addfilm" id="addfilm">
+        admin.status === "admin" ? <div className="addfilm" id="addfilm">
             <img
                 className="close"
                 alt="Close"
                 src={closeImg}
                 onClick={handleClickClose}
-                style={{ height: "40px", width: "40px" }}
+                style={{height: "40px", width: "40px"}}
             />
 
             <form className="form_add" id="addform" onSubmit={handleSubmit}>
@@ -120,7 +122,7 @@ const Addfilm = () => {
                     name="release_date"
                     onChange={handleInputChange}
                     value={release_date || ""}
-                    style={{ border: "none" }}
+                    style={{border: "none"}}
                 />
                 <label>Жанр:</label>
 
@@ -173,8 +175,8 @@ const Addfilm = () => {
                     Сохранить
                 </button>
             </form>
-        </div>
-    );
+        </div> : <Redirect to="../register"/>
+    )
 };
 
 export default Addfilm;
