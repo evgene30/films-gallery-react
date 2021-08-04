@@ -2,6 +2,9 @@
   width: 100%;
   padding: 10px;
   margin-top: 50px;
+  :active {
+    color: black;
+  }
 }
 
 .pagination {
@@ -32,11 +35,12 @@
   color: black;
   transition: 0.3s;
   background: #2196f3;
+
 }
 
 .active {
-  cursor: pointer;
   color: black;
   transition: 0.3s;
   background: #2196f3;
+
 }

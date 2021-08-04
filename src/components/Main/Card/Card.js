@@ -13,7 +13,7 @@ const Card = (props) => {
     const img = "https://image.tmdb.org/t/p/w500"; // формируем изображение
     const err = logoImage; // альтернативное изображение на случай отсутствия
     const delImage = delImg; // картинка удаления
-    const link = `${itemCard.id}`; // формирование строки адреса отдельного фильма для роутинга
+    const link = `/${itemCard.id}`; // формирование строки адреса отдельного фильма для роутинга
 
     const deleteCard = (id) => {
         dispatch(delFilm(id, dispatch));

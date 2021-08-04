@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import Infofilm from "../Card/Infofilm/Infofilm";
 import Editfilm from "../Editfilm/Editfilm";
 import React from "react";
@@ -69,6 +69,7 @@ export function HomePage() {
     const filmPage = useSelector((state) => state.stateApp.filmPage); // отправляем страницу пагинации
     const originalListFilms = useSelector((state) => state.stateApp.itemsFilm); // список всех фильмов
     const massiveFilms = packMassiveFilm(originalListFilms); // список рассортированных для пагинации фильмов
+    const {page = 0} = useParams();
 
 
     function packMassiveFilm(array) {
@@ -80,16 +81,20 @@ export function HomePage() {
         return massiveFilmsNew;
     }
 
+
     return (
         <div>
             <ul className="ul-movies" id="sectionmov">
                 {
-                    massiveFilms[filmPage]?.map((item) => <Card key={item.id} itemCard={item}/>)
+                    massiveFilms[page]?.map((item) => <Card key={item.id} itemCard={item}/>)
                 }
             </ul>
-            <Pagination
-                massiveFilms={massiveFilms} // список сортированных фильмов
-            />
+
+            <Link to={`/page/${filmPage}`}>
+                <Pagination
+                    massiveFilms={massiveFilms}// список сортированных фильмов
+                />
+            </Link>
         </div>
     )
 }

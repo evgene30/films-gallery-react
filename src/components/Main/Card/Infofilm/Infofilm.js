@@ -23,8 +23,9 @@ const Infofilm = (props) => {
     const img = "https://image.tmdb.org/t/p/w500"; // формируем изображение
     const err = logoImage; // альтернативное изображение на случай отсутствия
     const history = useHistory();
-    const Links = `edit/${infoFilm.id}`; // формирование пути роутинга
+    const Links = `/edit/${infoFilm.id}`; // формирование пути роутинга
     const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // оценка фильма
+
 
 
     const [state, setState] = useState({
@@ -32,7 +33,8 @@ const Infofilm = (props) => {
     });
 
     const handleClickClose = () => {
-        history.push("./");
+        // history.push("./");
+        history.goBack();
     };
     const deleteCard = (id) => {
         history.push("./");

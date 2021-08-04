@@ -27,7 +27,7 @@ const Header = () => {
                 <div className="innertext">
                     {infoUser.name ? infoUser.name : ""}
                 </div>
-                <Link to={infoUser.name ? "./" : "/register"}>
+                <Link to={infoUser.name ? "../" : "/register"}>
                     <button
                         className="button"
                         title="Авторизация"

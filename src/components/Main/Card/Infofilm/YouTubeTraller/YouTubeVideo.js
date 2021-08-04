@@ -35,7 +35,9 @@ const YouTubeVideo = ({id}) => {
             </div>
         )
     }
-    return '';
+    return (
+        <div className="film-block__video" style={{height:"23.4vh"}}/>
+    );
 };
 
 export default YouTubeVideo
