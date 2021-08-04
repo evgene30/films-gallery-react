@@ -3,7 +3,7 @@
   padding: 10px;
   margin-top: 50px;
   :active {
-    color: black;
+    color: black !important;
   }
 }
 
@@ -32,15 +32,14 @@
 .pagination li:hover,
 .pagination li.active {
   cursor: pointer;
-  color: black;
+  color: black !important;
   transition: 0.3s;
   background: #2196f3;
 
 }
 
 .active {
-  color: black;
-  transition: 0.3s;
+  color: black !important;
   background: #2196f3;
-
+  transition: 0.3s;
 }

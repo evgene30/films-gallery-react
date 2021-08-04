@@ -5,7 +5,6 @@ import {
     FILMS_LOAD,
     ERROR_LOAD,
     LOAD_GENRIS,
-    FILM_PAGE,
     FILM_ID,
     SELECT_FILTER,
     USER_STATUS,
@@ -37,11 +36,6 @@ export const errorLoad = (value) => ({
 
 export const preloader = (value) => ({
     type: IS_FILMS_LOADING,
-    payload: value,
-});
-
-export const filmPage = (value) => ({
-    type: FILM_PAGE,
     payload: value,
 });
 

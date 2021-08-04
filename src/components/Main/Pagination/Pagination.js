@@ -1,44 +1,16 @@
 import "./Pagination.scss";
 import React from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {filmPage} from "../../../store/actions/actions";
-import {useParams} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {Link, useParams} from "react-router-dom";
 
 
 const Pagination = (props) => {
     const {massiveFilms} = props;
-
-    const dispatch = useDispatch(); // функция захвата объекта
-    const filmPages = useSelector((state) => state.stateApp.filmPage);
     const user = useSelector((state) => state.stateApp.user); // авторизированный пользователь
     const styleVisible =
         user.status === "admin" ? {background: "#8080ff"} : {}; // изменение фона для Админа
     let {page = 0} = useParams();
 
-
-
-    const handleClick = (event) => {
-        const filmsState = Number(page);
-
-        if (event.target.innerText === "Prev" && filmsState !== 0) {
-            dispatch(filmPage(filmsState - 1));
-
-        } else if (event.target.innerText === "Next" && filmsState !== 20) {
-            dispatch(filmPage(filmsState + 1));
-        } else if (Number(event.target.innerText)) {
-            dispatch(
-                filmPage(
-                    Number(
-                        event.target.innerText === "1"
-                            ? "0"
-                            : event.target.innerText
-                    )
-                )
-            );
-        } else {
-            dispatch(filmPage(filmPages));
-        }
-    };
 
     const handleVisualPagination = (index) => {
         const selectPage = Number(page);
@@ -67,23 +39,28 @@ const Pagination = (props) => {
         }
     };
 
-    
+
     return (
 
         <div className="pagination-block" style={styleVisible}>
             {/*блок отрисовки пагинации*/}
+
             <ul className="pagination" id="pagination">
-                <li tabIndex="0" className="nextclick mt" onClick={handleClick}>
-                    Prev
-                </li>
-                <li
-                    tabIndex="0"
-                    className={Number(page) === 0 ? "active" : ""}
-                    onClick={handleClick}
-                    id="0"
-                >
-                    1
-                </li>
+                <Link to={`/page/${page - 1 < 0 ? 0 : page - 1}`}>
+                    <li tabIndex="0" className="nextclick mt">
+                        Prev
+                    </li>
+                </Link>
+
+                <Link to={`/page/${0}`}>
+                    <li
+                        tabIndex="0"
+                        className={Number(page) === 0 ? "active" : ""}
+                        id="0"
+                    >
+                        1
+                    </li>
+                </Link>
                 {massiveFilms.map((item, index) => {
                     return (
                         <li
@@ -91,28 +68,33 @@ const Pagination = (props) => {
                             tabIndex="0"
                             key={index}
                             className={index + 1 === Number(page) ? "active" : ""}
-                            onClick={handleClick}
                             style={handleVisualPagination(index)}
                         >
-                            {index + 1}
+                            <Link to={`/page/${index + 1}`}>
+                                {index + 1}
+                            </Link>
                         </li>
-
                     );
                 })}
-                <li
-                    tabIndex="0"
-                    className={Number(page) === 20 ? "active" : ""}
-                    onClick={handleClick}
-                    id="20"
-                >
-                    20
-                </li>
-                <li tabIndex="0" className="nextclick mt" onClick={handleClick}>
-                    Next
-                </li>
+                <Link to={`/page/${20}`}>
+                    <li
+                        tabIndex="0"
+                        className={Number(page) === 20 ? "active" : ""}
+                        id="20"
+                    >
+                        20
+                    </li>
+                </Link>
+                <Link to={`/page/${Number(page) >= 20 ? 20 : Number(page) + 1}`}>
+                    <li tabIndex="0" className="nextclick mt">
+                        Next
+                    </li>
+                </Link>
             </ul>
+
         </div>
-    );
+    )
+        ;
 };
 
 export default Pagination;

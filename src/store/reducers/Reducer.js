@@ -5,7 +5,6 @@ import {
     FILMS_LOAD,
     ERROR_LOAD,
     LOAD_GENRIS,
-    FILM_PAGE,
     FILM_ID,
     SELECT_FILTER,
     USER_STATUS,
@@ -15,7 +14,6 @@ const initialState = {
     preloader: false,
     itemsFilm: [], // не сортированный список фильмов
     error: null,
-    filmPage: 0,
     filmId: "",
     filmCheck: false,
     genrisFilms: [],
@@ -66,12 +64,6 @@ const Reducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: action.payload,
-            };
-
-        case FILM_PAGE:
-            return {
-                ...state,
-                filmPage: action.payload,
             };
 
         case USER_STATUS:
