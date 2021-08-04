@@ -1,13 +1,15 @@
-import {loadTrailers} from "../actions/actions";
+import { loadTrailers } from "../actions/actions";
 import binarySearch from "./binarySearch";
 
 export const getTrailer = (idItemsList, dispatch) => {
-    const errorList = [120168, 64011, 93484, 81094, 73126, 128146, 2902, 2396, 4549, 6395];
+    const errorList = [
+        120168, 64011, 93484, 81094, 73126, 128146, 2902, 2396, 4549, 6395,
+    ];
     const video = new Map();
 
     idItemsList.forEach((id) => {
-
-        if (!binarySearch(errorList, id)) { // проверка бинарным поиском наличия элемента в массиве
+        if (!binarySearch(errorList, id)) {
+            // проверка бинарным поиском наличия элемента в массиве
             fetch(
                 `https://api.themoviedb.org/3/movie/${id}/videos?api_key=833e2dd8979208fbee927efb619ed90a&language=ru-RU`
             )
@@ -20,7 +22,7 @@ export const getTrailer = (idItemsList, dispatch) => {
                 })
                 .then(() => {
                     dispatch(loadTrailers(video));
-                })
+                });
         }
-    })
-}
+    });
+};

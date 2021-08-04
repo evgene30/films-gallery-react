@@ -1,13 +1,14 @@
 # Галерея фильмов
 
-Реализация: React, Redux, React Router
+## Реализация библиотек в приложении: React, redux, react-redux, redux-thunk, react-router-dom, node-sass, nanoid, prop-types
 
 ## Продакшен версия:
 
-## http://my-movies.cf
+## https://movies-list.ml
 
 ## Для проверки:
 ### Admin: proverka@mail.com, 12345678
-### для регистрации пользователя пройти через регистрацию
+### User: proverka@mail.com, 12345678
+### для регистрации произвольного пользователя пройти через регистрацию
 
 

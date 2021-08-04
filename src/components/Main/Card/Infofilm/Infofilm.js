@@ -3,13 +3,12 @@ import React from "react";
 import closeImg from "../../../../assets/png/close.png";
 import penImg from "../../../../assets/png/pen.png";
 import logoImage from "../../../../assets/png/movies.png";
-import {useHistory, Link} from "react-router-dom";
-import {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import "./Infofilm.scss";
+import { useHistory, Link } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./YouTubeTraller/videoYouTube.scss";
-import {delFilm} from "../../../../store/actions/actions";
-import {handleGenriFilm} from "./genrisFilm";
+import { delFilm } from "../../../../store/actions/actions";
+import { handleGenriFilm } from "./genrisFilm";
 import YouTubeVideo from "./YouTubeTraller/YouTubeVideo";
 
 const Infofilm = (props) => {
@@ -19,14 +18,12 @@ const Infofilm = (props) => {
     const genri = infoFilm.genre_ids; // жанр текущего фильма
     const infoUser = useSelector((state) => state.stateApp.user); // авторизированный пользователь
     const newStyle =
-        infoUser.status === "admin" ? {background: "#8080ff"} : {}; // изменение фона для Админа
+        infoUser.status === "admin" ? { background: "#8080ff" } : {}; // изменение фона для Админа
     const img = "https://image.tmdb.org/t/p/w500"; // формируем изображение
     const err = logoImage; // альтернативное изображение на случай отсутствия
     const history = useHistory();
     const Links = `/edit/${infoFilm.id}`; // формирование пути роутинга
     const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // оценка фильма
-
-
 
     const [state, setState] = useState({
         message: "",
@@ -71,13 +68,13 @@ const Infofilm = (props) => {
                                 "Вы уже голосовали. Ваш голос успешно обновлен.",
                         });
                     } else if (result.status_message === "Success.") {
-                        setState({message: "Ваш голос отправлен на сервер!"});
+                        setState({ message: "Ваш голос отправлен на сервер!" });
                     } else {
-                        setState({message: "Ошибка запроса"});
+                        setState({ message: "Ошибка запроса" });
                     }
                 })
                 .catch((error) => {
-                    setState({message: error});
+                    setState({ message: error });
                 });
         }
     };
@@ -104,7 +101,7 @@ const Infofilm = (props) => {
                             : err
                     }
                     alt={infoFilm.title}
-                    style={{width: "100%"}}
+                    style={{ width: "100%" }}
                 />
             </div>
 
@@ -115,7 +112,7 @@ const Infofilm = (props) => {
                             id="dell"
                             src={delImg}
                             alt="del"
-                            style={{paddingLeft: "8px"}}
+                            style={{ paddingLeft: "8px" }}
                             onClick={() => deleteCard(infoFilm.id)}
                         />
                     </div>
@@ -125,7 +122,7 @@ const Infofilm = (props) => {
                                 id="pen"
                                 src={penImg}
                                 alt="del"
-                                style={{paddingLeft: "8px"}}
+                                style={{ paddingLeft: "8px" }}
                             />
                         </Link>
                     </div>
@@ -144,7 +141,7 @@ const Infofilm = (props) => {
                 <p>Количество голосов: {infoFilm.vote_count}</p>
                 <p>Жанр: {handleGenriFilm(genri, genrisFilm)}</p>
                 {infoUser.name && (
-                    <div className="ratingFilm" style={{display: "block"}}>
+                    <div className="ratingFilm" style={{ display: "block" }}>
                         <select
                             name="selectrating"
                             className="select-rating"
@@ -163,12 +160,12 @@ const Infofilm = (props) => {
                         </select>
                     </div>
                 )}
-                <p style={{fontWeight: "normal", fontSize: "16px"}}>
+                <p style={{ fontWeight: "normal", fontSize: "16px" }}>
                     {infoFilm.overview}
                 </p>
                 <div className="film-block__msg">{state.message}</div>
             </div>
-            <YouTubeVideo id={infoFilm.id}/>
+            <YouTubeVideo id={infoFilm.id} />
         </div>
     );
 };

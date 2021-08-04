@@ -1,12 +1,12 @@
 import closeImg from "../../../assets/png/close.png";
 import React from "react";
-import {Redirect, useHistory} from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import "./Editfilm.scss";
-import {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {addFilm} from "../../../store/actions/actions";
-import {newFilms} from "../Addfilm/addNewFilm";
-import {nanoid} from "nanoid";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addFilm } from "../../../store/actions/actions";
+import { newFilms } from "../Addfilm/addNewFilm";
+import { nanoid } from "nanoid";
 
 const Editfilm = (props) => {
     const admin = JSON.parse(localStorage.getItem("User")) || [];
@@ -68,14 +68,14 @@ const Editfilm = (props) => {
         vote_average,
         vote_count,
     } = state;
-    return (
-        admin.status === "admin" ? <div className="addfilm" id="addfilm">
+    return admin.status === "admin" ? (
+        <div className="addfilm" id="addfilm">
             <img
                 className="close"
                 alt="Close"
                 src={closeImg}
                 onClick={handleClickClose}
-                style={{height: "40px", width: "40px"}}
+                style={{ height: "40px", width: "40px" }}
             />
 
             <form className="form_add" id="addform" onSubmit={handleSubmit}>
@@ -123,7 +123,7 @@ const Editfilm = (props) => {
                     name="release_date"
                     onChange={handleInputChange}
                     value={release_date || ""}
-                    style={{border: "none"}}
+                    style={{ border: "none" }}
                 />
                 <label>Жанр:</label>
 
@@ -176,7 +176,9 @@ const Editfilm = (props) => {
                     Сохранить
                 </button>
             </form>
-        </div> : <Redirect to="../register"/>
+        </div>
+    ) : (
+        <Redirect to="../register" />
     );
 };
 

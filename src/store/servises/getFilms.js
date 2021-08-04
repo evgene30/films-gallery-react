@@ -1,4 +1,4 @@
-import {errorLoad, filmsLoad, preloader} from "../actions/actions";
+import { errorLoad, filmsLoad, preloader } from "../actions/actions";
 
 export const getFilms = (dispatch) => {
     dispatch(preloader(true));
@@ -15,5 +15,5 @@ export const getFilms = (dispatch) => {
         })
         .finally(() => {
             dispatch(preloader(false));
-        })
-}
+        });
+};

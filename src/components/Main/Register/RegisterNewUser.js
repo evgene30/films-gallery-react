@@ -1,9 +1,9 @@
-import {useState} from "react";
+import { useState } from "react";
 import React from "react";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Json from "../../../dummy_data/users.json";
-import {useDispatch} from "react-redux";
-import {usersStatus} from "../../../store/actions/actions";
+import { useDispatch } from "react-redux";
+import { usersStatus } from "../../../store/actions/actions";
 
 const RegisterNewUser = () => {
     const history = useHistory();
@@ -56,8 +56,8 @@ const RegisterNewUser = () => {
                 lastname: state.lastname,
                 pass: "",
                 auth_pass: "",
-                passLabelError: {color: "red"},
-                passInputError: {border: "3px solid red"},
+                passLabelError: { color: "red" },
+                passInputError: { border: "3px solid red" },
                 mesEmail: "Email registered",
                 nonCheckInput: {},
                 nonCheckLabel: {},
@@ -65,7 +65,7 @@ const RegisterNewUser = () => {
             });
         } else {
             if (state.pass === state.auth_pass) {
-                dispatch(usersStatus({name: state.name, status: "user"}));
+                dispatch(usersStatus({ name: state.name, status: "user" }));
                 const regUser = JSON.stringify({
                     name: state.name,
                     status: "user",
@@ -82,8 +82,8 @@ const RegisterNewUser = () => {
                     passLabelError: {},
                     passInputError: {},
                     mesEmail: "",
-                    nonCheckInput: {border: "3px solid red"},
-                    nonCheckLabel: {color: "red"},
+                    nonCheckInput: { border: "3px solid red" },
+                    nonCheckLabel: { color: "red" },
                     mesPass: "Password mismatch",
                 });
             }

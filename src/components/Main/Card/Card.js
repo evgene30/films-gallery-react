@@ -2,14 +2,14 @@ import "./Card.scss";
 import React from "react";
 import logoImage from "../../../assets/png/movies.png";
 import delImg from "../../../assets/png/del.png";
-import {Link} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {delFilm} from "../../../store/actions/actions";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { delFilm } from "../../../store/actions/actions";
 
 const Card = (props) => {
     const dispatch = useDispatch(); // функция захвата экшена
     const infoUser = useSelector((state) => state.stateApp.user); // авторизированный пользователь
-    const {itemCard} = props; // информация о выбранном фильме
+    const { itemCard } = props; // информация о выбранном фильме
     const img = "https://image.tmdb.org/t/p/w500"; // формируем изображение
     const err = logoImage; // альтернативное изображение на случай отсутствия
     const delImage = delImg; // картинка удаления
@@ -20,11 +20,7 @@ const Card = (props) => {
     };
 
     return (
-        <li
-            tabIndex="0"
-            className="card-block"
-            id={itemCard.id}
-        >
+        <li tabIndex="0" className="card-block" id={itemCard.id}>
             <Link to={link}>
                 <div className="card" title={itemCard.title}>
                     <div className="hover-img">
@@ -39,7 +35,7 @@ const Card = (props) => {
                                 : err
                         }
                         alt={itemCard.title}
-                        style={{width: "100%"}}
+                        style={{ width: "100%" }}
                     />
                     <div className="container">
                         <h4>
@@ -59,7 +55,7 @@ const Card = (props) => {
                         id="dell"
                         src={delImage}
                         alt="del"
-                        style={{paddingLeft: "8px"}}
+                        style={{ paddingLeft: "8px" }}
                         onClick={() => deleteCard(itemCard.id)}
                     />
                 </div>

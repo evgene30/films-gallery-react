@@ -7,4 +7,3 @@ export const LOAD_GENRIS = "LOAD_GENRIS";
 export const FILM_ID = "FILM_ID";
 export const SELECT_FILTER = "SELECT_FILTER";
 export const USER_STATUS = "USER_STATUS";
-

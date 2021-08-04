@@ -10,9 +10,9 @@ import {
     USER_STATUS,
 } from "../constans/const";
 
-import {getFilms} from "../servises/getFilms";
-import {getGenris} from "../servises/getGenris";
-import {delCardPOST} from "../servises/postDelFilm";
+import { getFilms } from "../servises/getFilms";
+import { getGenris } from "../servises/getGenris";
+import { delCardPOST } from "../servises/postDelFilm";
 
 export const addFilm = (value) => ({
     type: ADD_FILM,
@@ -32,7 +32,7 @@ export const usersStatus = (value) => ({
 export const errorLoad = (value) => ({
     type: ERROR_LOAD,
     payload: value,
-})
+});
 
 export const preloader = (value) => ({
     type: IS_FILMS_LOADING,
@@ -57,10 +57,8 @@ export const filmsLoad = (value) => ({
 export const loadGenris = (value) => ({
     type: LOAD_GENRIS,
     payload: value,
-})
+});
 
 export const getListFilms = () => (dispatch) => getFilms(dispatch); // асинхронный запрос списка фильмов с сервера
 
 export const getGenrisFilms = () => (dispatch) => getGenris(dispatch); // асинхронный запрос списка жанров фильмов с сервера
-
-

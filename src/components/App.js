@@ -2,17 +2,19 @@ import React from "react";
 import Footer from "./Footer/Footer";
 import Header from "./Header/Header";
 import Main from "./Main/Main";
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
-import {getListFilms, getGenrisFilms, usersStatus} from "../store/actions/actions";
-
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import {
+    getListFilms,
+    getGenrisFilms,
+    usersStatus,
+} from "../store/actions/actions";
 
 const App = () => {
     const dispatch = useDispatch(); // функция захвата экшена
     const preloader = useSelector((state) => state.stateApp.preloader); // передзагрузчик
     const user = useSelector((state) => state.stateApp.user); // авторизированный пользователь
     const errors = useSelector((state) => state.stateApp.error); // отлов ошибок
-
 
     useEffect(() => {
         const userLocal = JSON.parse(localStorage.getItem("User")) || []; // проверка зарегистрированного пользователя
@@ -21,11 +23,10 @@ const App = () => {
 
         if (userLocal) {
             dispatch(
-                usersStatus({name: userLocal.name, status: userLocal.status})
+                usersStatus({ name: userLocal.name, status: userLocal.status })
             );
         }
     }, [dispatch]);
-
 
     if (errors) {
         return (
@@ -37,17 +38,17 @@ const App = () => {
             </div>
         );
     } else if (preloader) {
-        return <div id="preloader" className="visible"/>;
+        return <div id="preloader" className="visible" />;
     } else {
         return (
             <div
                 className="App"
-                style={user.status === "admin" ? {background: "#dae7f1"} : {}}
+                style={user.status === "admin" ? { background: "#dae7f1" } : {}}
             >
                 <div className="container">
-                    <Header/>
-                    <Main/>
-                    <Footer/>
+                    <Header />
+                    <Main />
+                    <Footer />
                 </div>
             </div>
         );
