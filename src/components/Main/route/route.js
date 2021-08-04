@@ -81,20 +81,22 @@ export function HomePage() {
         return massiveFilmsNew;
     }
 
+    if (page < 21 && page >= 0) {
+        return (
+            <div>
+                <ul className="ul-movies" id="sectionmov">
+                    {
+                        massiveFilms[page]?.map((item) => <Card key={item.id} itemCard={item}/>)
+                    }
+                </ul>
 
-    return (
-        <div>
-            <ul className="ul-movies" id="sectionmov">
-                {
-                    massiveFilms[page]?.map((item) => <Card key={item.id} itemCard={item}/>)
-                }
-            </ul>
-
-            <Link to={`/page/${filmPage}`}>
-                <Pagination
-                    massiveFilms={massiveFilms}// список сортированных фильмов
-                />
-            </Link>
-        </div>
-    )
+                <Link to={`/page/${filmPage}`}>
+                    <Pagination
+                        massiveFilms={massiveFilms}// список сортированных фильмов
+                    />
+                </Link>
+            </div>
+        )
+    }
+    return <NoteFoundPage/>;
 }
