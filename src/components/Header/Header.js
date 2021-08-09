@@ -1,10 +1,8 @@
 import "./Header.scss";
 import React from "react";
-import logoSite from "../../assets/svg/logo.svg";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { usersStatus } from "../../store/actions/actions";
-
 import {ReactComponent as LogoSVG} from "../../../src/assets/svg/logo.svg";
 
 const Header = () => {
@@ -12,9 +10,9 @@ const Header = () => {
     const infoUser = useSelector((state) => state.stateApp.user); // авторизированный пользователь
 
     const siteLogo = (
-        <a href="/" className="logo" title={"Домой"}>
-            <LogoSVG style={{color: "yellow"}} className={".logo"} width={40} height={40} />
-            myMovies
+        <a href="/" className="link_logo" title={"Домой"}>
+            <LogoSVG style={{color: "white"}} className="logo"/>
+            <p>myMovies</p>
         </a>
     ); // ссылка на лого
     const handleMarkCard = () => {

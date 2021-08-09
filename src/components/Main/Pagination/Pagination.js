@@ -2,6 +2,7 @@ import "./Pagination.scss";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 const Pagination = (props) => {
     const { massiveFilms } = props;
@@ -94,3 +95,8 @@ const Pagination = (props) => {
 };
 
 export default Pagination;
+
+
+Pagination.propTypes = {
+    massiveFilms: PropTypes.arrayOf(PropTypes.array.isRequired),
+  }

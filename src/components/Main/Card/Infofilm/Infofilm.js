@@ -10,7 +10,7 @@ import "./YouTubeTraller/videoYouTube.scss";
 import { delFilm } from "../../../../store/actions/actions";
 import { handleGenriFilm } from "./genrisFilm";
 import YouTubeVideo from "./YouTubeTraller/YouTubeVideo";
-import {postRaitFim} from "../../../../store/servises/movi";
+import {postRatingFim} from "../../../../store/servises/postRatingFim";
 
 const Infofilm = (props) => {
     const dispatch = useDispatch(); // функция захвата экшена
@@ -48,7 +48,7 @@ const Infofilm = (props) => {
             const addRating = {
                 value: value, // отправляем нашу оценку фильма
             };
-            postRaitFim(id, addRating).then(response => setState(response));
+            postRatingFim(id, addRating).then(response => setState(response));
         }
     };
 

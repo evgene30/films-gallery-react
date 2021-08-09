@@ -5,6 +5,8 @@ import delImg from "../../../assets/png/del.png";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { delFilm } from "../../../store/actions/actions";
+import PropTypes from 'prop-types';
+
 
 const Card = (props) => {
     const dispatch = useDispatch(); // функция захвата экшена
@@ -65,4 +67,8 @@ const Card = (props) => {
 };
 
 export default Card;
+
+Card.propTypes = {
+    itemCard: PropTypes.object.isRequired,
+}
 

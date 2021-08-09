@@ -4,10 +4,12 @@ import { Route, Switch } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Select from "./Select/Select";
 import { useSelector } from "react-redux";
-import { HomePage, Film, Edit } from "./route/route";
+import ListFilm from "./route/ListFilm";
 import Addfilm from "./Addfilm/Addfilm";
 import NoteFoundPage from "./route/NoteFoundPage";
 import Register from "./Register/Register";
+import HomePage from "./route/HomePage";
+import Edit from "./route/EditFilm"
 
 const Main = () => {
     const infoUser = useSelector((state) => state.stateApp.user); // авторизированный пользователь
@@ -49,7 +51,7 @@ const Main = () => {
                         <Register />
                     </Route>
                     <Route exact path="/:id">
-                        <Film />
+                        <ListFilm />
                     </Route>
                     <Route exact path="/edit/:id">
                         <Edit />

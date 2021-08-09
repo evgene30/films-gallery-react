@@ -1,4 +1,4 @@
-export const postRaitFim = (id, rating) => fetch(
+export const postRatingFim = (id, rating) => fetch(
     `https://api.themoviedb.org/3/movie/${id}/rating?api_key=833e2dd8979208fbee927efb619ed90a&session_id=b5ac2e7a824e2eff35e3f452706116df7525a037`,
     {
         method: "POST",

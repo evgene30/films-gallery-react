@@ -7,11 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { addFilm } from "../../../store/actions/actions";
 import { newFilms } from "../Addfilm/addNewFilm";
 import { nanoid } from "nanoid";
+import PropTypes from 'prop-types';
 
 const Editfilm = (props) => {
     const admin = JSON.parse(localStorage.getItem("User")) || [];
     const dispatch = useDispatch(); // функция захвата экшена
     const infoFilm = props.item;
+    console.log(props)
     const itemsFilm = useSelector((state) => state.stateApp.itemsFilm); // список всех фильмов
     const genrisFilm = useSelector((state) => state.stateApp.genrisFilms); // жанры фильмов
     const cardGenri = new Map(genrisFilm.map((item) => [item.id, item])); // создаем карту объектов
@@ -183,3 +185,8 @@ const Editfilm = (props) => {
 };
 
 export default Editfilm;
+
+
+Editfilm.propTypes = {
+    item: PropTypes.object.isRequired,
+}
