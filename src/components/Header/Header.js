@@ -5,13 +5,15 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { usersStatus } from "../../store/actions/actions";
 
+import {ReactComponent as LogoSVG} from "../../../src/assets/svg/logo.svg";
+
 const Header = () => {
     const dispatch = useDispatch(); // функция захвата экшена
     const infoUser = useSelector((state) => state.stateApp.user); // авторизированный пользователь
 
     const siteLogo = (
         <a href="/" className="logo" title={"Домой"}>
-            <img src={logoSite} alt={"logo"} />
+            <LogoSVG style={{color: "yellow"}} className={".logo"} width={40} height={40} />
             myMovies
         </a>
     ); // ссылка на лого
@@ -25,7 +27,7 @@ const Header = () => {
             <div className="wrap-logo">{siteLogo}</div>
             <div className="prebutton">
                 <div className="innertext">
-                    {infoUser.name ? infoUser.name : ""}
+                    {infoUser?.name}
                 </div>
                 <Link to={infoUser.name ? "../" : "/register"}>
                     <button

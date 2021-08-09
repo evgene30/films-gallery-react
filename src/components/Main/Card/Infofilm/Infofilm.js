@@ -10,6 +10,7 @@ import "./YouTubeTraller/videoYouTube.scss";
 import { delFilm } from "../../../../store/actions/actions";
 import { handleGenriFilm } from "./genrisFilm";
 import YouTubeVideo from "./YouTubeTraller/YouTubeVideo";
+import {postRaitFim} from "../../../../store/servises/movi";
 
 const Infofilm = (props) => {
     const dispatch = useDispatch(); // функция захвата экшена
@@ -47,35 +48,7 @@ const Infofilm = (props) => {
             const addRating = {
                 value: value, // отправляем нашу оценку фильма
             };
-            fetch(
-                `https://api.themoviedb.org/3/movie/${id}/rating?api_key=833e2dd8979208fbee927efb619ed90a&session_id=b5ac2e7a824e2eff35e3f452706116df7525a037`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json;charset=utf-8",
-                    },
-                    body: JSON.stringify(addRating),
-                }
-            )
-                .then((response) => response.json())
-                .then((result) => {
-                    if (
-                        result.status_message ===
-                        "The item/record was updated successfully."
-                    ) {
-                        setState({
-                            message:
-                                "Вы уже голосовали. Ваш голос успешно обновлен.",
-                        });
-                    } else if (result.status_message === "Success.") {
-                        setState({ message: "Ваш голос отправлен на сервер!" });
-                    } else {
-                        setState({ message: "Ошибка запроса" });
-                    }
-                })
-                .catch((error) => {
-                    setState({ message: error });
-                });
+            postRaitFim(id, addRating).then(response => setState(response));
         }
     };
 

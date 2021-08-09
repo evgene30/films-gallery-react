@@ -57,7 +57,7 @@ const Main = () => {
                     <Route exact path="/page/:page">
                         <HomePage />
                     </Route>
-                    <NoteFoundPage />
+                        <NoteFoundPage />
                 </Switch>
             </section>
         </main>
