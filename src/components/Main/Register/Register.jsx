@@ -1,12 +1,11 @@
-import closeImg from "../../../assets/png/close.png";
-import React from "react";
+import closeImg from "assets/png/close.png";
+import React, { useState }  from "react";
 import { useHistory } from "react-router-dom";
-import { useState } from "react";
 import "./Register.scss";
 import RegisterNewUser from "./RegisterNewUser";
-import Json from "../../../dummy_data/users.json";
+import Json from "dummy_data/users.json";
 import { useDispatch } from "react-redux";
-import { usersStatus } from "../../../store/actions/actions";
+import { usersStatus } from "store/actions/actions";
 
 const Register = () => {
     const dispatch = useDispatch(); // функция захвата экшена

@@ -1,45 +1,49 @@
+import closeImg from "assets/png/close.png";
+import React, { useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
-import React from "react";
-import closeImg from "../../../assets/png/close.png";
-import "./Addfilm.scss";
-import { useState } from "react";
-import { nanoid } from "nanoid";
+import "./Editfilm.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { addFilm } from "../../../store/actions/actions";
-import { newFilms } from "./addNewFilm";
+import { addFilm } from "store/actions/actions";
+import { newFilms } from "../Addfilm/addNewFilm";
+import { nanoid } from "nanoid";
+import PropTypes from 'prop-types';
 
-const Addfilm = () => {
+
+const Editfilm = (props) => {
     const admin = JSON.parse(localStorage.getItem("User")) || [];
-    const history = useHistory();
     const dispatch = useDispatch(); // функция захвата экшена
-    const genriFilms = useSelector((state) => state.stateApp.genrisFilms); // жанры фильмов
-    const cardGenri = new Map(genriFilms.map((item) => [item.id, item])); // создаем карту объектов
-    const Genri = genriFilms.map((item) => cardGenri.get(item.id).name); // извлекаем жанры
-    const itemsFilm = useSelector((state) => state.stateApp.itemsFilm); // список всех фильмов
+    const infoFilm = props.item;
+    const {itemsFilm, genrisFilms}  = useSelector((state) => state.stateApp);
+    const cardGenri = new Map(genrisFilms.map((item) => [item.id, item])); // создаем карту объектов
+    const Genri = genrisFilms.map((item) => cardGenri.get(item.id).name); // извлекаем жанры
+    const history = useHistory();
+
+    const [state, setState] = useState({
+        id: infoFilm.id,
+        adult: infoFilm.adult,
+        backdrop_path: infoFilm.backdrop_path,
+        genre_ids: "",
+        media_type: infoFilm.media_type,
+        original_language: infoFilm.original_language,
+        original_title: infoFilm.original_title,
+        overview: infoFilm.overview,
+        popularity: infoFilm.popularity,
+        poster_path: infoFilm.poster_path,
+        release_date: infoFilm.release_date,
+        title: infoFilm.title,
+        video: infoFilm.video,
+        vote_average: infoFilm.vote_average,
+        vote_count: infoFilm.vote_count,
+    });
 
     const handleClickClose = () => {
-        history.push("../");
+        history.goBack();
     };
-    const [state, setState] = useState({
-        id: nanoid(),
-        adult: false,
-        genre_ids: "",
-        media_type: "film",
-        original_language: "ru",
-        original_title: "",
-        overview: "",
-        popularity: 0,
-        poster_path: "null",
-        release_date: "",
-        title: "",
-        video: "false",
-        vote_average: 0,
-        vote_count: 0,
-    });
+
     const handleSubmit = (event) => {
         event.preventDefault();
         dispatch(addFilm(newFilms(state, itemsFilm))); // обработка логики добавления/изменения фильма
-        history.push("../");
+        history.goBack();
     };
 
     const handleInputChange = (event) => {
@@ -64,7 +68,6 @@ const Addfilm = () => {
         vote_average,
         vote_count,
     } = state;
-
     return admin.status === "admin" ? (
         <div className="addfilm" id="addfilm">
             <img
@@ -76,7 +79,7 @@ const Addfilm = () => {
             />
 
             <form className="form_add" id="addform" onSubmit={handleSubmit}>
-                <label>Добавление нового фильма:</label>
+                <label>Название фильма:</label>
                 <input
                     type="text"
                     onChange={handleInputChange}
@@ -84,7 +87,6 @@ const Addfilm = () => {
                     name="title"
                     id="title_add"
                     minLength="3"
-                    placeholder="Название фильма"
                 />
                 <label>Описание фильма:</label>
                 <textarea
@@ -128,9 +130,9 @@ const Addfilm = () => {
                 <select
                     className="add_select"
                     name="genre_ids"
-                    multiple={false}
                     onChange={handleInputChange}
                     value={genre_ids}
+                    multiple={false}
                     id="select_add"
                 >
                     {Genri.map((item) => {
@@ -180,4 +182,9 @@ const Addfilm = () => {
     );
 };
 
-export default Addfilm;
+export default Editfilm;
+
+
+Editfilm.propTypes = {
+    item: PropTypes.object.isRequired,
+}

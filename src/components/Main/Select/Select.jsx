@@ -1,13 +1,12 @@
 import { nanoid } from "nanoid";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addFilm, selectFilter } from "../../../store/actions/actions";
+import { addFilm, selectFilter } from "store/actions/actions";
 import { selectFilms } from "./selectFilms";
 
 const Select = () => {
     const dispatch = useDispatch(); // функция захвата экшена
-    const checkSelect = useSelector((state) => state.stateApp.checkSelect); // запись выбранного фильтра (название)
-    const itemsFilm = useSelector((state) => state.stateApp.itemsFilm); // список всех фильмов
+    const {checkSelect, itemsFilm}  = useSelector((state) => state.stateApp); // запись выбранного фильтра (название)
     const sortingSelect = [
         { indexValue: "id", indexName: "Выберите фильтр..." },
         { indexValue: "popularity", indexName: "Популярность" },

@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import Infofilm from "../Card/Infofilm/Infofilm";
 import React from "react";
 import { useSelector } from "react-redux";
-import NoteFoundPage from "../route/NoteFoundPage";
+import NoteFoundPage from "./NoteFoundPage";
 
 export default function ListFilm() {
     const originalListFilms = useSelector((state) => state.stateApp.itemsFilm); // список всех фильмов

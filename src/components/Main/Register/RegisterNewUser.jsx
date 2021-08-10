@@ -1,9 +1,8 @@
-import { useState } from "react";
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import Json from "../../../dummy_data/users.json";
+import Json from "dummy_data/users.json";
 import { useDispatch } from "react-redux";
-import { usersStatus } from "../../../store/actions/actions";
+import { usersStatus } from "store/actions/actions";
 
 const RegisterNewUser = () => {
     const history = useHistory();

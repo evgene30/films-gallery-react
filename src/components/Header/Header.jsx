@@ -2,8 +2,9 @@ import "./Header.scss";
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { usersStatus } from "../../store/actions/actions";
-import {ReactComponent as LogoSVG} from "../../../src/assets/svg/logo.svg";
+import { usersStatus } from "store/actions/actions";
+import {ReactComponent as LogoSVG} from "assets/svg/logo.svg";
+
 
 const Header = () => {
     const dispatch = useDispatch(); // функция захвата экшена

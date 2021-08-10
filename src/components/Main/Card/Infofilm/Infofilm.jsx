@@ -1,25 +1,24 @@
-import delImg from "../../../../assets/png/del.png";
-import React from "react";
-import closeImg from "../../../../assets/png/close.png";
-import penImg from "../../../../assets/png/pen.png";
-import logoImage from "../../../../assets/png/movies.png";
+import delImg from "assets/png/del.png";
+import React, { useState } from "react";
+import closeImg from "assets/png/close.png";
+import penImg from "assets/png/pen.png";
+import logoImage from "assets/png/movies.png";
 import { useHistory, Link } from "react-router-dom";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./YouTubeTraller/videoYouTube.scss";
-import { delFilm } from "../../../../store/actions/actions";
+import { delFilm } from "store/actions/actions";
 import { handleGenriFilm } from "./genrisFilm";
 import YouTubeVideo from "./YouTubeTraller/YouTubeVideo";
-import {postRatingFim} from "../../../../store/servises/postRatingFim";
+import {postRatingFim} from "store/servises/postRatingFim";
+
 
 const Infofilm = (props) => {
     const dispatch = useDispatch(); // функция захвата экшена
     const infoFilm = props.item; // информация о выбранном фильме
-    const genrisFilm = useSelector((state) => state.stateApp.genrisFilms); // жанры фильмов
+    const { genrisFilms, user } = useSelector((state) => state.stateApp); // жанры фильмов
     const genri = infoFilm.genre_ids; // жанр текущего фильма
-    const infoUser = useSelector((state) => state.stateApp.user); // авторизированный пользователь
     const newStyle =
-        infoUser.status === "admin" ? { background: "#8080ff" } : {}; // изменение фона для Админа
+        user.status === "admin" ? { background: "#8080ff" } : {}; // изменение фона для Админа
     const img = "https://image.tmdb.org/t/p/w500"; // формируем изображение
     const err = logoImage; // альтернативное изображение на случай отсутствия
     const history = useHistory();
@@ -78,7 +77,7 @@ const Infofilm = (props) => {
                 />
             </div>
 
-            {infoUser.status === "admin" && (
+            {user.status === "admin" && (
                 <div className="correct">
                     <div className="imgdel">
                         <img
@@ -112,8 +111,8 @@ const Infofilm = (props) => {
                 <p>Популярность: {infoFilm.popularity}</p>
                 <p>Дата релиза: {infoFilm.release_date}</p>
                 <p>Количество голосов: {infoFilm.vote_count}</p>
-                <p>Жанр: {handleGenriFilm(genri, genrisFilm)}</p>
-                {infoUser.name && (
+                <p>Жанр: {handleGenriFilm(genri, genrisFilms)}</p>
+                {user.name && (
                     <div className="ratingFilm" style={{ display: "block" }}>
                         <select
                             name="selectrating"

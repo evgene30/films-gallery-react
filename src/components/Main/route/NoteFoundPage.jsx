@@ -1,8 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import "./NoteFoundPage.scss";
-import NoteFound from "../../../assets/png/404.png";
-import closeImg from "../../../assets/png/close.png";
+import NoteFound from "assets/png/404.png";
+import closeImg from "assets/png/close.png";
 
 const NoteFoundPage = () => {
     const history = useHistory();

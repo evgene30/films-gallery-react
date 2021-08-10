@@ -1,10 +1,10 @@
 import "./Card.scss";
 import React from "react";
-import logoImage from "../../../assets/png/movies.png";
-import delImg from "../../../assets/png/del.png";
+import logoImage from "assets/png/movies.png";
+import delImg from "assets/png/del.png";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { delFilm } from "../../../store/actions/actions";
+import { delFilm } from "store/actions/actions";
 import PropTypes from 'prop-types';
 
 

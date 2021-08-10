@@ -8,13 +8,12 @@ import {
     getListFilms,
     getGenrisFilms,
     usersStatus,
-} from "../store/actions/actions";
+} from "store/actions/actions";
+
 
 const App = () => {
     const dispatch = useDispatch(); // функция захвата экшена
-    const preloader = useSelector((state) => state.stateApp.preloader); // передзагрузчик
-    const user = useSelector((state) => state.stateApp.user); // авторизированный пользователь
-    const errors = useSelector((state) => state.stateApp.error); // отлов ошибок
+    const {preloader, user, errors} = useSelector((state) => state.stateApp);
 
     useEffect(() => {
         const userLocal = JSON.parse(localStorage.getItem("User")) || []; // проверка зарегистрированного пользователя
