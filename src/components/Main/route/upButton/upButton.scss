@@ -1,0 +1,32 @@
+/* Кнопка ВВерх */
+#topButtom {
+    display: inline-block;
+    position: fixed;
+    text-align: center;
+    bottom: 45px;
+    right: 45px;
+    z-index: 1000;
+    cursor: pointer;
+
+
+    rect {
+        fill: #ffc41e;
+    }
+    path {
+        fill: #000000;
+    }
+
+    rect:hover {
+        transition: 0.5;
+        fill: #ffdf86;
+    }
+    rect:focus-visible {
+        outline: none;
+        border: solid #6b6b6b 3px;
+    }
+    rect:active {
+        fill: #ffbb0c;
+        outline: none;
+        border: none;
+    }
+}

@@ -1,9 +1,10 @@
-import {useSelector} from "react-redux";
-import {useParams} from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import Card from "../Card/Card";
 import Pagination from "../Pagination/Pagination";
 import NoteFoundPage from "./NoteFoundPage";
 import React from "react";
+import ButtonUp from "./upButton/upButton";
 
 export default function HomePage() {
     const originalListFilms = useSelector((state) => state.stateApp.itemsFilm); // список всех фильмов
@@ -30,6 +31,7 @@ export default function HomePage() {
                 <Pagination
                     massiveFilms={massiveFilms} // список сортированных фильмов
                 />
+                <ButtonUp />
             </div>
         );
     }
