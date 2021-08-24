@@ -1,14 +1,11 @@
 import closeImg from "assets/png/close.png";
-import React, { useState }  from "react";
-import { useHistory } from "react-router-dom";
+import React, {useState} from "react";
+import {useHistory} from "react-router-dom";
 import "./Register.scss";
 import RegisterNewUser from "./RegisterNewUser";
-import Json from "dummy_data/users.json";
-import { useDispatch } from "react-redux";
-import { usersStatus } from "store/actions/actions";
+import app from "store/servises/fireBase";
 
 const Register = () => {
-    const dispatch = useDispatch(); // функция захвата экшена
     const [state, setState] = useState({
         form: true,
         email: "",
@@ -23,49 +20,52 @@ const Register = () => {
     const history = useHistory();
 
     const handleClickClose = () => {
-        history.push("./");
+        history.push("../");
     };
 
     const handleClickRegister = () => {
-        setState({ form: !state.form });
+        setState({form: !state.form});
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const User = Json.find((item) => item.email === state.email);
 
-        if (!User) {
-            setState({
-                form: true,
-                email: state.email,
-                pass: "",
-                mesEmail: "No registration email",
-                labelStyleError: { color: "red" },
-                inputStyleError: { border: "3px solid red" },
+        app.auth().signInWithEmailAndPassword(state.email, state.pass)
+            .then(() => {
+                history.push("../");
+            })
+            .catch((error) => {
+                if (error.code === "auth/user-not-found") {
+                    setState({
+                        form: true,
+                        email: state.email,
+                        pass: "",
+                        mesEmail: "No registration email",
+                        labelStyleError: {color: "red"},
+                        inputStyleError: {border: "3px solid red"},
+                    });
+                } else if (error.code === "auth/wrong-password") {
+                    setState({
+                        form: true,
+                        pass: "",
+                        email: state.email,
+                        mesPass: "Password error",
+                        passLabelError: {color: "red"},
+                        passInputError: {border: "3px solid red"},
+                        inputStyleError: {border: "3px solid red"},
+                    });
+                } else {
+                    setState({
+                        form: true,
+                        pass: "",
+                        email: "",
+                        mesPass: error.message,
+                        passLabelError: {color: "red"},
+                        passInputError: {border: "3px solid red"},
+                        inputStyleError: {border: "3px solid red"},
+                    });
+                }
             });
-        } else {
-            if (User.password === state.pass) {
-                dispatch(usersStatus({ name: User.name, status: User.status }));
-
-                const regUser = JSON.stringify({
-                    name: User.name,
-                    status: User.status,
-                });
-                localStorage.setItem("User", regUser);
-
-                history.push("./");
-            } else {
-                setState({
-                    form: true,
-                    pass: "",
-                    email: "",
-                    mesPass: "Password error",
-                    passLabelError: { color: "red" },
-                    passInputError: { border: "3px solid red" },
-                    inputStyleError: { border: "3px solid red" },
-                });
-            }
-        }
     };
 
     const handleInputChange = (event) => {
@@ -83,7 +83,7 @@ const Register = () => {
                 alt="Close"
                 src={closeImg}
                 onClick={handleClickClose}
-                style={{ height: "40px", width: "40px" }}
+                style={{height: "40px", width: "40px"}}
             />
             {state.form && (
                 <form
@@ -144,7 +144,7 @@ const Register = () => {
                     </div>
                 </form>
             )}
-            {!state.form && <RegisterNewUser />}
+            {!state.form && <RegisterNewUser/>}
         </section>
     );
 };

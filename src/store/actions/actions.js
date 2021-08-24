@@ -10,14 +10,15 @@ import {
     USER_STATUS,
 } from "../constans/const";
 
-import { getFilms } from "../servises/getFilms";
-import { getGenris } from "../servises/getGenris";
-import { delCardPOST } from "../servises/postDelFilm";
+import {getFilms} from "../servises/getFilms";
+import {getGenris} from "../servises/getGenris";
+import {delCardPOST} from "../servises/postDelFilm";
 
 export const addFilm = (value) => ({
     type: ADD_FILM,
     payload: value,
 });
+
 
 export const delFilm = (value, dispatch) => ({
     type: REMOVE_FILM,
@@ -60,5 +61,4 @@ export const loadGenris = (value) => ({
 });
 
 export const getListFilms = () => (dispatch) => getFilms(dispatch); // асинхронный запрос списка фильмов с сервера
-
 export const getGenrisFilms = () => (dispatch) => getGenris(dispatch); // асинхронный запрос списка жанров фильмов с сервера

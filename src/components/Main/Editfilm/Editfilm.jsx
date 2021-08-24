@@ -10,8 +10,8 @@ import PropTypes from 'prop-types';
 
 
 const Editfilm = (props) => {
-    const admin = JSON.parse(localStorage.getItem("User")) || [];
     const dispatch = useDispatch(); // функция захвата экшена
+    const infoUser = useSelector((state) => state.stateApp.user); // авторизированный пользователь
     const infoFilm = props.item;
     const {itemsFilm, genrisFilms}  = useSelector((state) => state.stateApp);
     const cardGenri = new Map(genrisFilms.map((item) => [item.id, item])); // создаем карту объектов
@@ -68,7 +68,7 @@ const Editfilm = (props) => {
         vote_average,
         vote_count,
     } = state;
-    return admin.status === "admin" ? (
+    return infoUser.status === "admin" ? (
         <div className="addfilm" id="addfilm">
             <img
                 className="close"

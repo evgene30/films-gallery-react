@@ -1,3 +1,13 @@
 body .section-register {
-    align-items: baseline;
+  align-items: baseline;
+}
+
+.userAvatar {
+  display: inline-block;
+
+  .userAvatarImage {
+    margin-left: 10px;
+    height: 60px;
+    border-radius: 50%;
+  }
 }

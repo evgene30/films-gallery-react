@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 
-const YouTubeVideo = ({ id }) => {
+
+const YouTubeVideo = ({id}) => {
     const [state, setState] = useState({
         link: "",
     });
@@ -14,7 +15,7 @@ const YouTubeVideo = ({ id }) => {
                 .then((data) => data.results)
                 .then((item) => {
                     if (typeof item === "object") {
-                        setState({ link: item[0]?.key });
+                        setState({link: item[0]?.key});
                     }
                 });
         }
@@ -34,7 +35,7 @@ const YouTubeVideo = ({ id }) => {
             </div>
         );
     }
-    return <div className="film-block__video" style={{ height: "23.4vh" }} />;
+    return <div className="film-block__video" style={{height: "23.4vh"}}/>;
 };
 
 export default YouTubeVideo;

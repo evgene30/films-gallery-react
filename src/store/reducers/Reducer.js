@@ -15,7 +15,6 @@ const initialState = {
     itemsFilm: [], // не сортированный список фильмов
     error: null,
     filmId: "",
-    filmCheck: false,
     genrisFilms: [],
     user: [],
 };

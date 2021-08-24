@@ -6,13 +6,5 @@
         "id": "0",
         "status": "admin",
         "password": "12345678"
-    },
-    {
-        "name": "User",
-        "surname": "user",
-        "email": "test@mail.com",
-        "id": "1",
-        "status": "user",
-        "password": "87654321"
     }
 ]
