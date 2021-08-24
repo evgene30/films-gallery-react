@@ -8,10 +8,10 @@ import { addFilm } from "store/actions/actions";
 import { newFilms } from "./addNewFilm";
 
 const Addfilm = () => {
-    const admin = JSON.parse(localStorage.getItem("User")) || [];
+    const infoUser = useSelector((state) => state.stateApp.user); // авторизированный пользователь
     const history = useHistory();
     const dispatch = useDispatch(); // функция захвата экшена
-    const { genrisFilms, itemsFilm }  = useSelector((state) => state.stateApp); // жанры фильмов
+    const { genrisFilms, itemsFilm } = useSelector((state) => state.stateApp); // жанры фильмов
     const cardGenri = new Map(genrisFilms.map((item) => [item.id, item])); // создаем карту объектов
     const Genri = genrisFilms.map((item) => cardGenri.get(item.id).name); // извлекаем жанры
 
@@ -63,7 +63,7 @@ const Addfilm = () => {
         vote_count,
     } = state;
 
-    return admin.status === "admin" ? (
+    return infoUser.status === "admin" ? (
         <div className="addfilm" id="addfilm">
             <img
                 className="close"
