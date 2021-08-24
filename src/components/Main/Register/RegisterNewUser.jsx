@@ -1,13 +1,12 @@
-import React, {useState} from "react";
-import {useHistory} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {usersStatus} from "store/actions/actions";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { usersStatus } from "store/actions/actions";
 import app from "store/servises/fireBase";
 
 const RegisterNewUser = () => {
     const history = useHistory();
     const dispatch = useDispatch(); // функция захвата экшена
-
 
     const [state, setState] = useState({
         name: "",
@@ -50,40 +49,41 @@ const RegisterNewUser = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         if (state.pass === state.auth_pass) {
-            app.auth().createUserWithEmailAndPassword(state.email, state.pass) // регистрируем нового пользователя по полю email и пароль
+            app.auth()
+                .createUserWithEmailAndPassword(state.email, state.pass) // регистрируем нового пользователя по полю email и пароль
                 .then(() => {
                     const user = app.auth().currentUser; // после успешной регистрации создаем объект зарегистрированного пользователя
                     user.updateProfile({
                         displayName: state.name, // добавляем имя пользователя из формы
-                        photoURL: "https://img.icons8.com/bubbles/2x/user.png" // добавляем фото пользователя из формы
+                        photoURL: "https://img.icons8.com/bubbles/2x/user.png", // добавляем фото пользователя из формы
                     }).then(() => {
                         dispatch(
-                            usersStatus({name: user.displayName, status: "user", avatar: user.photoURL})
+                            usersStatus({
+                                name: user.displayName,
+                                status: "user",
+                                avatar: user.photoURL,
+                            })
                             // записываем данные в стейт
-                        )
+                        );
                         history.push("../"); // перенаправление на главную страницу после авторизации
-                    })
+                    });
                 })
                 .catch((error) => {
-                    if (error.code === 'auth/email-already-in-use') {
+                    if (error.code === "auth/email-already-in-use") {
                         setState({
                             name: state.name,
                             email: "",
                             lastname: state.lastname,
                             pass: state.pass,
                             auth_pass: state.auth_pass,
-                            passLabelError: {color: "red"},
-                            passInputError: {border: "3px solid red"},
+                            passLabelError: { color: "red" },
+                            passInputError: { border: "3px solid red" },
                             mesEmail: "Email is registered",
                             nonCheckInput: {},
                             nonCheckLabel: {},
                             mesPass: "",
                         });
                     }
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.log(errorCode)
-                    console.log(errorMessage)
                 });
         } else {
             setState({
@@ -95,8 +95,8 @@ const RegisterNewUser = () => {
                 passLabelError: {},
                 passInputError: {},
                 mesEmail: "",
-                nonCheckInput: {border: "3px solid red"},
-                nonCheckLabel: {color: "red"},
+                nonCheckInput: { border: "3px solid red" },
+                nonCheckLabel: { color: "red" },
                 mesPass: "Password mismatch",
             });
         }

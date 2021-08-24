@@ -2,21 +2,20 @@ import React from "react";
 import Footer from "./Footer/Footer";
 import Header from "./Header/Header";
 import Main from "./Main/Main";
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import {
     getListFilms,
     getGenrisFilms,
     usersStatus,
 } from "store/actions/actions";
-import app from "store/servises/fireBase"
+import app from "store/servises/fireBase";
 import "firebase/database";
 import Json from "dummy_data/users.json";
 
-
 const App = () => {
     const dispatch = useDispatch(); // функция захвата экшена
-    const {preloader, user, errors} = useSelector((state) => state.stateApp);
+    const { preloader, user, errors } = useSelector((state) => state.stateApp);
 
     useEffect(() => {
         const authUser = Json;
@@ -33,19 +32,21 @@ const App = () => {
                             status: authUser[0].status,
                             avatar: user.photoURL,
                         })
-                    )
+                    );
                 } else {
                     dispatch(
-                        usersStatus({name: user.displayName, status: "user", avatar: user.photoURL})
-                    )
+                        usersStatus({
+                            name: user.displayName,
+                            status: "user",
+                            avatar: user.photoURL,
+                        })
+                    );
                 }
             }
         });
 
         dispatch(getListFilms()); // загружаем список фильмов
         dispatch(getGenrisFilms()); // загружаем жанры
-
-
     }, [dispatch]);
 
     if (errors) {
@@ -58,17 +59,17 @@ const App = () => {
             </div>
         );
     } else if (preloader) {
-        return <div id="preloader" className="visible"/>;
+        return <div id="preloader" className="visible" />;
     } else {
         return (
             <div
                 className="App"
-                style={user.status === "admin" ? {background: "#dae7f1"} : {}}
+                style={user.status === "admin" ? { background: "#dae7f1" } : {}}
             >
                 <div className="container">
-                    <Header/>
-                    <Main/>
-                    <Footer/>
+                    <Header />
+                    <Main />
+                    <Footer />
                 </div>
             </div>
         );
@@ -76,4 +77,3 @@ const App = () => {
 };
 
 export default App;
-

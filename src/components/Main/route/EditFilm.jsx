@@ -1,5 +1,5 @@
-import {useSelector} from "react-redux";
-import {useParams} from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import Editfilm from "../Editfilm/Editfilm";
 import NoteFoundPage from "./NoteFoundPage";
 import React from "react";
