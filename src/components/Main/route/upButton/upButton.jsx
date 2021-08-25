@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { ReactComponent as UpSVG } from "assets/svg/up.svg";
+import { CSSTransition } from "react-transition-group";
 import "./upButton.scss";
 
 const ButtonUp = () => {
@@ -14,31 +15,33 @@ const ButtonUp = () => {
                 // проверка на наличие touch
                 setState({ scrollState: 0 });
             } else {
-                const scrollTop = event.target.scrollingElement.scrollTop; // координаты прокрутки страницы
+                const scrollTop = event.target.scrollingElement.scrollTop; // координаты прокрутки страницы если нет touch
                 setState({ scrollState: scrollTop });
             }
         });
         return () => setState(); // отписка от функции
     }, []);
 
-    function upPage() {
-        // document.querySelector("body").animate({ scrollTop: 0 }, 700);
-        window.scrollTo(0, 0);
-    }
+    const scrollToTop = () => {
+        const c = document.documentElement.scrollTop || document.body.scrollTop;
+        if (c > 0) {
+            window.requestAnimationFrame(scrollToTop);
+            window.scrollTo(0, c - c / 9); // чем больше число, тем плавнее прокрутка
+        }
+    };
 
     return (
-        <div
-            id="topButtom"
-            title="Вверх"
-            onClick={upPage}
-            style={
-                state?.scrollState !== 0
-                    ? { display: "inline-block" }
-                    : { display: "none" }
-            }
+        <CSSTransition
+            in={state?.scrollState !== 0}
+            timeout={500}
+            classNames={"scroll"}
+            mountOnEnter
+            unmountOnExit
         >
-            <UpSVG />
-        </div>
+            <div id="topButtom" title="Вверх" onClick={scrollToTop}>
+                <UpSVG />
+            </div>
+        </CSSTransition>
     );
 };
 

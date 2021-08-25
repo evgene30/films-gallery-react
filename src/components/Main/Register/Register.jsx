@@ -1,6 +1,6 @@
 import closeImg from "assets/png/close.png";
-import React, {useState} from "react";
-import {useHistory} from "react-router-dom";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import "./Register.scss";
 import RegisterNewUser from "./RegisterNewUser";
 import app from "store/servises/fireBase";
@@ -24,13 +24,15 @@ const Register = () => {
     };
 
     const handleClickRegister = () => {
-        setState({form: !state.form});
+        setState({ form: !state.form });
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        app.auth().signInWithEmailAndPassword(state.email, state.pass)
+        app.auth()
+            .signInWithEmailAndPassword(state.email, state.pass)
+            // аутентификация пользователя
             .then(() => {
                 history.push("../");
             })
@@ -41,8 +43,8 @@ const Register = () => {
                         email: state.email,
                         pass: "",
                         mesEmail: "No registration email",
-                        labelStyleError: {color: "red"},
-                        inputStyleError: {border: "3px solid red"},
+                        labelStyleError: { color: "red" },
+                        inputStyleError: { border: "3px solid red" },
                     });
                 } else if (error.code === "auth/wrong-password") {
                     setState({
@@ -50,9 +52,9 @@ const Register = () => {
                         pass: "",
                         email: state.email,
                         mesPass: "Password error",
-                        passLabelError: {color: "red"},
-                        passInputError: {border: "3px solid red"},
-                        inputStyleError: {border: "3px solid red"},
+                        passLabelError: { color: "red" },
+                        passInputError: { border: "3px solid red" },
+                        inputStyleError: { border: "3px solid red" },
                     });
                 } else {
                     setState({
@@ -60,9 +62,9 @@ const Register = () => {
                         pass: "",
                         email: "",
                         mesPass: error.message,
-                        passLabelError: {color: "red"},
-                        passInputError: {border: "3px solid red"},
-                        inputStyleError: {border: "3px solid red"},
+                        passLabelError: { color: "red" },
+                        passInputError: { border: "3px solid red" },
+                        inputStyleError: { border: "3px solid red" },
                     });
                 }
             });
@@ -83,7 +85,7 @@ const Register = () => {
                 alt="Close"
                 src={closeImg}
                 onClick={handleClickClose}
-                style={{height: "40px", width: "40px"}}
+                style={{ height: "40px", width: "40px" }}
             />
             {state.form && (
                 <form
@@ -144,7 +146,7 @@ const Register = () => {
                     </div>
                 </form>
             )}
-            {!state.form && <RegisterNewUser/>}
+            {!state.form && <RegisterNewUser />}
         </section>
     );
 };

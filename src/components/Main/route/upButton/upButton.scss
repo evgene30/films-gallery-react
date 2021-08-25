@@ -8,7 +8,6 @@
     z-index: 1000;
     cursor: pointer;
 
-
     rect {
         fill: #ffc41e;
     }
@@ -29,4 +28,20 @@
         outline: none;
         border: none;
     }
+}
+.scroll-enter {
+    // состояние скрытия элемента (изначальное)
+    opacity: 0;
+}
+
+.scroll-enter-active {
+    // появление элемента
+    transition: opacity 500ms ease-out;
+    opacity: 1;
+}
+
+.scroll-exit-active {
+    // последующее скрытие элемента
+    transition: opacity 500ms ease-out;
+    opacity: 0;
 }
